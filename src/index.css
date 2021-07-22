@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --measure: 70ch;
+  --ratio: 1.5;
+  --s-5: calc(var(--s-4) / var(--ratio));
+  --s-4: calc(var(--s-3) / var(--ratio));
+  --s-3: calc(var(--s-2) / var(--ratio));
+  --s-2: calc(var(--s-1) / var(--ratio));
+  --s-1: calc(var(--s0) / var(--ratio));
+  --s0: 1rem;
+  --s1: calc(var(--s0) * var(--ratio));
+  --s2: calc(var(--s1) * var(--ratio));
+  --s3: calc(var(--s2) * var(--ratio));
+  --s4: calc(var(--s3) * var(--ratio));
+  --s5: calc(var(--s4) * var(--ratio));
+}
+
+:root {
+  font-family: 'Helvetica Neue', arial, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: #fafafa;
+  color: #444;
+}
+
+#app {
+  height: 100%;
+  text-align: center;
+  background-color: #673ab8;
+  color: #fff;
+  font-size: 1.5em;
+  padding-top: 100px;
+}
+
+.link {
+  color: #fff;
+}
