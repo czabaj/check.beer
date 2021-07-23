@@ -3,19 +3,21 @@ import type { ComponentChildren } from "preact";
 
 import { toModularScale } from "./utils";
 
+const CSS_PROP_SPACE = `--space`;
+
 const styleBase = css`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   /* ↓ The vertical spacing is established via "Lobotomic Owl" selector */
   & > * + * {
-    margin-top: var(--space);
+    margin-top: var(${CSS_PROP_SPACE});
   }
 `;
 
 const styleRecursive = css`
   & * + * {
-    margin-top: var(--space);
+    margin-top: var(${CSS_PROP_SPACE});
   }
 `;
 
@@ -63,7 +65,7 @@ export default function Stack({
         splitAfter && styleSplitAfter
       )}
       style={{
-        "--space": toModularScale(space),
+        [CSS_PROP_SPACE]: toModularScale(space),
       }}
       {...(splitAfter !== undefined && { "data-split-after": splitAfter })}
     >
