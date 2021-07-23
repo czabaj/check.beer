@@ -1,5 +1,15 @@
-import { Stack } from "react-every-layout";
+import { css } from "@linaria/core";
+import Stack from "./components/layouts/Stack";
 import { Logo } from "./logo";
+
+const appStyle = css`
+  height: 100%;
+  text-align: center;
+  background-color: #673ab8;
+  color: #fff;
+  font-size: 1.5em;
+  padding-top: 100px;
+`
 
 const data = {
   places: {
@@ -25,10 +35,12 @@ const data = {
 
 export function App() {
   return (
-    <Stack>
-      {data.places["Kosovští kumpáni"].participants.map((participant) => (
-        <div>{participant.name}</div>
-      ))}
-    </Stack>
+    <div className={appStyle}>
+      <Stack>
+        {data.places["Kosovští kumpáni"].participants.map((participant) => (
+          <div>{participant.name}</div>
+        ))}
+      </Stack>
+    </div>
   );
 }

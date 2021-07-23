@@ -16,10 +16,13 @@
   --s3: calc(var(--s2) * var(--ratio));
   --s4: calc(var(--s3) * var(--ratio));
   --s5: calc(var(--s4) * var(--ratio));
+  --color-background: #fff;
+  --color-foreground: #000;
+  --border-thin: 2px;
 }
 
 :root {
-  font-family: 'Helvetica Neue', arial, sans-serif;
+  font-family: "Helvetica Neue", arial, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,15 +36,6 @@ body {
   margin: 0;
   background: #fafafa;
   color: #444;
-}
-
-#app {
-  height: 100%;
-  text-align: center;
-  background-color: #673ab8;
-  color: #fff;
-  font-size: 1.5em;
-  padding-top: 100px;
 }
 
 .link {
