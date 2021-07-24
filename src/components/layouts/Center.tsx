@@ -3,8 +3,8 @@ import type { ComponentChildren } from "preact";
 
 import { toModularScale } from "./utils";
 
-const CSS_PROP_GUTTERS = `--gutters`;
-const CSS_PROP_MAX = `--max`;
+const CSS_PROP_GUTTERS = `--center-gutters`;
+const CSS_PROP_MAX = `--center-max`;
 
 const styleBase = css`
   box-sizing: content-box;
@@ -32,6 +32,7 @@ export type Props = {
   andText?: boolean;
   as?: keyof JSX.IntrinsicElements;
   children: ComponentChildren;
+  className?: string;
   /**
    * The minimum space on either side of the content
    */
@@ -49,6 +50,7 @@ export type Props = {
 export default function Center({
   andText,
   as: Component = `div`,
+  className,
   children,
   gutters,
   intrinsic,
@@ -59,7 +61,8 @@ export default function Center({
       className={cx(
         styleBase,
         andText && styleAndText,
-        intrinsic && styleIntrinsic
+        intrinsic && styleIntrinsic,
+        className
       )}
       style={{
         [CSS_PROP_GUTTERS]: toModularScale(gutters),

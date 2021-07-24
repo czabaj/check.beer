@@ -3,7 +3,7 @@ import type { ComponentChildren } from "preact";
 
 import { toModularScale } from "./utils";
 
-const CSS_PROP_SPACE = `--space`;
+const CSS_PROP_GAP = `--stack-gap`;
 
 const styleBase = css`
   display: flex;
@@ -11,13 +11,13 @@ const styleBase = css`
   justify-content: flex-start;
   /* ↓ The vertical spacing is established via "Lobotomic Owl" selector */
   & > * + * {
-    margin-top: var(${CSS_PROP_SPACE});
+    margin-top: var(${CSS_PROP_GAP});
   }
 `;
 
 const styleRecursive = css`
   & * + * {
-    margin-top: var(${CSS_PROP_SPACE});
+    margin-top: var(${CSS_PROP_GAP});
   }
 `;
 
@@ -38,6 +38,11 @@ const styleSplitAfter = css`
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
   children: ComponentChildren;
+  className?: string;
+  /**
+   * The vertical space to be applied between children
+   */
+  gap?: string | number;
   /**
    * The vertical spacing affects by default only direct children, this applies vertical spacing to _all_ children
    */
@@ -46,30 +51,29 @@ export type Props = {
    * The space after passed nth-child will consume all available free space
    */
   splitAfter?: number;
-  /**
-   * The vertical space to be applied between children
-   */
-  space?: string | number;
 };
 
 export default function Stack({
   as: Component = `div`,
   children,
+  className,
   recursive,
-  space = 1,
+  gap = 1,
   splitAfter,
 }: Props) {
+  const hasSplitAfter = splitAfter && splitAfter > 0;
   return (
     <Component
       className={cx(
         styleBase,
         recursive && styleRecursive,
-        splitAfter && styleSplitAfter
+        hasSplitAfter && styleSplitAfter,
+        className
       )}
       style={{
-        [CSS_PROP_SPACE]: toModularScale(space),
+        [CSS_PROP_GAP]: toModularScale(gap),
       }}
-      {...(splitAfter !== undefined && { "data-split-after": splitAfter })}
+      {...(hasSplitAfter && { "data-split-after": splitAfter })}
     >
       {children}
     </Component>

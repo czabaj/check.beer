@@ -3,10 +3,10 @@ import type { ComponentChildren } from "preact";
 
 import { toModularScale } from "./utils";
 
-const CSS_PROP_BORDER_WIDTH = `--border-width`;
-const CSS_PROP_COLOR_DARK = `--color-dark`;
-const CSS_PROP_COLOR_LIGHT = `--color-light`;
-const CSS_PROP_PADDING = `--color-padding`;
+const CSS_PROP_BORDER_WIDTH = `--box-border-width`;
+const CSS_PROP_COLOR_DARK = `--box-color-dark`;
+const CSS_PROP_COLOR_LIGHT = `--box-color-light`;
+const CSS_PROP_PADDING = `--box-color-padding`;
 
 const styleBase = css`
   background-color: var(${CSS_PROP_COLOR_LIGHT});
@@ -32,16 +32,27 @@ const styleInverted = css`
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
   children: ComponentChildren;
+  className?: string;
+  /**
+   * A CSS border-width value
+   */
   borderWidth?: string;
   colorDark?: string;
   colorLight?: string;
+  /**
+   * Whether to apply an inverted theme
+   */
   inverted?: boolean;
+  /**
+   * A CSS padding value
+   */
   padding?: number | string;
 };
 
 export default function Box({
   as: Component = `div`,
   children,
+  className,
   borderWidth = `var(--border-thin)`,
   colorDark = `var(--color-background)`,
   colorLight = `var(--color-foreground)`,
@@ -50,7 +61,7 @@ export default function Box({
 }: Props) {
   return (
     <Component
-      className={cx(styleBase, inverted && styleInverted)}
+      className={cx(styleBase, inverted && styleInverted, className)}
       style={{
         [CSS_PROP_BORDER_WIDTH]: borderWidth,
         [CSS_PROP_COLOR_DARK]: colorLight,

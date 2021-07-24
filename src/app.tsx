@@ -1,4 +1,5 @@
 import { css } from "@linaria/core";
+import Center from "./components/layouts/Center";
 import Cluster from "./components/layouts/Cluster";
 import Stack from "./components/layouts/Stack";
 import { Logo } from "./logo";
@@ -43,11 +44,20 @@ export function App() {
             <div>Zpět</div>
             <h2>Titulek stranky</h2>
           </Cluster>
-          <nav>Navigační menu</nav>
+          <Stack as="nav">
+            <a href="#">Nastavení místa</a>
+            <a href="#">Statistiky</a>
+            <a href="#">Moje konto</a>
+            <a href="#">Jinam</a>
+          </Stack>
         </Cluster>
-        {data.places["Kosovští kumpáni"].participants.map((participant) => (
-          <div>{participant.name}</div>
-        ))}
+        <Center>
+          <Stack>
+            {data.places["Kosovští kumpáni"].participants.map((participant) => (
+              <div>{participant.name}</div>
+            ))}
+          </Stack>
+        </Center>
       </Stack>
     </div>
   );

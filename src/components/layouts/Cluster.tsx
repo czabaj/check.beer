@@ -1,17 +1,17 @@
-import { css } from "@linaria/core";
+import { css, cx } from "@linaria/core";
 import type { ComponentChildren } from "preact";
 
 import { toModularScale } from "./utils";
 
-const CSS_PROP_ALIGN = `--align`;
-const CSS_PROP_JUSTIFY = `--justify`;
-const CSS_PROP_SPACE = `--space`;
+const CSS_PROP_ALIGN = `--cluster-align`;
+const CSS_PROP_JUSTIFY = `--cluster-justify`;
+const CSS_PROP_GAP = `--cluster-gap`;
 
 const styleBase = css`
   align-items: var(${CSS_PROP_ALIGN});
   display: flex;
   flex-wrap: wrap;
-  gap: var(${CSS_PROP_SPACE}, 1rem);
+  gap: var(${CSS_PROP_GAP}, 1rem);
   justify-content: var(${CSS_PROP_JUSTIFY});
 `;
 
@@ -22,6 +22,11 @@ export type Props = {
    */
   align?: `baseline` | `center` | `flex-end` | `flex-start` | `stretch`;
   children: ComponentChildren;
+  className?: string;
+  /**
+   * A CSS gap value. The minimum space between the clustered child elements.
+   */
+  gap?: number | string;
   /**
    * A CSS justify-content value
    */
@@ -32,26 +37,23 @@ export type Props = {
     | `space-arount`
     | `space-between`
     | `space-evenly`;
-  /**
-   * A CSS gap value. The minimum space between the clustered child elements.
-   */
-  space?: number | string;
 };
 
 export default function Cluster({
   align = `flex-start`,
   as: Component = `div`,
   children,
+  className,
+  gap = 1,
   justify = `flex-start`,
-  space = 1,
 }: Props) {
   return (
     <Component
-      className={styleBase}
+      className={cx(styleBase, className)}
       style={{
         [CSS_PROP_ALIGN]: align,
+        [CSS_PROP_GAP]: toModularScale(gap),
         [CSS_PROP_JUSTIFY]: justify,
-        [CSS_PROP_SPACE]: toModularScale(space),
       }}
     >
       {children}
