@@ -14,6 +14,7 @@ const styleBase = css`
   color: var(${CSS_PROP_COLOR_DARK});
   display: block;
   padding: var(${CSS_PROP_PADDING});
+  /* ↓ Force colors to inherit from the parent and honor inversion (below)  */
   & * {
     color: inherit;
   }
@@ -24,11 +25,12 @@ const styleBase = css`
 
 const styleInverted = css`
   /* ↓ Dark becomes light, and light becomes dark */
-  color: var(${CSS_PROP_COLOR_LIGHT});
   background-color: var(${CSS_PROP_COLOR_DARK});
+  color: var(${CSS_PROP_COLOR_LIGHT});
 `;
 
 export type Props = {
+  as?: keyof JSX.IntrinsicElements;
   children: ComponentChildren;
   borderWidth?: string;
   colorDark?: string;
@@ -38,15 +40,16 @@ export type Props = {
 };
 
 export default function Box({
+  as: Component = `div`,
   children,
   borderWidth = `var(--border-thin)`,
   colorDark = `var(--color-background)`,
   colorLight = `var(--color-foreground)`,
-  inverted = false,
+  inverted,
   padding = 1,
 }: Props) {
   return (
-    <div
+    <Component
       className={cx(styleBase, inverted && styleInverted)}
       style={{
         [CSS_PROP_BORDER_WIDTH]: borderWidth,
@@ -56,6 +59,6 @@ export default function Box({
       }}
     >
       {children}
-    </div>
+    </Component>
   );
 }

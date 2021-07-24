@@ -36,6 +36,7 @@ const styleSplitAfter = css`
 `;
 
 export type Props = {
+  as?: keyof JSX.IntrinsicElements;
   children: ComponentChildren;
   /**
    * The vertical spacing affects by default only direct children, this applies vertical spacing to _all_ children
@@ -52,13 +53,14 @@ export type Props = {
 };
 
 export default function Stack({
+  as: Component = `div`,
   children,
-  recursive = false,
+  recursive,
   space = 1,
   splitAfter,
 }: Props) {
   return (
-    <div
+    <Component
       className={cx(
         styleBase,
         recursive && styleRecursive,
@@ -70,6 +72,6 @@ export default function Stack({
       {...(splitAfter !== undefined && { "data-split-after": splitAfter })}
     >
       {children}
-    </div>
+    </Component>
   );
 }
