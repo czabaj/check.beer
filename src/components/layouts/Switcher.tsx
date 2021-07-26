@@ -5,6 +5,7 @@ import { toModularScale } from "./utils";
 
 const CSS_PROP_GAP = `--switcher-gap`;
 const CSS_PROP_THRESHOLD = `--switcher-threshold`;
+const DATA_ATTR_LIMIT = `data-limit`;
 
 const styleBase = css`
   display: flex;
@@ -23,8 +24,8 @@ const styleLimit = css`
       const nthChild = idx + 1; // the CSS counts from 1, not 0
       const nextChild = nthChild + 1; // apply the rule from the next child
       return `
-  &[data-limit=${nthChild}] > :nth-last-child(n + ${nextChild}),
-  &[data-limit=${nthChild}] > :nth-last-child(n + ${nextChild}) ~ * {
+  &[${DATA_ATTR_LIMIT}="${nthChild}"] > :nth-last-child(n + ${nextChild}),
+  &[${DATA_ATTR_LIMIT}="${nthChild}"] > :nth-last-child(n + ${nextChild}) ~ * {
       flex-basis: 100%;
     }
 `;
@@ -66,7 +67,7 @@ export default function Switcher({
         [CSS_PROP_GAP]: toModularScale(gap),
         [CSS_PROP_THRESHOLD]: threshold,
       }}
-      {...(hasLimit && { "data-limit": limit })}
+      {...(hasLimit && { [DATA_ATTR_LIMIT]: limit })}
     >
       {children}
     </Component>

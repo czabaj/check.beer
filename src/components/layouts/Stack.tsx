@@ -4,6 +4,7 @@ import type { ComponentChildren } from "preact";
 import { toModularScale } from "./utils";
 
 const CSS_PROP_GAP = `--stack-gap`;
+const DATA_ATTR_SPLIT_AFTER = `data-split-after`;
 
 const styleBase = css`
   display: flex;
@@ -27,7 +28,7 @@ const styleSplitAfter = css`
     .map((_value, idx) => {
       const nthChild = idx + 1; // the CSS counts from 1, not 0
       return `
-  &[data-split-after=${nthChild}] > :nth-child(${nthChild}) {
+  &[${DATA_ATTR_SPLIT_AFTER}="${nthChild}"] > :nth-child(${nthChild}) {
       margin-bottom: auto;
     }
 `;
@@ -73,7 +74,7 @@ export default function Stack({
       style={{
         [CSS_PROP_GAP]: toModularScale(gap),
       }}
-      {...(hasSplitAfter && { "data-split-after": splitAfter })}
+      {...(hasSplitAfter && { [DATA_ATTR_SPLIT_AFTER]: splitAfter })}
     >
       {children}
     </Component>
