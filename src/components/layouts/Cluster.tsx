@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_ALIGN = `--cluster-align`;
 const CSS_PROP_JUSTIFY = `--cluster-justify`;
@@ -21,7 +21,9 @@ export type Props = {
    * A CSS align-items value
    */
   align?: `baseline` | `center` | `flex-end` | `flex-start` | `stretch`;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: { className: string; style: object }) => VNode);
   className?: string;
   /**
    * A CSS gap value. The minimum space between the clustered child elements.
@@ -47,16 +49,17 @@ export default function Cluster({
   gap = 1,
   justify = `flex-start`,
 }: Props) {
-  return (
-    <Component
-      className={cx(styleBase, className)}
-      style={{
-        [CSS_PROP_ALIGN]: align,
-        [CSS_PROP_GAP]: toModularScale(gap),
-        [CSS_PROP_JUSTIFY]: justify,
-      }}
-    >
-      {children}
-    </Component>
+  const componentProps = {
+    className: cx(styleBase, className),
+    style: {
+      [CSS_PROP_ALIGN]: align,
+      [CSS_PROP_GAP]: toModularScale(gap),
+      [CSS_PROP_JUSTIFY]: justify,
+    },
+  };
+  return typeof children === `function` ? (
+    children(componentProps)
+  ) : (
+    <Component {...componentProps}>{children}</Component>
   );
 }

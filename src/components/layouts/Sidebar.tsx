@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_CONTENT_MIN = `--sidebar-content-min`;
 const CSS_PROP_SIDE_WIDTH = `--sidebar-side-width`;
@@ -32,7 +32,9 @@ const styleNoStretch = css`
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: { className: string; style: object }) => VNode);
   className?: string;
   /**
    * A CSS percentage value. The minimum width of the content element in the horizontal configuration

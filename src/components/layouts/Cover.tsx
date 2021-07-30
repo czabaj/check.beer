@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_GAP = `--cover-gap`;
 const CSS_PROP_MIN_HEIGHT = `--cover-min-height`;
@@ -35,7 +35,7 @@ const styleNoPad = css`
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children: VNode<any>;
   className?: string;
   /**
    * The optional element to be rendered at the bottom edge

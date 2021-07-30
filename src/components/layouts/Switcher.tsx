@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_GAP = `--switcher-gap`;
 const CSS_PROP_THRESHOLD = `--switcher-threshold`;
@@ -35,7 +35,13 @@ const styleLimit = css`
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: {
+        className: string;
+        [DATA_ATTR_LIMIT]?: number;
+        style: object;
+      }) => VNode);
   className?: string;
   /**
    * A CSS margin value
@@ -60,16 +66,17 @@ export default function Switcher({
   threshold = `var(--measure)`,
 }: Props) {
   const hasLimit = limit && limit > 0;
-  return (
-    <Component
-      className={cx(styleBase, hasLimit && styleLimit, className)}
-      style={{
-        [CSS_PROP_GAP]: toModularScale(gap),
-        [CSS_PROP_THRESHOLD]: threshold,
-      }}
-      {...(hasLimit && { [DATA_ATTR_LIMIT]: limit })}
-    >
-      {children}
-    </Component>
+  const componentProps = {
+    className: cx(styleBase, hasLimit && styleLimit, className),
+    ...(hasLimit && { [DATA_ATTR_LIMIT]: limit }),
+    style: {
+      [CSS_PROP_GAP]: toModularScale(gap),
+      [CSS_PROP_THRESHOLD]: threshold,
+    },
+  };
+  return typeof children === `function` ? (
+    children(componentProps)
+  ) : (
+    <Component {...componentProps}>{children}</Component>
   );
 }

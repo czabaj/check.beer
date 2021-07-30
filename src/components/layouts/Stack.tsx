@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_GAP = `--stack-gap`;
 const DATA_ATTR_SPLIT_AFTER = `data-split-after`;
@@ -38,7 +38,13 @@ const styleSplitAfter = css`
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: {
+        className: string;
+        [DATA_ATTR_SPLIT_AFTER]?: number;
+        style: object;
+      }) => VNode);
   className?: string;
   /**
    * The vertical space to be applied between children
@@ -63,20 +69,21 @@ export default function Stack({
   splitAfter,
 }: Props) {
   const hasSplitAfter = splitAfter && splitAfter > 0;
-  return (
-    <Component
-      className={cx(
-        styleBase,
-        recursive && styleRecursive,
-        hasSplitAfter && styleSplitAfter,
-        className
-      )}
-      style={{
-        [CSS_PROP_GAP]: toModularScale(gap),
-      }}
-      {...(hasSplitAfter && { [DATA_ATTR_SPLIT_AFTER]: splitAfter })}
-    >
-      {children}
-    </Component>
+  const componentProps = {
+    className: cx(
+      styleBase,
+      recursive && styleRecursive,
+      hasSplitAfter && styleSplitAfter,
+      className
+    ),
+    ...(hasSplitAfter && { [DATA_ATTR_SPLIT_AFTER]: splitAfter }),
+    style: {
+      [CSS_PROP_GAP]: toModularScale(gap),
+    },
+  };
+  return typeof children === `function` ? (
+    children(componentProps)
+  ) : (
+    <Component {...componentProps}>{children}</Component>
   );
 }

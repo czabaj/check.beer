@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_GAP = `--grid-gap`;
 const CSS_PROPS_MIN = `--grid-min`;
@@ -22,7 +22,9 @@ const styleBase = css`
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: { className: string; style: object }) => VNode);
   className?: string;
   /**
    * The space between grid cells
@@ -41,15 +43,16 @@ export default function Grid({
   gap,
   min,
 }: Props) {
-  return (
-    <Component
-      className={cx(styleBase, className)}
-      style={{
-        [CSS_PROP_GAP]: toModularScale(gap),
-        [CSS_PROPS_MIN]: min,
-      }}
-    >
-      {children}
-    </Component>
+  const componentProps = {
+    className: cx(styleBase, className),
+    style: {
+      [CSS_PROP_GAP]: toModularScale(gap),
+      [CSS_PROPS_MIN]: min,
+    },
+  };
+  return typeof children === `function` ? (
+    children(componentProps)
+  ) : (
+    <Component {...componentProps}>{children}</Component>
   );
 }

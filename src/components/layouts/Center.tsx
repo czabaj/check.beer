@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_GUTTERS = `--center-gutters`;
 const CSS_PROP_MAX = `--center-max`;
@@ -31,7 +31,9 @@ export type Props = {
    */
   andText?: boolean;
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: { className: string; style: object }) => VNode);
   className?: string;
   /**
    * The minimum space on either side of the content
@@ -56,20 +58,21 @@ export default function Center({
   intrinsic,
   max = `var(--measure)`,
 }: Props) {
-  return (
-    <Component
-      className={cx(
-        styleBase,
-        andText && styleAndText,
-        intrinsic && styleIntrinsic,
-        className
-      )}
-      style={{
-        [CSS_PROP_GUTTERS]: toModularScale(gutters),
-        [CSS_PROP_MAX]: max,
-      }}
-    >
-      {children}
-    </Component>
+  const componentProps = {
+    className: cx(
+      styleBase,
+      andText && styleAndText,
+      intrinsic && styleIntrinsic,
+      className
+    ),
+    style: {
+      [CSS_PROP_GUTTERS]: toModularScale(gutters),
+      [CSS_PROP_MAX]: max,
+    },
+  };
+  return typeof children === `function` ? (
+    children(componentProps)
+  ) : (
+    <Component {...componentProps}>{children}</Component>
   );
 }

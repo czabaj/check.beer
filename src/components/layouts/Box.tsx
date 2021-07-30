@@ -1,7 +1,7 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, VNode } from "preact";
 
-import { toModularScale } from "./utils";
+import { toModularScale } from "../../utils/style";
 
 const CSS_PROP_BORDER_WIDTH = `--box-border-width`;
 const CSS_PROP_PADDING = `--box-color-padding`;
@@ -29,7 +29,9 @@ const styleInverted = css`
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: { className: string; style: object }) => VNode);
   className?: string;
   /**
    * A CSS border-width value
@@ -53,15 +55,16 @@ export default function Box({
   inverted,
   padding = 1,
 }: Props) {
-  return (
-    <Component
-      className={cx(styleBase, inverted && styleInverted, className)}
-      style={{
-        [CSS_PROP_BORDER_WIDTH]: borderWidth,
-        [CSS_PROP_PADDING]: toModularScale(padding),
-      }}
-    >
-      {children}
-    </Component>
+  const componentProps = {
+    className: cx(styleBase, inverted && styleInverted, className),
+    style: {
+      [CSS_PROP_BORDER_WIDTH]: borderWidth,
+      [CSS_PROP_PADDING]: toModularScale(padding),
+    },
+  };
+  return typeof children === `function` ? (
+    children(componentProps)
+  ) : (
+    <Component {...componentProps}>{children}</Component>
   );
 }

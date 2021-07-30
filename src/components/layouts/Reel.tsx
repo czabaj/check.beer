@@ -1,10 +1,13 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, RefCallback, VNode } from "preact";
 import { useEffect, useRef } from "preact/hooks";
 
-import { isOverflowing, toModularScale } from "./utils";
+import {
+  CSS_CLASS_OVERFLOWING,
+  startObserving,
+} from "../../utils/appendOverflowingClass";
+import { toModularScale } from "../../utils/style";
 
-const CSS_CLASS_OVERFLOWING = `overflowing`;
 const CSS_PROP_GAP = `--reel-gap`;
 const CSS_PROP_HEIGHT = `--reel-height`;
 const CSS_PROP_ITEM_WIDTH = `--reel-item-width`;
@@ -54,36 +57,15 @@ const styleBase = css`
   }
 `;
 
-const toggleOverflowClass = (element: Element): void => {
-  element.classList.toggle(CSS_CLASS_OVERFLOWING, isOverflowing(element));
-};
-const resizeObserver =
-  `ResizeObserver` in window
-    ? new ResizeObserver((entries) => {
-        toggleOverflowClass(entries[0].target);
-      })
-    : undefined;
-const startObserving =
-  resizeObserver || `MutationObserver` in window
-    ? (element: Element) => {
-        const mutationObserver =
-          `MutationObserver` in window
-            ? new MutationObserver((entries) => {
-                toggleOverflowClass(entries[0].target as Element);
-              })
-            : undefined;
-        mutationObserver?.observe(element, { childList: true });
-        resizeObserver?.observe(element);
-        return () => {
-          mutationObserver?.disconnect();
-          resizeObserver?.unobserve(element);
-        };
-      }
-    : undefined;
-
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
-  children: ComponentChildren;
+  children:
+    | ComponentChildren
+    | ((props: {
+        className: string;
+        ref: RefCallback<Element>;
+        style: object;
+      }) => VNode);
   className?: string;
   /**
    * The space between Reel items (child elements)
@@ -116,21 +98,24 @@ export default function Reel({
   useEffect(() => () => {
     resizeObserverUnobserveRef.current?.();
   });
-
-  return (
-    <Component
-      className={cx(styleBase, noBar && styleNoBar, className)}
-      ref={(node) => {
+  const componentProps = {
+    className: cx(styleBase, noBar && styleNoBar, className),
+    ref: (node: Element | null) => {
+      if (node) {
         resizeObserverUnobserveRef.current?.();
         resizeObserverUnobserveRef.current = startObserving?.(node);
-      }}
-      style={{
-        [CSS_PROP_GAP]: toModularScale(gap),
-        [CSS_PROP_HEIGHT]: height,
-        [CSS_PROP_ITEM_WIDTH]: itemWidth,
-      }}
-    >
-      {children}
-    </Component>
+      }
+    },
+    style: {
+      [CSS_PROP_GAP]: toModularScale(gap),
+      [CSS_PROP_HEIGHT]: height,
+      [CSS_PROP_ITEM_WIDTH]: itemWidth,
+    },
+  };
+
+  return typeof children === `function` ? (
+    children(componentProps)
+  ) : (
+    <Component {...componentProps}>{children}</Component>
   );
 }
