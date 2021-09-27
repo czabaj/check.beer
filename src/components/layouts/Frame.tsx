@@ -28,9 +28,9 @@ const styleBase = css`
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
   /**
-   * The element's aspect ratio
+   * The element's aspect ratio, must be two intefer delimit by a colon.
    */
-  aspectRatio?: [number, number];
+  aspectRatio?: string;
   children:
     | ComponentChildren
     | ((props: { className: string; style: object }) => VNode);
@@ -39,14 +39,16 @@ export type Props = {
 
 export default function Frame({
   as: Component = `div`,
-  aspectRatio: [denominator, numerator] = [16, 9],
+  aspectRatio = `16:9`,
   children,
   className,
 }: Props) {
+  const [denominator, numerator] = aspectRatio.split(`:`, 2);
   const componentProps = {
     className: cx(styleBase, className),
     style: {
-      [CSS_PROP_ASPECT_RATIO]: numerator / denominator,
+      [CSS_PROP_ASPECT_RATIO]:
+        parseInt(numerator, 10) / parseInt(denominator, 10),
     },
   };
   return typeof children === `function` ? (

@@ -4,5 +4,10 @@ import VitePluginLinaria from "vite-plugin-linaria";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      react: "preact/compat",
+    },
+  },
   plugins: [preact(), VitePluginLinaria()],
 });

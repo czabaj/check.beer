@@ -12,19 +12,21 @@ const styleBase = css`
   min-height: var(${CSS_PROP_MIN_HEIGHT});
   padding: var(${CSS_PROP_GAP});
   & > * {
-    margin-bottom: var(${CSS_PROP_GAP});
-    margin-top: var(${CSS_PROP_GAP});
+    margin-top: auto;
+    margin-bottom: auto;
   }
 `;
 
 const styleHasFooter = css`
   & > :last-child {
     margin-bottom: 0;
+    margin-top: var(${CSS_PROP_GAP});
   }
 `;
 
 const styleHasHeader = css`
   & > :first-child {
+    margin-bottom: var(${CSS_PROP_GAP});
     margin-top: 0;
   }
 `;

@@ -1,0 +1,16 @@
+type User = {
+  email: string,
+  name: string
+}
+
+type Place = {
+  name: string,
+  persons: string[] 
+}
+
+// TODO: just coppied from https://firebaseopensource.com/projects/bijoutrouvaille/fireward/
+match /users/{id} is User {
+  allow read: true; // will allow all reads
+  allow create, update: request.auth!=null; // will only allow creates and updates if logged in AND input is of type User
+  allow delete: false; // will never allow deletes
+}
