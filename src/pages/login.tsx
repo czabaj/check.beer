@@ -1,11 +1,11 @@
-import firebase from "firebase";
-import { auth as firebaseAuthUI } from "firebaseui";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import type { FunctionComponent } from "preact";
-import { useEffect } from "preact/hooks";
 import { useAuth } from "reactfire";
 
-import { LoadingIndicator } from "../components/LoadingIndicator";
-import { DEFAULT_PRIVATE_ROUTE } from "../constants/routes";
+import { Button } from "../components/Button";
+import { Center } from "../components/layouts/Center";
+import { Cover } from "../components/layouts/Cover";
+import { Stack } from "../components/layouts/Stack";
 
 const LOGIN_CONTENT_ID = `login_content`;
 
@@ -16,16 +16,21 @@ type Props = {};
  */
 export const Login: FunctionComponent<Props> = () => {
   const auth = useAuth();
-  useEffect(() => {
-    const ui = new firebaseAuthUI.AuthUI(auth);
-    ui.start(`#${LOGIN_CONTENT_ID}`, {
-      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-      signInSuccessUrl: DEFAULT_PRIVATE_ROUTE,
-    });
-  }, []);
   return (
-    <div id={LOGIN_CONTENT_ID}>
-      <LoadingIndicator />
-    </div>
+    <Cover>
+      <Stack>
+        <h1 className="text-center">Login</h1>
+        <Center>
+          <Button
+            onClick={() => {
+              signInWithPopup(auth, new GoogleAuthProvider());
+            }}
+            primary
+          >
+            Login with Google
+          </Button>
+        </Center>
+      </Stack>
+    </Cover>
   );
 };

@@ -1,7 +1,6 @@
 import type { FunctionComponent, VNode } from "preact";
-import { useRecoilValue } from "recoil";
+import { useUser } from "reactfire";
 
-import { userAtom } from "../atoms/userAtom";
 import { LoadingIndicator } from "./LoadingIndicator";
 import { Redirect } from "./Redirect";
 
@@ -30,12 +29,11 @@ export const RedirectAuth: FunctionComponent<Props> = ({
   children,
   to,
 }) => {
-  const user = useRecoilValue(userAtom);
-  if (user === undefined) {
-    // auth status undetermined
+  const { status, data: user } = useUser();
+  if (status === `loading`) {
     return <LoadingIndicator />;
   }
-  if (Boolean(user) === authenticated) {
+  if (Boolean(user) === Boolean(authenticated)) {
     return <Redirect to={to} />;
   }
   return children;

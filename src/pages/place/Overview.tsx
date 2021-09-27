@@ -1,6 +1,12 @@
 import { css, cx } from "@linaria/core";
 import * as dayjs from "dayjs";
-import firebase from "firebase/app";
+import {
+  query,
+  collection,
+  where,
+  DocumentReference,
+  Timestamp,
+} from "firebase/firestore";
 import throttle from "lodash/throttle";
 import type { FunctionComponent } from "preact";
 import { useFirestoreCollectionData } from "reactfire";
@@ -89,27 +95,26 @@ const styleAddActiveUser = css`
 `;
 
 const UPDATE_EVERY = 60 * 60 * 1000; // milliseconds
-const getSlidingWindow = throttle((): firebase.firestore.Timestamp => {
+const getSlidingWindow = throttle((): Timestamp => {
   const fetchKegsWithConsumptionFrom = dayjs()
     .subtract(1, `month`)
     .startOf(`day`); // align to start of the unit - improves caching
-  return firebase.firestore.Timestamp.fromMillis(
-    fetchKegsWithConsumptionFrom.valueOf()
-  );
+  return Timestamp.fromMillis(fetchKegsWithConsumptionFrom.valueOf());
 }, UPDATE_EVERY);
 
 type OverviewProps = {
   place: Place;
-  placeRef: firebase.firestore.DocumentReference;
+  placeRef: DocumentReference;
 };
 
 export const Overview: FunctionComponent<OverviewProps> = ({
   place,
   placeRef,
 }) => {
-  const recentKegsRef = placeRef
-    .collection(`kegs`)
-    .where(`lastConsumptionAt`, `>=`, getSlidingWindow());
+  const recentKegsRef = query<Keg>(
+    collection(placeRef, `kegs`) as any,
+    where(`lastConsumptionAt`, `>=`, getSlidingWindow())
+  );
   const { data: kegs, status } = useFirestoreCollectionData<Keg>(recentKegsRef);
   console.log(`data`, { place, kegs });
   if (!kegs) {

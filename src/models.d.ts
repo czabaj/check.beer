@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import { DocumentReference, Timestamp } from "firebase/firestore";
 
 /**
  * All volume units are represented as integer of milliliters
@@ -20,8 +20,8 @@ type TapName = string;
 
 export type FinancialTransaction = {
   amount: number;
-  at: firebase.firestore.Timestamp;
-  keg?: firebase.firestore.DocumentReference<Keg>;
+  at: Timestamp;
+  keg?: DocumentReference<Keg>;
   note: string;
 };
 
@@ -31,7 +31,7 @@ export type PersonalAccount = {
 };
 
 export type Consumption = {
-  at: firebase.firestore.Timestamp;
+  at: Timestamp;
   milliliters: MillilitersInteger;
   person: PersonName;
 };
@@ -39,9 +39,9 @@ export type Consumption = {
 export type Keg = {
   beer: string;
   consumptions: Consumption[];
-  createdAt: firebase.firestore.Timestamp;
-  finishedAt?: firebase.firestore.Timestamp;
-  lastConsumptionAt?: firebase.firestore.Timestamp;
+  createdAt: Timestamp;
+  finishedAt?: Timestamp;
+  lastConsumptionAt?: Timestamp;
   milliliters: MillilitersInteger;
   priceEnd: number;
   priceNew: number;
@@ -49,7 +49,7 @@ export type Keg = {
 
 type PersonIsActive = boolean;
 export type Place = {
-  taps: Record<TapName, firebase.firestore.DocumentReference<Keg>>;
+  taps: Record<TapName, DocumentReference<Keg>>;
   name: string;
   persons: Record<PersonName, PersonIsActive>;
 };

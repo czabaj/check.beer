@@ -1,5 +1,6 @@
+import { doc, getFirestore } from "firebase/firestore";
 import { Route, Router } from "preact-router";
-import { useFirestoreDocData, useFirestore } from "reactfire";
+import { useFirebaseApp, useFirestoreDocData } from "reactfire";
 
 import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { PLACE } from "../../constants/routes";
@@ -12,7 +13,8 @@ type PlaceProps = {
 };
 
 export const Place = ({ placeId }: PlaceProps) => {
-  const placeRef = useFirestore().collection(`places`).doc(placeId);
+  const firestoreInstance = getFirestore(useFirebaseApp());
+  const placeRef = doc<PlaceType>(firestoreInstance as any, `places`, placeId);
   const { data: place, status } = useFirestoreDocData<PlaceType>(placeRef);
   return !place ? (
     <LoadingIndicator />

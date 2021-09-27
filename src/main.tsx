@@ -1,9 +1,8 @@
-import "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { FunctionComponent, render } from "preact";
 import { Suspense } from "preact/compat";
 import { Route, Router } from "preact-router";
-import { FirebaseAppProvider } from "reactfire";
-import { RecoilRoot } from "recoil";
+import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
 
 import { LoadingIndicator } from "./components/LoadingIndicator";
 import { withRedirectAuth } from "./components/RedirectAuth";
@@ -29,6 +28,12 @@ const firebaseConfig = {
   measurementId: "G-RX9W09W11H",
 };
 
+const FirebaseAuthProvider: FunctionComponent = ({ children }) => {
+  const firebaseApp = useFirebaseApp();
+  const auth = getAuth(firebaseApp);
+  return <AuthProvider sdk={auth}>{children}</AuthProvider>;
+};
+
 const redirectAuthenticatedIntoApp = (Component: FunctionComponent<any>) =>
   withRedirectAuth({ authenticated: true, to: DEFAULT_PRIVATE_ROUTE })(
     Component
@@ -38,8 +43,8 @@ const redirectUnauthenticatedToLogin = (Component: FunctionComponent<any>) =>
 
 const Main = () => {
   return (
-    <RecoilRoot>
-      <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+      <FirebaseAuthProvider>
         <Suspense fallback={<LoadingIndicator />}>
           <Router>
             <Route component={Index} path="/" />
@@ -61,8 +66,8 @@ const Main = () => {
             />
           </Router>
         </Suspense>
-      </FirebaseAppProvider>
-    </RecoilRoot>
+      </FirebaseAuthProvider>
+    </FirebaseAppProvider>
   );
 };
 

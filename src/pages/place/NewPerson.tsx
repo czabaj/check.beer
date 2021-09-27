@@ -1,11 +1,11 @@
-import firebase from "firebase/app";
+import { DocumentReference } from "firebase/firestore";
 
 import { TemplateApp } from "../../components/TemplateApp";
 import type { Consumption, Keg, Place } from "../../models";
 
 type NewPersonProps = {
   place: Place;
-  placeRef: firebase.firestore.DocumentReference;
+  placeRef: DocumentReference<Place>;
 };
 
 export const NewPerson = ({ place }: NewPersonProps) => {
