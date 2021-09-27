@@ -1,22 +1,12 @@
 import { getAuth } from "firebase/auth";
 import { FunctionComponent, render } from "preact";
 import { Suspense } from "preact/compat";
-import { Route, Router } from "preact-router";
+import { BrowserRouter } from "react-router-dom";
 import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
 
 import { LoadingIndicator } from "./components/LoadingIndicator";
-import { withRedirectAuth } from "./components/RedirectAuth";
-import {
-  DEFAULT_PRIVATE_ROUTE,
-  LOGIN,
-  PLACE,
-  PROFILE,
-} from "./constants/routes";
 import "./styles/index";
-import { Index } from "./pages/index";
-import { Login } from "./pages/login";
-import { Place } from "./pages/place";
-import { Profile } from "./pages/profile";
+import { Root } from "./pages";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCnlgTK7_2DyPyeAubyD-uxMlKleaSJ5Gs",
@@ -34,37 +24,14 @@ const FirebaseAuthProvider: FunctionComponent = ({ children }) => {
   return <AuthProvider sdk={auth}>{children}</AuthProvider>;
 };
 
-const redirectAuthenticatedIntoApp = (Component: FunctionComponent<any>) =>
-  withRedirectAuth({ authenticated: true, to: DEFAULT_PRIVATE_ROUTE })(
-    Component
-  );
-const redirectUnauthenticatedToLogin = (Component: FunctionComponent<any>) =>
-  withRedirectAuth({ to: LOGIN })(Component);
-
 const Main = () => {
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
       <FirebaseAuthProvider>
         <Suspense fallback={<LoadingIndicator />}>
-          <Router>
-            <Route component={Index} path="/" />
-            <Route
-              component={redirectAuthenticatedIntoApp(Login)}
-              path={LOGIN}
-            />
-            <Route
-              component={redirectUnauthenticatedToLogin(Profile)}
-              path={PROFILE}
-            />
-            <Route
-              component={redirectUnauthenticatedToLogin(Place)}
-              path={`${PLACE}/:placeId`}
-            />
-            <Route
-              component={redirectUnauthenticatedToLogin(Place)}
-              path={`${PLACE}/:placeId/:*rest`}
-            />
-          </Router>
+          <BrowserRouter>
+            <Root />
+          </BrowserRouter>
         </Suspense>
       </FirebaseAuthProvider>
     </FirebaseAppProvider>

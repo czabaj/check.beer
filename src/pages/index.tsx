@@ -1,24 +1,43 @@
 import type { FunctionComponent } from "preact";
+import { Route, Switch } from "react-router-dom";
 
-import { Button } from "../components/Button";
-import { Center } from "../components/layouts/Center";
-import { Cover } from "../components/layouts/Cover";
-import { Stack } from "../components/layouts/Stack";
-import { LOGIN } from "../constants/routes";
+import { withRedirectAuth } from "../components/RedirectAuth";
+import {
+  DEFAULT_PRIVATE_ROUTE,
+  LOGIN,
+  PLACE,
+  PROFILE,
+} from "../constants/routes";
+import { Homepage } from "./Homepage";
+import { Login } from "./Login";
+import { Places } from "./place";
+import { Profile } from "./Profile";
 
-type Props = {};
+const redirectAuthenticatedIntoApp = (Component: FunctionComponent<any>) =>
+  withRedirectAuth({ authenticated: true, to: DEFAULT_PRIVATE_ROUTE })(
+    Component
+  );
+const redirectUnauthenticatedToLogin = (Component: FunctionComponent<any>) =>
+  withRedirectAuth({ to: LOGIN })(Component);
 
-export const Index: FunctionComponent<Props> = () => {
+export type Props = {};
+
+export const Root: FunctionComponent<Props> = () => {
   return (
-    <Cover>
-      <Stack>
-        <h1 className="text-center">Untap.beer</h1>
-        <Center>
-          <Button primary to={LOGIN}>
-            Do aplikace
-          </Button>
-        </Center>
-      </Stack>
-    </Cover>
+    <Switch>
+      <Route component={Homepage} exact path="/" />
+      <Route
+        component={redirectAuthenticatedIntoApp(Login)}
+        exact
+        path={LOGIN}
+      />
+      <Route
+        component={redirectUnauthenticatedToLogin(Profile)}
+        exact
+        path={PROFILE}
+      />
+      <Route component={Places} path={PLACE} />
+      <Route path="*">The URL was not found in the router :(</Route>
+    </Switch>
   );
 };

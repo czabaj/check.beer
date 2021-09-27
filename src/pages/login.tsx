@@ -7,8 +7,6 @@ import { Center } from "../components/layouts/Center";
 import { Cover } from "../components/layouts/Cover";
 import { Stack } from "../components/layouts/Stack";
 
-const LOGIN_CONTENT_ID = `login_content`;
-
 type Props = {};
 
 /**

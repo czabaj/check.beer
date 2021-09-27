@@ -1,8 +1,8 @@
 import type { FunctionComponent, VNode } from "preact";
-import { useUser } from "reactfire";
+import { Redirect } from "react-router-dom";
 
+import { UNDETERMIED, useUserData } from "../hooks/useUserData";
 import { LoadingIndicator } from "./LoadingIndicator";
-import { Redirect } from "./Redirect";
 
 export type Props = {
   /**
@@ -29,8 +29,8 @@ export const RedirectAuth: FunctionComponent<Props> = ({
   children,
   to,
 }) => {
-  const { status, data: user } = useUser();
-  if (status === `loading`) {
+  const user = useUserData();
+  if (user === (UNDETERMIED as any)) {
     return <LoadingIndicator />;
   }
   if (Boolean(user) === Boolean(authenticated)) {
