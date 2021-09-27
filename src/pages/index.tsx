@@ -1,4 +1,3 @@
-import { css } from "@linaria/core";
 import type { FunctionComponent } from "preact";
 
 import { Button } from "../components/Button";
@@ -9,17 +8,11 @@ import { LOGIN } from "../constants/routes";
 
 type Props = {};
 
-const styleStack = css`
-  > * {
-    text-align: center;
-  }
-`;
-
 export const Index: FunctionComponent<Props> = () => {
   return (
     <Cover>
-      <Stack className={styleStack}>
-        <h1>Untap.beer</h1>
+      <Stack>
+        <h1 className="text-center">Untap.beer</h1>
         <Center>
           <Button primary to={LOGIN}>
             Do aplikace

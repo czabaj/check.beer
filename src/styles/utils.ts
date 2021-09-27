@@ -16,8 +16,8 @@ export const globals = css`
     .max-width\:measure\/2 {
       max-width: calc(var(--measure) / 2);
     }
-    .text\:center {
-      text-align: center;
+    .text-center {
+      text-align: center !important;
     }
     .visually-hidden:not(:active):not(:focus) {
       ${visuallyHidden}

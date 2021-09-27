@@ -7,7 +7,7 @@ export const Profile = () => {
   const user = useRecoilValue(userAtom);
   return (
     <TemplateApp pageTitle="Moje nastavení">
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      <pre style={{ overflow: `scroll` }}>{JSON.stringify(user, null, 2)}</pre>
     </TemplateApp>
   );
 };
