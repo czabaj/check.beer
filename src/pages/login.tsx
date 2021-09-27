@@ -1,16 +1,18 @@
 import firebase from "firebase";
 import { auth as firebaseAuthUI } from "firebaseui";
+import type { FunctionComponent } from "preact";
 import { useEffect } from "preact/hooks";
 import { useAuth } from "reactfire";
 
 import LoadingIndicator from "../components/LoadingIndicator";
+import { RedirectAuth } from "../components/RedirectAuth";
 const LOGIN_CONTENT_ID = `login_content`;
 
 type Props = {
   foo?: string;
 };
 
-export const Login = ({ foo = `bar` }: Props) => {
+const LoginContent: FunctionComponent<Props> = ({ foo = `bar` }) => {
   const auth = useAuth();
   useEffect(() => {
     const ui = new firebaseAuthUI.AuthUI(auth);
@@ -25,3 +27,9 @@ export const Login = ({ foo = `bar` }: Props) => {
     </div>
   );
 };
+
+export const Login: FunctionComponent<Props> = (props) => (
+  <RedirectAuth authenticated to="/profil">
+    <LoginContent {...props} />
+  </RedirectAuth>
+);
