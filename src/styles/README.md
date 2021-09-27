@@ -1,0 +1,1 @@
+This files follows loosely inverted-triangle CSS methodology (ITCSS). Read [ITCSS: Scalable and Maintainable CSS Architecture](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/) for general overview.

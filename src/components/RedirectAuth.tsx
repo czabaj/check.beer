@@ -1,4 +1,4 @@
-import { FunctionComponent, VNode } from "preact";
+import type { FunctionComponent, VNode } from "preact";
 import { useRecoilValue } from "recoil";
 
 import { userAtom } from "../atoms/userAtom";

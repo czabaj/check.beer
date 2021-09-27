@@ -2,7 +2,7 @@ import { css, cx } from "@linaria/core";
 import * as dayjs from "dayjs";
 import firebase from "firebase/app";
 import throttle from "lodash/throttle";
-import type { FunctionComponent } from 'preact'
+import type { FunctionComponent } from "preact";
 import { useFirestoreCollectionData } from "reactfire";
 
 import { Button } from "../../components/Button";
@@ -103,7 +103,10 @@ type OverviewProps = {
   placeRef: firebase.firestore.DocumentReference;
 };
 
-export const Overview: FunctionComponent<OverviewProps> = ({ place, placeRef }) => {
+export const Overview: FunctionComponent<OverviewProps> = ({
+  place,
+  placeRef,
+}) => {
   const recentKegsRef = placeRef
     .collection(`kegs`)
     .where(`lastConsumptionAt`, `>=`, getSlidingWindow());
@@ -140,7 +143,7 @@ export const Overview: FunctionComponent<OverviewProps> = ({ place, placeRef }) 
       </ol>
       <Button
         className={styleAddActiveUser}
-        href={`/misto/${placeRef.id}/nova-osoba`}
+        to={`/misto/${placeRef.id}/nova-osoba`}
       >
         <span>+</span>
         <span className="hide-visually"> přidat dalšího uživatele</span>

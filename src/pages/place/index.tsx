@@ -1,8 +1,9 @@
 import { Route, Router } from "preact-router";
 import { useFirestoreDocData, useFirestore } from "reactfire";
 
-import type { Place as PlaceType } from "../../models";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { PLACE } from "../../constants/routes";
+import type { Place as PlaceType } from "../../models";
 import { NewPerson } from "./NewPerson";
 import { Overview } from "./Overview";
 
@@ -19,13 +20,13 @@ export const Place = ({ placeId }: PlaceProps) => {
     <Router>
       <Route
         component={NewPerson}
-        path="/misto/:placeId/nova-osoba"
+        path={`${PLACE}/:placeId/nova-osoba`}
         place={place}
         placeRef={placeRef}
       />
       <Route
         component={Overview}
-        path="/misto/:placeId"
+        path={`${PLACE}/:placeId`}
         place={place}
         placeRef={placeRef}
       />

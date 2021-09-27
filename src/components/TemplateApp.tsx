@@ -24,7 +24,7 @@ export type Props = {
 export const TemplateApp: FunctionComponent<Props> = ({ children, pageTitle }) => {
   return (
     <Center>
-      <Stack as="section">
+      <Stack as="article">
         <Cluster as="header" className={styleHeader} justify="space-between">
           <h1>{pageTitle}</h1>
           <a className="align-self:center" href="#menu">

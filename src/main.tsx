@@ -1,5 +1,4 @@
 import "firebase/firestore";
-import "normalize.css";
 import { FunctionComponent, render } from "preact";
 import { Suspense } from "preact/compat";
 import { Route, Router } from "preact-router";
@@ -14,8 +13,7 @@ import {
   PLACE,
   PROFILE,
 } from "./constants/routes";
-import "./css/global.css";
-import "./css/utils.css";
+import "./styles/index";
 import { Index } from "./pages/index";
 import { Login } from "./pages/login";
 import { Place } from "./pages/place";
