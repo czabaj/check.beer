@@ -1,4 +1,4 @@
-import type { ComponentChildren, FunctionComponent } from "preact";
+import { FunctionComponent, VNode } from "preact";
 import { useRecoilValue } from "recoil";
 
 import { userAtom } from "../atoms/userAtom";
@@ -9,7 +9,7 @@ export type Props = {
   /**
    * The content to be rendered when redirection wont fire.
    */
-  children: ComponentChildren;
+  children: VNode;
   /**
    * Setting to `true` redirects _authenticated_ users away, e.g. on the login
    * page, which must not be shown to already logged-in users. Leave unset or
@@ -38,5 +38,20 @@ export const RedirectAuth: FunctionComponent<Props> = ({
   if (Boolean(user) === authenticated) {
     return <Redirect to={to} />;
   }
-  return <>{children}</>;
+  return children;
 };
+
+/**
+ * HOC for usage in routers
+ */
+export const withRedirectAuth: <ComponentProps>(
+  options: Omit<Props, `children`>
+) => (
+  WrappedComponent: FunctionComponent<ComponentProps>
+) => (props: ComponentProps) => VNode =
+  (options) => (WrappedComponent) => (props) =>
+    (
+      <RedirectAuth {...options}>
+        <WrappedComponent {...props} />
+      </RedirectAuth>
+    );

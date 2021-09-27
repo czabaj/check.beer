@@ -1,12 +1,19 @@
 import "firebase/firestore";
 import "normalize.css";
-import { render } from "preact";
+import { FunctionComponent, render } from "preact";
 import { Suspense } from "preact/compat";
 import { Route, Router } from "preact-router";
 import { FirebaseAppProvider } from "reactfire";
 import { RecoilRoot } from "recoil";
 
 import { LoadingIndicator } from "./components/LoadingIndicator";
+import { withRedirectAuth } from "./components/RedirectAuth";
+import {
+  DEFAULT_PRIVATE_ROUTE,
+  LOGIN,
+  PLACE,
+  PROFILE,
+} from "./constants/routes";
 import "./css/global.css";
 import "./css/utils.css";
 import { Index } from "./pages/index";
@@ -24,6 +31,13 @@ const firebaseConfig = {
   measurementId: "G-RX9W09W11H",
 };
 
+const redirectAuthenticatedIntoApp = (Component: FunctionComponent<any>) =>
+  withRedirectAuth({ authenticated: true, to: DEFAULT_PRIVATE_ROUTE })(
+    Component
+  );
+const redirectUnauthenticatedToLogin = (Component: FunctionComponent<any>) =>
+  withRedirectAuth({ to: LOGIN })(Component);
+
 const Main = () => {
   return (
     <RecoilRoot>
@@ -31,10 +45,22 @@ const Main = () => {
         <Suspense fallback={<LoadingIndicator />}>
           <Router>
             <Route component={Index} path="/" />
-            <Route component={Login} path="/prihlaseni" />
-            <Route component={Profile} path="/profil" />
-            <Route component={Place} path="/misto/:placeId" />
-            <Route component={Place} path="/misto/:placeId/:*rest" />
+            <Route
+              component={redirectAuthenticatedIntoApp(Login)}
+              path={LOGIN}
+            />
+            <Route
+              component={redirectUnauthenticatedToLogin(Profile)}
+              path={PROFILE}
+            />
+            <Route
+              component={redirectUnauthenticatedToLogin(Place)}
+              path={`${PLACE}/:placeId`}
+            />
+            <Route
+              component={redirectUnauthenticatedToLogin(Place)}
+              path={`${PLACE}/:placeId/:*rest`}
+            />
           </Router>
         </Suspense>
       </FirebaseAppProvider>

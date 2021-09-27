@@ -5,20 +5,22 @@ import { useEffect } from "preact/hooks";
 import { useAuth } from "reactfire";
 
 import { LoadingIndicator } from "../components/LoadingIndicator";
-import { RedirectAuth } from "../components/RedirectAuth";
+import { DEFAULT_PRIVATE_ROUTE } from "../constants/routes";
+
 const LOGIN_CONTENT_ID = `login_content`;
 
-type Props = {
-  foo?: string;
-};
+type Props = {};
 
-const LoginContent: FunctionComponent<Props> = ({ foo = `bar` }) => {
+/**
+ * The login page relies completely on firebaseUI
+ */
+export const Login: FunctionComponent<Props> = () => {
   const auth = useAuth();
   useEffect(() => {
     const ui = new firebaseAuthUI.AuthUI(auth);
     ui.start(`#${LOGIN_CONTENT_ID}`, {
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-      signInSuccessUrl: `/place/QhKiv2azHaO8l6dwrty2/`,
+      signInSuccessUrl: DEFAULT_PRIVATE_ROUTE,
     });
   }, []);
   return (
@@ -27,9 +29,3 @@ const LoginContent: FunctionComponent<Props> = ({ foo = `bar` }) => {
     </div>
   );
 };
-
-export const Login: FunctionComponent<Props> = (props) => (
-  <RedirectAuth authenticated to="/profil">
-    <LoginContent {...props} />
-  </RedirectAuth>
-);
