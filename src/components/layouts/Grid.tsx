@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -36,13 +36,13 @@ export type Props = {
   min: string;
 };
 
-export default function Grid({
+export const Grid: FunctionComponent<Props> = ({
   as: Component = `div`,
   children,
   className,
   gap,
   min,
-}: Props) {
+}) => {
   const componentProps = {
     className: cx(styleBase, className),
     style: {
@@ -55,4 +55,4 @@ export default function Grid({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};

@@ -6,7 +6,7 @@ import { Route, Router } from "preact-router";
 import { FirebaseAppProvider } from "reactfire";
 import { RecoilRoot } from "recoil";
 
-import LoadingIndicator from "./components/LoadingIndicator";
+import { LoadingIndicator } from "./components/LoadingIndicator";
 import "./css/global.css";
 import "./css/utils.css";
 import { Index } from "./pages/index";

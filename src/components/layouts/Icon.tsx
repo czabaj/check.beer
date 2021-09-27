@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChild, VNode } from "preact";
+import type { ComponentChild, FunctionComponent, VNode } from "preact";
 
 const styleBase = css`
   height: 0.75em;
@@ -24,12 +24,12 @@ export type Props = {
   label?: string;
 };
 
-export default function Icon({
+export const Icon: FunctionComponent<Props> = ({
   as: Component = `span`,
   children,
   className,
   label,
-}: Props) {
+}) => {
   const componentProps = {
     className: cx(styleBase, className),
     ...(label && {
@@ -42,4 +42,4 @@ export default function Icon({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};

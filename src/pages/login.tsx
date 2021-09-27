@@ -4,7 +4,7 @@ import type { FunctionComponent } from "preact";
 import { useEffect } from "preact/hooks";
 import { useAuth } from "reactfire";
 
-import LoadingIndicator from "../components/LoadingIndicator";
+import { LoadingIndicator } from "../components/LoadingIndicator";
 import { RedirectAuth } from "../components/RedirectAuth";
 const LOGIN_CONTENT_ID = `login_content`;
 

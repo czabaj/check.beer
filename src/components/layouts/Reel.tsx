@@ -1,5 +1,10 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, RefCallback, VNode } from "preact";
+import type {
+  ComponentChildren,
+  FunctionComponent,
+  RefCallback,
+  VNode,
+} from "preact";
 import { useEffect, useRef } from "preact/hooks";
 
 import {
@@ -85,7 +90,7 @@ export type Props = {
   noBar?: boolean;
 };
 
-export default function Reel({
+export const Reel: FunctionComponent<Props> = ({
   as: Component = `div`,
   children,
   className,
@@ -93,7 +98,7 @@ export default function Reel({
   height = `auto`,
   itemWidth = `auto`,
   noBar,
-}: Props) {
+}) => {
   const resizeObserverUnobserveRef = useRef<(() => void) | void>();
   useEffect(() => () => {
     resizeObserverUnobserveRef.current?.();
@@ -118,4 +123,4 @@ export default function Reel({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};

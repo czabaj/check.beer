@@ -9,6 +9,10 @@ export type Props = {
 
 const SuspenseUndefinetely = lazy(() => new Promise(() => {}) as Promise<any>);
 
+/**
+ * Handles redirect. Relies on Suspense for displaying loader while the
+ * redirection takes place.
+ */
 export const Redirect: FunctionComponent<Props> = ({ to }) => {
   useLayoutEffect(() => {
     route(to, true);

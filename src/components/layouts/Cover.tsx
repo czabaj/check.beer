@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { VNode } from "preact";
+import type { FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -61,7 +61,7 @@ export type Props = {
   noPad?: boolean;
 };
 
-export default function Cover({
+export const Cover: FunctionComponent<Props> = ({
   as: Component = `div`,
   children,
   className,
@@ -70,7 +70,7 @@ export default function Cover({
   header,
   minHeight = `100vh`,
   noPad,
-}: Props) {
+}) => {
   return (
     <Component
       className={cx(
@@ -90,4 +90,4 @@ export default function Cover({
       {footer}
     </Component>
   );
-}
+};

@@ -2,7 +2,7 @@ import type { ComponentChildren, FunctionComponent } from "preact";
 import { useRecoilValue } from "recoil";
 
 import { userAtom } from "../atoms/userAtom";
-import LoadingIndicator from "./LoadingIndicator";
+import { LoadingIndicator } from "./LoadingIndicator";
 import { Redirect } from "./Redirect";
 
 export type Props = {

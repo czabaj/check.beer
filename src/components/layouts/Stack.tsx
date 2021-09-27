@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -60,14 +60,14 @@ export type Props = {
   splitAfter?: number;
 };
 
-export default function Stack({
+export const Stack: FunctionComponent<Props> = ({
   as: Component = `div`,
   children,
   className,
   recursive,
   gap = 1,
   splitAfter,
-}: Props) {
+}) => {
   const hasSplitAfter = splitAfter && splitAfter > 0;
   const componentProps = {
     className: cx(

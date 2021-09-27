@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -57,14 +57,14 @@ export type Props = {
   threshold?: string;
 };
 
-export default function Switcher({
+export const Switcher: FunctionComponent<Props> = ({
   as: Component = `div`,
   children,
   className,
   gap = 1,
   limit = 4,
   threshold = `var(--measure)`,
-}: Props) {
+}) => {
   const hasLimit = limit && limit > 0;
   const componentProps = {
     className: cx(styleBase, hasLimit && styleLimit, className),
@@ -79,4 +79,4 @@ export default function Switcher({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};

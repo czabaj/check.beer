@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -49,7 +49,7 @@ export type Props = {
   max?: string;
 };
 
-export default function Center({
+export const Center: FunctionComponent<Props> = ({
   andText,
   as: Component = `div`,
   className,
@@ -57,7 +57,7 @@ export default function Center({
   gutters,
   intrinsic,
   max = `var(--measure)`,
-}: Props) {
+}) => {
   const componentProps = {
     className: cx(
       styleBase,

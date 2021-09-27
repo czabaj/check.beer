@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 
-import TemplateApp from "../../components/TemplateApp";
+import { TemplateApp } from "../../components/TemplateApp";
 import type { Consumption, Keg, Place } from "../../models";
 
 type NewPersonProps = {

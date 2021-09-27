@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -38,14 +38,14 @@ export type Props = {
   margin?: number | string;
 };
 
-export default function Imposter({
+export const Imposter: FunctionComponent<Props> = ({
   as: Component = `div`,
   breakout,
   children,
   className,
   fixed,
   margin,
-}: Props) {
+}) => {
   const componentProps = {
     className: cx(styleBase, !breakout && styleContain, className),
     style: {
@@ -58,4 +58,4 @@ export default function Imposter({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};

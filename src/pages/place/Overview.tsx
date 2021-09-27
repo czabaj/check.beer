@@ -5,9 +5,9 @@ import throttle from "lodash/throttle";
 import { useFirestoreCollectionData } from "reactfire";
 
 import { Button } from "../../components/Button";
-import LoadingIndicator from "../../components/LoadingIndicator";
-import Cluster from "../../components/layouts/Cluster";
-import TemplateApp from "../../components/TemplateApp";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { Cluster } from "../../components/layouts/Cluster";
+import { TemplateApp } from "../../components/TemplateApp";
 import type { Consumption, Keg, Place } from "../../models";
 
 const stylePersonListItemBase = css`

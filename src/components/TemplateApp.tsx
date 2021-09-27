@@ -1,11 +1,11 @@
 import { css } from "@linaria/core";
-import type { ComponentChild, ComponentChildren } from "preact";
+import type { ComponentChild, ComponentChildren, FunctionComponent } from "preact";
 
 import IconMenu from "../assets/icons/menu.svg";
-import Center from "./layouts/Center";
-import Cluster from "./layouts/Cluster";
-import Icon from "./layouts/Icon";
-import Stack from "./layouts/Stack";
+import { Center } from "./layouts/Center";
+import { Cluster } from "./layouts/Cluster";
+import { Icon } from "./layouts/Icon";
+import { Stack } from "./layouts/Stack";
 
 const styleHeader = css`
   padding: var(--s-1);
@@ -21,7 +21,7 @@ export type Props = {
   pageTitle: ComponentChild;
 };
 
-export default function TemplateApp({ children, pageTitle }: Props) {
+export const TemplateApp: FunctionComponent<Props> = ({ children, pageTitle }) => {
   return (
     <Center>
       <Stack as="section">

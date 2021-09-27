@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren } from "preact";
+import type { ComponentChildren, FunctionComponent } from "preact";
 
 import { toModularScale } from "../utils/style";
 
@@ -13,7 +13,11 @@ export type Props = {
   className?: string;
 };
 
-export default function Boilerplate({ as: Component = `div`, children, className }: Props) {
+export const Boilerplate: FunctionComponent<Props> = ({
+  as: Component = `div`,
+  children,
+  className,
+}) => {
   return (
     <Component
       className={cx(styleBase, className)}
@@ -24,4 +28,4 @@ export default function Boilerplate({ as: Component = `div`, children, className
       {children}
     </Component>
   );
-}
+};

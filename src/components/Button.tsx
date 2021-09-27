@@ -1,6 +1,6 @@
 import { css, cx } from "@linaria/core";
 import { lighten } from "polished";
-import type { JSX, ComponentChildren } from "preact";
+import type { ComponentChildren, FunctionComponent, JSX } from "preact";
 
 const styleBase = css`
   background-color: #98d635;
@@ -24,12 +24,12 @@ type Props = {
   type?: `button` | `reset` | `submit`;
 };
 
-export const Button = ({
+export const Button: FunctionComponent<Props> = ({
   className,
   href,
   type = `button`,
   ...other
-}: Props) => {
+}) => {
   return href ? (
     <a
       {...other}

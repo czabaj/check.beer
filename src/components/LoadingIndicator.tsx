@@ -1,7 +1,11 @@
-import Center from "./layouts/Center";
-import Cover from "./layouts/Cover";
+import type { FunctionComponent } from "preact";
 
-export default function LoadingIndicator() {
+import { Center } from "./layouts/Center";
+import { Cover } from "./layouts/Cover";
+
+type Props = {};
+
+export const LoadingIndicator: FunctionComponent<Props> = () => {
   return (
     <Center>
       <Cover className="text:center">

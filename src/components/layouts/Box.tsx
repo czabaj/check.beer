@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -47,14 +47,14 @@ export type Props = {
   padding?: number | string;
 };
 
-export default function Box({
+export const Box: FunctionComponent<Props> = ({
   as: Component = `div`,
   children,
   className,
   borderWidth = `var(--border-thin)`,
   inverted,
   padding = 1,
-}: Props) {
+}) => {
   const componentProps = {
     className: cx(styleBase, inverted && styleInverted, className),
     style: {
@@ -67,4 +67,4 @@ export default function Box({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};

@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -58,7 +58,7 @@ export type Props = {
   sideWidth?: string;
 };
 
-export default function Sidebar({
+export const Sidebar: FunctionComponent<Props> = ({
   as: Component = `div`,
   children,
   className,
@@ -67,7 +67,7 @@ export default function Sidebar({
   noStretch,
   sidebarOnRight,
   sideWidth,
-}: Props) {
+}) => {
   return (
     <Component
       className={cx(
@@ -85,4 +85,4 @@ export default function Sidebar({
       {children}
     </Component>
   );
-}
+};

@@ -2,7 +2,7 @@ import { Route, Router } from "preact-router";
 import { useFirestoreDocData, useFirestore } from "reactfire";
 
 import type { Place as PlaceType } from "../../models";
-import LoadingIndicator from "../../components/LoadingIndicator";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { NewPerson } from "./NewPerson";
 import { Overview } from "./Overview";
 

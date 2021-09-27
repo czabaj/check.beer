@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 const CSS_PROP_ASPECT_RATIO = `--frame-aspect-ratio`;
 
@@ -37,12 +37,12 @@ export type Props = {
   className?: string;
 };
 
-export default function Frame({
+export const Frame: FunctionComponent<Props> = ({
   as: Component = `div`,
   aspectRatio = `16:9`,
   children,
   className,
-}: Props) {
+}) => {
   const [denominator, numerator] = aspectRatio.split(`:`, 2);
   const componentProps = {
     className: cx(styleBase, className),
@@ -56,4 +56,4 @@ export default function Frame({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};

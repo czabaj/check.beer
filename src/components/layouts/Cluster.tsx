@@ -1,5 +1,5 @@
 import { css, cx } from "@linaria/core";
-import type { ComponentChildren, VNode } from "preact";
+import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
 
@@ -41,14 +41,14 @@ export type Props = {
     | `space-evenly`;
 };
 
-export default function Cluster({
+export const Cluster: FunctionComponent<Props> = ({
   align = `flex-start`,
   as: Component = `div`,
   children,
   className,
   gap = 1,
   justify = `flex-start`,
-}: Props) {
+}) => {
   const componentProps = {
     className: cx(styleBase, className),
     style: {
@@ -62,4 +62,4 @@ export default function Cluster({
   ) : (
     <Component {...componentProps}>{children}</Component>
   );
-}
+};
