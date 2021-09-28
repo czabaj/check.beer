@@ -1,7 +1,11 @@
+import { ReactComponent as BarsIcon } from "@fortawesome/fontawesome-free/svgs/solid/bars.svg";
 import { css } from "@linaria/core";
-import type { ComponentChild, ComponentChildren, FunctionComponent } from "preact";
+import type {
+  ComponentChild,
+  ComponentChildren,
+  FunctionComponent,
+} from "preact";
 
-import IconMenu from "../assets/icons/menu.svg";
 import { Center } from "./layouts/Center";
 import { Cluster } from "./layouts/Cluster";
 import { Icon } from "./layouts/Icon";
@@ -21,20 +25,22 @@ export type Props = {
   pageTitle: ComponentChild;
 };
 
-export const TemplateApp: FunctionComponent<Props> = ({ children, pageTitle }) => {
+export const TemplateApp: FunctionComponent<Props> = ({
+  children,
+  pageTitle,
+}) => {
   return (
     <Center>
       <Stack as="article">
         <Cluster as="header" className={styleHeader} justify="space-between">
           <h1>{pageTitle}</h1>
           <a className="align-self:center" href="#menu">
-            <Icon label="menu">
-              <img width="24" src={IconMenu} />
-            </Icon>
+            <Icon icon={BarsIcon} height="2rem" />
+            <span className="visually-hidden">Navigační menu</span>
           </a>
         </Cluster>
         <main>{children}</main>
       </Stack>
     </Center>
   );
-}
+};

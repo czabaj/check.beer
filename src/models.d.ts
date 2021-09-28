@@ -53,3 +53,9 @@ export type Place = {
   name: string;
   persons: Record<PersonName, PersonIsActive>;
 };
+
+export type User = {
+  email: string;
+  name: string;
+  places: Record<string, string>;
+};

@@ -1,6 +1,7 @@
 import preact from "@preact/preset-vite";
 import { defineConfig } from "vite";
 import VitePluginLinaria from "vite-plugin-linaria";
+import svgrPlugin from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,5 +10,5 @@ export default defineConfig({
       react: "preact/compat",
     },
   },
-  plugins: [preact(), VitePluginLinaria()],
+  plugins: [preact(), VitePluginLinaria(), svgrPlugin()],
 });

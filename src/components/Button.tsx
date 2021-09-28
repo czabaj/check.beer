@@ -1,6 +1,7 @@
 import { css, cx } from "@linaria/core";
 import { darken, lighten } from "polished";
-import type { ComponentChildren, FunctionComponent, JSX } from "preact";
+import type { ComponentChildren, JSX, Ref } from "preact";
+import { forwardRef } from "preact/compat";
 
 import { COLOR_PRIMARY } from "../styles/settings";
 import { resetButton } from "../styles/tools";
@@ -28,50 +29,85 @@ const styleColorPrimary = css`
   }
 `;
 
+const styleShapeRound = css`
+  --height: calc(2.5ch + var(--s1));
+  border-radius: calc(var(--height) * 0.5);
+  bottom: var(--s-1);
+  display: inline-block;
+  font-size: 200%;
+  height: var(--height);
+  line-height: var(--height);
+  min-width: var(--height);
+  padding: 0 var(--s-1);
+  text-align: center;
+  position: fixed;
+  font-weight: 700;
+  right: var(--s-1);
+`;
+
 export type Props = {
-  className?: string;
   children: ComponentChildren;
-  color?: `green`;
+  className?: string;
   disabled?: boolean;
+  href?: string;
   onClick?: (event: MouseEvent) => void;
   primary?: boolean;
+  round?: boolean;
   style?: JSX.CSSProperties;
-  to?: string;
   type?: string;
 };
 
-export const Button: FunctionComponent<Props> = ({
-  children,
-  className,
-  color = `green`,
-  disabled,
-  primary,
-  to,
-  type = `button`,
-  ...other
-}) => {
-  const isAnchor = Boolean(to);
-  const classes = cx(styleBase, primary && styleColorPrimary, className);
+export const Button = forwardRef<
+  HTMLAnchorElement | HTMLButtonElement | null,
+  Props
+>(
+  (
+    {
+      children,
+      className,
+      disabled,
+      primary,
+      href,
+      round,
+      type = `button`,
+      ...other
+    },
+    ref
+  ) => {
+    const isAnchor = href !== undefined;
+    const classes = cx(
+      styleBase,
+      primary && styleColorPrimary,
+      round && styleShapeRound,
+      className
+    );
 
-  return isAnchor ? (
-    <a
-      {...other}
-      {...(disabled
-        ? {
-            href: ``,
-            "aria-disabled": `true`,
-          }
-        : {
-            href: to,
-          })}
-      className={classes}
-    >
-      {children}
-    </a>
-  ) : (
-    // eslint-disable-next-line react/button-has-type
-    <button {...other} className={classes} disabled={disabled} type={type}>
-      {children}
-    </button>
-  );
-};
+    return isAnchor ? (
+      <a
+        {...other}
+        {...(disabled
+          ? {
+              href: ``,
+              "aria-disabled": `true`,
+            }
+          : {
+              href,
+            })}
+        className={classes}
+        ref={ref as Ref<HTMLAnchorElement> | undefined}
+      >
+        {children}
+      </a>
+    ) : (
+      <button
+        {...other}
+        className={classes}
+        disabled={disabled}
+        ref={ref as Ref<HTMLButtonElement> | undefined}
+        type={type}
+      >
+        {children}
+      </button>
+    );
+  }
+);

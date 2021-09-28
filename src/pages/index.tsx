@@ -7,7 +7,7 @@ import {
   LOGIN,
   PLACE,
   PROFILE,
-} from "../constants/routes";
+} from "./routes";
 import { Homepage } from "./Homepage";
 import { Login } from "./Login";
 import { Places } from "./place";

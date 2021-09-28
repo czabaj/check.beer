@@ -1,4 +1,5 @@
-import { css, cx } from "@linaria/core";
+import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
+import { css } from "@linaria/core";
 import * as dayjs from "dayjs";
 import {
   query,
@@ -10,12 +11,15 @@ import {
 import throttle from "lodash/throttle";
 import type { FunctionComponent } from "preact";
 import { useFirestoreCollectionData } from "reactfire";
+import { Link, useRouteMatch } from "react-router-dom";
 
 import { Button } from "../../../components/Button";
 import { LoadingIndicator } from "../../../components/LoadingIndicator";
 import { Cluster } from "../../../components/layouts/Cluster";
+import { Icon } from "../../../components/layouts/Icon";
 import { TemplateApp } from "../../../components/TemplateApp";
 import type { Consumption, Keg, Place } from "../../../models";
+import { NEW_PERSON } from "./routes";
 
 const stylePersonListItemBase = css`
   font-size: 120%;
@@ -75,25 +79,6 @@ const stylePlaceOrderedList = css`
   text-indent: 0;
 `;
 
-const styleAddActiveUser = css`
-  --height: calc(2.5ch + var(--s1));
-  border-radius: calc(var(--height) * 0.5);
-  bottom: var(--s-2);
-  display: inline-block;
-  font-size: 200%;
-  height: var(--height);
-  line-height: var(--height);
-  min-width: var(--height);
-  padding: 0 var(--s1);
-  position: fixed;
-  font-weight: 700;
-  right: var(--s-2);
-  & > :first-child {
-    position: relative;
-    bottom: 0.125rem;
-  }
-`;
-
 const UPDATE_EVERY = 60 * 60 * 1000; // milliseconds
 const getSlidingWindow = throttle((): Timestamp => {
   const fetchKegsWithConsumptionFrom = dayjs()
@@ -102,7 +87,7 @@ const getSlidingWindow = throttle((): Timestamp => {
   return Timestamp.fromMillis(fetchKegsWithConsumptionFrom.valueOf());
 }, UPDATE_EVERY);
 
-type OverviewProps = {
+export type OverviewProps = {
   place: Place;
   placeRef: DocumentReference;
 };
@@ -116,6 +101,7 @@ export const Overview: FunctionComponent<OverviewProps> = ({
     where(`lastConsumptionAt`, `>=`, getSlidingWindow())
   );
   const { data: kegs, status } = useFirestoreCollectionData<Keg>(recentKegsRef);
+  const { url } = useRouteMatch();
   console.log(`data`, { place, kegs });
   if (!kegs) {
     return <LoadingIndicator />;
@@ -146,13 +132,10 @@ export const Overview: FunctionComponent<OverviewProps> = ({
           />
         ))}
       </ol>
-      <Button
-        className={styleAddActiveUser}
-        to={`/misto/${placeRef.id}/nova-osoba`}
-      >
-        <span>+</span>
-        <span className="hide-visually"> přidat dalšího uživatele</span>
-      </Button>
+      <Link component={Button} primary round to={`${url}${NEW_PERSON}`}>
+        <Icon icon={PlusIcon} noAlign />
+        <span className="visually-hidden"> přidat dalšího uživatele</span>
+      </Link>
     </TemplateApp>
   );
 };
