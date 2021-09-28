@@ -7,12 +7,10 @@ import { Center } from "../components/layouts/Center";
 import { Cover } from "../components/layouts/Cover";
 import { Stack } from "../components/layouts/Stack";
 
-type Props = {};
-
 /**
  * The login page relies completely on firebaseUI
  */
-export const Login: FunctionComponent<Props> = () => {
+export const Login: FunctionComponent = () => {
   const auth = useAuth();
   return (
     <Cover>

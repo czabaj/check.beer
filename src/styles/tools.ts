@@ -1,9 +1,7 @@
-export const resetButton = {
-  border: `none`,
-  display: `inline-block`,
-  padding: 0,
-  textDecoration: `none`,
-  width: `fit-content`,
+export const resetList = {
+	listStyleType: `none`,
+	margin: 0,
+	padding: 0,
 };
 
 export const visuallyHidden = {

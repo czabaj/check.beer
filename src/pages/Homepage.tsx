@@ -7,9 +7,7 @@ import { Cover } from "../components/layouts/Cover";
 import { Stack } from "../components/layouts/Stack";
 import { LOGIN } from "./routes";
 
-export type Props = {};
-
-export const Homepage: FunctionComponent<Props> = () => {
+export const Homepage: FunctionComponent = () => {
   return (
     <Cover>
       <Stack>

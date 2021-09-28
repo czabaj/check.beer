@@ -19,7 +19,7 @@ export const globals = css`
     .text-center {
       text-align: center !important;
     }
-    .visually-hidden:not(:active):not(:focus) {
+    .visually-hidden:not(:active):not(:focus):not(:focus-within) {
       ${visuallyHidden}
     }
   }

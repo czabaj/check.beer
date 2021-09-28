@@ -1,31 +1,25 @@
 import { css, cx } from "@linaria/core";
-import { darken, lighten } from "polished";
-import type { ComponentChildren, JSX, Ref } from "preact";
+import { darken } from "polished";
 import { forwardRef } from "preact/compat";
 
 import { COLOR_PRIMARY } from "../styles/settings";
-import { resetButton } from "../styles/tools";
+import { Props as TouchableProps, Touchable } from "./Touchable";
 
 const styleBase = css`
-  ${resetButton}
   border: 1px solid transparent;
   border-radius: 4px;
   padding: 12px 20px;
+  :disabled,
+  [aria-disabled="true"] {
+    opacity: 0.7;
+  }
 `;
 
 const styleColorPrimary = css`
   background-color: ${COLOR_PRIMARY};
   color: white;
-  :focus {
-    box-shadow: 0px 0px 6px rgba(30, 130, 240, 0.4);
-    outline: none;
-  }
   :hover {
     background-color: ${darken(0.1, COLOR_PRIMARY)};
-  }
-  :disabled,
-  [aria-disabled="true"] {
-    background-color: ${lighten(0.2, COLOR_PRIMARY)};
   }
 `;
 
@@ -45,69 +39,25 @@ const styleShapeRound = css`
   right: var(--s-1);
 `;
 
-export type Props = {
-  children: ComponentChildren;
-  className?: string;
-  disabled?: boolean;
-  href?: string;
-  onClick?: (event: MouseEvent) => void;
+export type Props = TouchableProps & {
   primary?: boolean;
   round?: boolean;
-  style?: JSX.CSSProperties;
-  type?: string;
 };
 
 export const Button = forwardRef<
   HTMLAnchorElement | HTMLButtonElement | null,
   Props
->(
-  (
-    {
-      children,
-      className,
-      disabled,
-      primary,
-      href,
-      round,
-      type = `button`,
-      ...other
-    },
-    ref
-  ) => {
-    const isAnchor = href !== undefined;
-    const classes = cx(
-      styleBase,
-      primary && styleColorPrimary,
-      round && styleShapeRound,
-      className
-    );
-
-    return isAnchor ? (
-      <a
-        {...other}
-        {...(disabled
-          ? {
-              href: ``,
-              "aria-disabled": `true`,
-            }
-          : {
-              href,
-            })}
-        className={classes}
-        ref={ref as Ref<HTMLAnchorElement> | undefined}
-      >
-        {children}
-      </a>
-    ) : (
-      <button
-        {...other}
-        className={classes}
-        disabled={disabled}
-        ref={ref as Ref<HTMLButtonElement> | undefined}
-        type={type}
-      >
-        {children}
-      </button>
-    );
-  }
-);
+>(({ className, primary, round, ...other }, ref) => {
+  return (
+    <Touchable
+      {...other}
+      className={cx(
+        styleBase,
+        primary && styleColorPrimary,
+        round && styleShapeRound,
+        className
+      )}
+      ref={ref}
+    />
+  );
+});

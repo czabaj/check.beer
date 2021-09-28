@@ -16,6 +16,12 @@ export const globals = css`
       cursor: pointer;
     }
 
+    a:link:focus,
+    button:focus {
+      box-shadow: 0px 0px 6px rgba(30, 130, 240, 0.4);
+      outline: none;
+    }
+
     body,
     html {
       height: 100%;

@@ -1,28 +1,14 @@
 import type { FunctionComponent } from "preact";
 import { Route, Switch } from "react-router-dom";
 
-import { withRedirectAuth } from "../components/RedirectAuth";
-import {
-  DEFAULT_PRIVATE_ROUTE,
-  LOGIN,
-  PLACE,
-  PROFILE,
-} from "./routes";
 import { Homepage } from "./Homepage";
 import { Login } from "./Login";
 import { Places } from "./place";
 import { Profile } from "./Profile";
+import { LOGIN, PLACE, PROFILE } from "./routes";
+import { redirectAuthenticatedIntoApp, redirectUnauthenticatedToLogin } from './utils'
 
-const redirectAuthenticatedIntoApp = (Component: FunctionComponent<any>) =>
-  withRedirectAuth({ authenticated: true, to: DEFAULT_PRIVATE_ROUTE })(
-    Component
-  );
-const redirectUnauthenticatedToLogin = (Component: FunctionComponent<any>) =>
-  withRedirectAuth({ to: LOGIN })(Component);
-
-export type Props = {};
-
-export const Root: FunctionComponent<Props> = () => {
+export const Root: FunctionComponent = () => {
   return (
     <Switch>
       <Route component={Homepage} exact path="/" />

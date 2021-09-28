@@ -19,6 +19,7 @@ import { Cluster } from "../../../components/layouts/Cluster";
 import { Icon } from "../../../components/layouts/Icon";
 import { TemplateApp } from "../../../components/TemplateApp";
 import type { Consumption, Keg, Place } from "../../../models";
+import { resetList } from "../../../styles/tools";
 import { NEW_PERSON } from "./routes";
 
 const stylePersonListItemBase = css`
@@ -48,6 +49,7 @@ const stylePersonListItemBase = css`
 
 const sortConsumptions = (a: Consumption, b: Consumption) =>
   a.at.seconds - b.at.seconds;
+
 const toConsumptionSymbol = ({ milliliters }: Consumption) =>
   milliliters >= 400 ? `X` : `I`;
 
@@ -73,10 +75,7 @@ const PersonListItem = (props: PersonListItemProps) => {
 };
 
 const stylePlaceOrderedList = css`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  text-indent: 0;
+  ${resetList}
 `;
 
 const UPDATE_EVERY = 60 * 60 * 1000; // milliseconds
