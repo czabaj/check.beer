@@ -26,7 +26,7 @@ export const PlaceId: FunctionComponent = () => {
       <Route path={`${url}${NEW_PERSON}`}>
         <NewPerson place={place} placeRef={placeRef} />
       </Route>
-      <Route component={PlaceSettings} path={`${url}${SETTINGS}`}>
+      <Route path={`${url}${SETTINGS}`}>
         <PlaceSettings />
       </Route>
     </Switch>

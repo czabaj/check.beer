@@ -6,6 +6,7 @@ import type {
   ComponentChildren,
   FunctionComponent,
 } from "preact";
+import { useEffect } from "preact/hooks";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import { Button } from "./Button";
@@ -56,15 +57,36 @@ export const TemplateApp: FunctionComponent<Props> = ({
   pageTitle,
 }) => {
   const history = useHistory();
+  const closeMenu = history.goBack;
   const location = useLocation();
   const menuOpen = location.hash === NAV_TARGET;
+  useEffect(() => {
+    // allow close the menu with Escape
+    if (menuOpen) {
+      const type = `keydown`;
+      const handler = (event: KeyboardEvent) => {
+        if (
+          event.key === `Escape` &&
+          !event.defaultPrevented &&
+          !event.altKey &&
+          !event.ctrlKey &&
+          !event.metaKey &&
+          !event.shiftKey
+        ) {
+          closeMenu();
+        }
+      };
+      document.addEventListener(type, handler);
+      return () => document.removeEventListener(type, handler);
+    }
+  }, [menuOpen]);
   return (
     <Center>
       <Stack as="article">
         <Cluster as="header" className={styleHeader} justify="space-between">
           <h1>{pageTitle}</h1>
           {menuOpen ? (
-            <Touchable className="align-self:center" onClick={history.goBack}>
+            <Touchable className="align-self:center" onClick={closeMenu}>
               <Icon icon={IconTimes} height="2rem" />
               <span className="visually-hidden">Zpět na obsah</span>
             </Touchable>
@@ -89,7 +111,7 @@ export const TemplateApp: FunctionComponent<Props> = ({
               </NavLink>
             </li>
             <li>
-              <Button onClick={history.goBack}>Zavřít</Button>
+              <Button onClick={closeMenu}>Zavřít</Button>
             </li>
           </ul>
         </nav>
