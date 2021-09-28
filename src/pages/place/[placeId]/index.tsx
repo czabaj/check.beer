@@ -7,7 +7,8 @@ import { LoadingIndicator } from "../../../components/LoadingIndicator";
 import type { Place as PlaceType } from "../../../models";
 import { NewPerson } from "./NewPerson";
 import { Overview } from "./Overview";
-import { NEW_PERSON } from "./routes";
+import { PlaceSettings } from "./PlaceSettings";
+import { NEW_PERSON, SETTINGS } from "./routes";
 
 export const PlaceId: FunctionComponent = () => {
   const { path, url } = useRouteMatch();
@@ -19,11 +20,14 @@ export const PlaceId: FunctionComponent = () => {
     <LoadingIndicator />
   ) : (
     <Switch>
-      <Route component={Overview} exact path={path}>
+      <Route exact path={path}>
         <Overview place={place} placeRef={placeRef} />
       </Route>
-      <Route component={NewPerson} path={`${url}${NEW_PERSON}`}>
+      <Route path={`${url}${NEW_PERSON}`}>
         <NewPerson place={place} placeRef={placeRef} />
+      </Route>
+      <Route component={PlaceSettings} path={`${url}${SETTINGS}`}>
+        <PlaceSettings />
       </Route>
     </Switch>
   );
