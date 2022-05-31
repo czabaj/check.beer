@@ -1,4 +1,3 @@
-import { css, cx } from "@linaria/core";
 import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
@@ -6,18 +5,18 @@ import { toModularScale } from "../../utils/style";
 const CSS_PROP_MARGIN = `--imposter-margin`;
 const CSS_PROP_POSITION = `--imposter-position`;
 
-const styleBase = css`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const styleContain = css`
-  overflow: auto;
-  max-width: calc(100% - (var(${CSS_PROP_MARGIN}) * 2));
-  max-height: calc(100% - (var(${CSS_PROP_MARGIN}) * 2));
-`;
+// const styleBase = css`
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// `;
+//
+// const styleContain = css`
+//   overflow: auto;
+//   max-width: calc(100% - (var(${CSS_PROP_MARGIN}) * 2));
+//   max-height: calc(100% - (var(${CSS_PROP_MARGIN}) * 2));
+// `;
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
@@ -47,7 +46,7 @@ export const Imposter: FunctionComponent<Props> = ({
   margin,
 }) => {
   const componentProps = {
-    className: cx(styleBase, !breakout && styleContain, className),
+    // className: cx(styleBase, !breakout && styleContain, className),
     style: {
       ...(!breakout && { [CSS_PROP_MARGIN]: toModularScale(margin) }),
       [CSS_PROP_POSITION]: fixed ? `fixed` : `absolute`,

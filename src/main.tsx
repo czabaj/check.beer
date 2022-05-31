@@ -7,7 +7,7 @@ import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
 
 import { LoadingIndicator } from "./components/LoadingIndicator";
 import { Root } from "./pages";
-import "./styles/index";
+import "./styles/index.css";
 
 const APP_CHECK_TOKEN = `6LcR8pUcAAAAAGYjKIm5p1owwr23EpDQxbfEGlpo`;
 

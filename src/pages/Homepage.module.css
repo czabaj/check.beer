@@ -1,0 +1,12 @@
+@import "../styles/functionalSelectors.css";
+
+.root {
+    @extend %centerContentHorizontal, %centerSelfHorizontal;
+
+    min-block-size: 100vh;
+    min-block-size: 100 lvh;
+
+    & > div {
+        margin-block: auto;
+    }
+}

@@ -1,9 +1,8 @@
-import { css, cx } from "@linaria/core";
 import type { FunctionComponent, JSX } from "preact";
 
-const styleVerticalAlign = css`
-  vertical-align: -0.125em;
-`;
+// const styleVerticalAlign = css`
+//   vertical-align: -0.125em;
+// `;
 
 export type Props = {
   className?: string;
@@ -31,7 +30,6 @@ export const Icon: FunctionComponent<Props> = ({
     <IconComponent
       {...other}
       fill="currentColor"
-      className={cx(!noAlign && styleVerticalAlign, className)}
       style={style}
       height={height}
       width={width}

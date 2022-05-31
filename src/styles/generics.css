@@ -1,0 +1,18 @@
+html {
+    background-color: var(--surface-1);
+    color: var(--text-2, var(--gray-9));
+    font-family: var(--font-sans);
+    line-height: 1.5;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+@media screen and (--motionOK) {
+    html {
+        scroll-behavior: smooth;
+    }
+}

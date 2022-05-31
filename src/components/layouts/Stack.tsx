@@ -1,4 +1,3 @@
-import { css, cx } from "@linaria/core";
 import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
@@ -6,35 +5,35 @@ import { toModularScale } from "../../utils/style";
 const CSS_PROP_GAP = `--stack-gap`;
 const DATA_ATTR_SPLIT_AFTER = `data-split-after`;
 
-const styleBase = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  /* ↓ The vertical spacing is established via "Lobotomic Owl" selector */
-  & > * + * {
-    margin-top: var(${CSS_PROP_GAP});
-  }
-`;
+// const styleBase = css`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   /* ↓ The vertical spacing is established via "Lobotomic Owl" selector */
+//   & > * + * {
+//     margin-top: var(${CSS_PROP_GAP});
+//   }
+// `;
+//
+// const styleRecursive = css`
+//   & * + * {
+//     margin-top: var(${CSS_PROP_GAP});
+//   }
+// `;
 
-const styleRecursive = css`
-  & * + * {
-    margin-top: var(${CSS_PROP_GAP});
-  }
-`;
-
-const SPLIT_AFTER_MAX = 5;
-const styleSplitAfter = css`
-  ${Array.from(Array(SPLIT_AFTER_MAX))
-    .map((_value, idx) => {
-      const nthChild = idx + 1; // the CSS counts from 1, not 0
-      return `
-  &[${DATA_ATTR_SPLIT_AFTER}="${nthChild}"] > :nth-child(${nthChild}) {
-      margin-bottom: auto;
-    }
-`;
-    })
-    .join(``)}
-`;
+// const SPLIT_AFTER_MAX = 5;
+// const styleSplitAfter = css`
+//   ${Array.from(Array(SPLIT_AFTER_MAX))
+//     .map((_value, idx) => {
+//       const nthChild = idx + 1; // the CSS counts from 1, not 0
+//       return `
+//   &[${DATA_ATTR_SPLIT_AFTER}="${nthChild}"] > :nth-child(${nthChild}) {
+//       margin-bottom: auto;
+//     }
+// `;
+//     })
+//     .join(``)}
+// `;
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
@@ -70,12 +69,12 @@ export const Stack: FunctionComponent<Props> = ({
 }) => {
   const hasSplitAfter = splitAfter && splitAfter > 0;
   const componentProps = {
-    className: cx(
-      styleBase,
-      recursive && styleRecursive,
-      hasSplitAfter && styleSplitAfter,
-      className
-    ),
+    // className: cx(
+    //   styleBase,
+    //   recursive && styleRecursive,
+    //   hasSplitAfter && styleSplitAfter,
+    //   className
+    // ),
     ...(hasSplitAfter && { [DATA_ATTR_SPLIT_AFTER]: splitAfter }),
     style: {
       [CSS_PROP_GAP]: toModularScale(gap),

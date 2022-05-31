@@ -1,6 +1,6 @@
 import { ReactComponent as IconBars } from "@fortawesome/fontawesome-free/svgs/solid/bars.svg";
 import { ReactComponent as IconTimes } from "@fortawesome/fontawesome-free/svgs/solid/times.svg";
-import { css } from "@linaria/core";
+import cx from "classnames";
 import type {
   ComponentChild,
   ComponentChildren,
@@ -9,43 +9,40 @@ import type {
 import { useEffect } from "preact/hooks";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
-import { Button } from "./Button";
-import { Touchable } from "./Touchable";
-import { Center } from "./layouts/Center";
-import { Cluster } from "./layouts/Cluster";
-import { Icon } from "./layouts/Icon";
-import { Stack } from "./layouts/Stack";
-import { resetList, visuallyHidden } from "../styles/tools";
 import { PROFILE } from "../pages/routes";
 import { ROOT as PLACE_ROOT } from "../pages/place/routes";
+import buttonClasses from "../styles/components/button.module.css";
+import classes from "./TemplateApp.module.css";
+import React from "preact/compat";
+import { Icon } from "./layouts/Icon";
 
 const NAV_ID = `nav_menu`;
 const NAV_LABEL_ID = `nav_menu_label`;
 const NAV_TARGET = `#${NAV_ID}`;
 
-const styleHeader = css`
-  padding: var(--s-1);
-  & > h1 {
-    font-size: 1.5rem;
-    margin: 0;
-    text-decoration: underline;
-  }
-`;
+// const styleHeader = css`
+//   padding: var(--s-1);
+//   & > h1 {
+//     font-size: 1.5rem;
+//     margin: 0;
+//     text-decoration: underline;
+//   }
+// `;
 
-const styleNav = css`
-  :not(:target) {
-    ${visuallyHidden}
-  }
-  :target + main {
-    ${visuallyHidden}
-  }
-  ul {
-    ${resetList}
-  }
-  li {
-    padding: var(--s-1) var(--s-1);
-  }
-`;
+// const styleNav = css`
+//   :not(:target) {
+//     ${visuallyHidden}
+//   }
+//   :target + main {
+//     ${visuallyHidden}
+//   }
+//   ul {
+//     ${resetList}
+//   }
+//   li {
+//     padding: var(--s-1) var(--s-1);
+//   }
+// `;
 
 export type Props = {
   children: ComponentChildren;
@@ -81,42 +78,56 @@ export const TemplateApp: FunctionComponent<Props> = ({
     }
   }, [menuOpen]);
   return (
-    <Center>
-      <Stack as="article">
-        <Cluster as="header" className={styleHeader} justify="space-between">
-          <h1>{pageTitle}</h1>
+    <div className={classes.root}>
+      <header>
+        <div>
+          <h1>Untap.beer</h1>
+
           {menuOpen ? (
-            <Touchable className="align-self:center" onClick={closeMenu}>
+            <button
+              className={cx(
+                buttonClasses.button,
+                buttonClasses.variantStealth,
+                buttonClasses.flat
+              )}
+              onClick={closeMenu}
+              title="Zpět na obsah"
+            >
               <Icon icon={IconTimes} height="2rem" />
-              <span className="visually-hidden">Zpět na obsah</span>
-            </Touchable>
+            </button>
           ) : (
-            <Touchable className="align-self:center" href={NAV_TARGET}>
+            <a
+              className={cx(
+                buttonClasses.button,
+                buttonClasses.variantStealth,
+                buttonClasses.flat
+              )}
+              href={NAV_TARGET}
+              title="Navigační menu"
+            >
               <Icon icon={IconBars} height="2rem" />
-              <span className="visually-hidden">Navigační menu</span>
-            </Touchable>
+            </a>
           )}
-        </Cluster>
-        <nav aria-labelledby={NAV_LABEL_ID} className={styleNav} id={NAV_ID}>
-          <h2 className="visually-hidden">Hlavní rozcestník</h2>
-          <ul>
-            <li>
-              <NavLink component={Touchable} to={PROFILE}>
-                Moje nastavení
-              </NavLink>
-            </li>
-            <li>
-              <NavLink component={Touchable} to={PLACE_ROOT}>
-                Jinam
-              </NavLink>
-            </li>
-            <li>
-              <Button onClick={closeMenu}>Zavřít</Button>
-            </li>
-          </ul>
-        </nav>
-        <main>{children}</main>
-      </Stack>
-    </Center>
+        </div>
+      </header>
+      <nav aria-labelledby={NAV_LABEL_ID} id={NAV_ID}>
+        <h2 className="visually-hidden">Hlavní rozcestník</h2>
+        <ul>
+          <li>
+            <NavLink to={PROFILE}>Moje nastavení</NavLink>
+          </li>
+          <li>
+            <NavLink to={PLACE_ROOT}>Jinam</NavLink>
+          </li>
+          <li>
+            <button onClick={closeMenu}>Zavřít</button>
+          </li>
+        </ul>
+      </nav>
+      <main>
+        <h2>{pageTitle}</h2>
+        {children}
+      </main>
+    </div>
   );
 };

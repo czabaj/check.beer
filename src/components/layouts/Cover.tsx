@@ -1,4 +1,3 @@
-import { css, cx } from "@linaria/core";
 import type { FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
@@ -6,34 +5,34 @@ import { toModularScale } from "../../utils/style";
 const CSS_PROP_GAP = `--cover-gap`;
 const CSS_PROP_MIN_HEIGHT = `--cover-min-height`;
 
-const styleBase = css`
-  display: flex;
-  flex-direction: column;
-  min-height: var(${CSS_PROP_MIN_HEIGHT});
-  padding: var(${CSS_PROP_GAP});
-  & > * {
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-`;
-
-const styleHasFooter = css`
-  & > :last-child {
-    margin-bottom: 0;
-    margin-top: var(${CSS_PROP_GAP});
-  }
-`;
-
-const styleHasHeader = css`
-  & > :first-child {
-    margin-bottom: var(${CSS_PROP_GAP});
-    margin-top: 0;
-  }
-`;
-
-const styleNoPad = css`
-  padding: 0;
-`;
+// const styleBase = css`
+//   display: flex;
+//   flex-direction: column;
+//   min-height: var(${CSS_PROP_MIN_HEIGHT});
+//   padding: var(${CSS_PROP_GAP});
+//   & > * {
+//     margin-top: auto;
+//     margin-bottom: auto;
+//   }
+// `;
+//
+// const styleHasFooter = css`
+//   & > :last-child {
+//     margin-bottom: 0;
+//     margin-top: var(${CSS_PROP_GAP});
+//   }
+// `;
+//
+// const styleHasHeader = css`
+//   & > :first-child {
+//     margin-bottom: var(${CSS_PROP_GAP});
+//     margin-top: 0;
+//   }
+// `;
+//
+// const styleNoPad = css`
+//   padding: 0;
+// `;
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
@@ -73,13 +72,6 @@ export const Cover: FunctionComponent<Props> = ({
 }) => {
   return (
     <Component
-      className={cx(
-        styleBase,
-        footer && styleHasFooter,
-        header && styleHasHeader,
-        noPad && styleNoPad,
-        className
-      )}
       style={{
         [CSS_PROP_GAP]: toModularScale(gap),
         [CSS_PROP_MIN_HEIGHT]: minHeight,

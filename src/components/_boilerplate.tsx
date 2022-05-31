@@ -1,4 +1,3 @@
-import { css, cx } from "@linaria/core";
 import type { ComponentChildren, FunctionComponent } from "preact";
 
 import { toModularScale } from "../utils/style";

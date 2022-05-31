@@ -1,4 +1,3 @@
-import { css, cx } from "@linaria/core";
 import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
@@ -7,28 +6,28 @@ const CSS_PROP_CONTENT_MIN = `--sidebar-content-min`;
 const CSS_PROP_SIDE_WIDTH = `--sidebar-side-width`;
 const CSS_PROP_GAP = `--sidebar-gap`;
 
-const styleBase = css`
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(${CSS_PROP_GAP});
-  & > :first-child {
-    flex-basis: var(${CSS_PROP_SIDE_WIDTH});
-    flex-grow: 1;
-  }
-  & > :last-child {
-    flex-basis: 0;
-    flex-grow: 999;
-    min-width: ${CSS_PROP_CONTENT_MIN};
-  }
-`;
-
-const styleSidebarOnRight = css`
-  flex-direction: row-reverse;
-`;
-
-const styleNoStretch = css`
-  align-items: flex-start;
-`;
+// const styleBase = css`
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: var(${CSS_PROP_GAP});
+//   & > :first-child {
+//     flex-basis: var(${CSS_PROP_SIDE_WIDTH});
+//     flex-grow: 1;
+//   }
+//   & > :last-child {
+//     flex-basis: 0;
+//     flex-grow: 999;
+//     min-width: ${CSS_PROP_CONTENT_MIN};
+//   }
+// `;
+//
+// const styleSidebarOnRight = css`
+//   flex-direction: row-reverse;
+// `;
+//
+// const styleNoStretch = css`
+//   align-items: flex-start;
+// `;
 
 export type Props = {
   as?: keyof JSX.IntrinsicElements;
@@ -70,12 +69,6 @@ export const Sidebar: FunctionComponent<Props> = ({
 }) => {
   return (
     <Component
-      className={cx(
-        styleBase,
-        sidebarOnRight && styleSidebarOnRight,
-        noStretch && styleNoStretch,
-        className
-      )}
       style={{
         [CSS_PROP_CONTENT_MIN]: `${contentMin}%`,
         [CSS_PROP_GAP]: toModularScale(gap),

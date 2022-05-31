@@ -1,5 +1,4 @@
 import { getFirestore } from "firebase/firestore";
-import type { FunctionComponent } from "preact";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { FirestoreProvider, useFirebaseApp } from "reactfire";
 
@@ -9,7 +8,7 @@ import { NewPlace } from "./NewPlace";
 import { NEW_PLACE } from "./routes";
 import { redirectUnauthenticatedToLogin } from "../utils";
 
-export const Places: FunctionComponent = () => {
+export const Places = () => {
   const firestoreInstance = getFirestore(useFirebaseApp());
   const { path, url } = useRouteMatch();
 

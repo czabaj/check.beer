@@ -1,5 +1,5 @@
 import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
-import { css } from "@linaria/core";
+import cx from "classnames";
 import * as dayjs from "dayjs";
 import {
   query,
@@ -13,39 +13,38 @@ import type { FunctionComponent } from "preact";
 import { useFirestoreCollectionData } from "reactfire";
 import { Link, useRouteMatch } from "react-router-dom";
 
-import { Button } from "../../../components/Button";
 import { LoadingIndicator } from "../../../components/LoadingIndicator";
 import { Cluster } from "../../../components/layouts/Cluster";
 import { Icon } from "../../../components/layouts/Icon";
 import { TemplateApp } from "../../../components/TemplateApp";
 import type { Consumption, Keg, Place } from "../../../models";
-import { resetList } from "../../../styles/tools";
+import buttonClasses from "../../../styles/components/button.module.css";
 import { NEW_PERSON } from "./routes";
 
-const stylePersonListItemBase = css`
-  font-size: 120%;
-  padding: 0 var(--s-1);
-  position: relative;
-  &::before {
-    background-color: dodgerblue;
-    bottom: -1px;
-    content: "";
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: calc(var(--s-1) + 1.5ch);
-  }
-  & > span:first-child {
-    z-index: 1;
-    &::first-letter {
-      color: white;
-      font-weight: bold;
-    }
-  }
-  & > span:last-child {
-    font-style: italic;
-  }
-`;
+// const stylePersonListItemBase = css`
+//   font-size: 120%;
+//   padding: 0 var(--s-1);
+//   position: relative;
+//   &::before {
+//     background-color: dodgerblue;
+//     bottom: -1px;
+//     content: "";
+//     left: 0;
+//     position: absolute;
+//     top: 0;
+//     width: calc(var(--s-1) + 1.5ch);
+//   }
+//   & > span:first-child {
+//     z-index: 1;
+//     &::first-letter {
+//       color: white;
+//       font-weight: bold;
+//     }
+//   }
+//   & > span:last-child {
+//     font-style: italic;
+//   }
+// `;
 
 const sortConsumptions = (a: Consumption, b: Consumption) =>
   a.at.seconds - b.at.seconds;
@@ -63,20 +62,16 @@ const PersonListItem = (props: PersonListItemProps) => {
     .sort(sortConsumptions)
     .map(toConsumptionSymbol);
   return (
-    <Cluster
-      as="li"
-      className={stylePersonListItemBase}
-      justify="space-between"
-    >
+    <Cluster as="li" justify="space-between">
       <span>{props.name}</span>
       <span>{consumedMillilitersByDateAsc.join(``)}</span>
     </Cluster>
   );
 };
 
-const stylePlaceOrderedList = css`
-  ${resetList}
-`;
+// const stylePlaceOrderedList = css`
+//   ${resetList}
+// `;
 
 const UPDATE_EVERY = 60 * 60 * 1000; // milliseconds
 const getSlidingWindow = throttle((): Timestamp => {
@@ -123,7 +118,7 @@ export const Overview: FunctionComponent<OverviewProps> = ({
   }
   return (
     <TemplateApp pageTitle={place.name}>
-      <ol className={stylePlaceOrderedList}>
+      <ol>
         {activePersons.sort().map((personName) => (
           <PersonListItem
             recentConsumptions={consumptionPerPerson[personName]}
@@ -131,7 +126,10 @@ export const Overview: FunctionComponent<OverviewProps> = ({
           />
         ))}
       </ol>
-      <Link component={Button} primary round to={`${url}${NEW_PERSON}`}>
+      <Link
+        className={cx(buttonClasses.button, buttonClasses.variantPrimary)}
+        to={`${url}${NEW_PERSON}`}
+      >
         <Icon icon={PlusIcon} noAlign />
         <span className="visually-hidden"> přidat dalšího uživatele</span>
       </Link>

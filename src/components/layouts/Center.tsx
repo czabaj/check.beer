@@ -1,4 +1,3 @@
-import { css, cx } from "@linaria/core";
 import type { ComponentChildren, FunctionComponent, VNode } from "preact";
 
 import { toModularScale } from "../../utils/style";
@@ -6,24 +5,24 @@ import { toModularScale } from "../../utils/style";
 const CSS_PROP_GUTTERS = `--center-gutters`;
 const CSS_PROP_MAX = `--center-max`;
 
-const styleBase = css`
-  box-sizing: content-box;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: var(${CSS_PROP_MAX});
-  padding-left: var(${CSS_PROP_GUTTERS});
-  padding-right: var(${CSS_PROP_GUTTERS});
-`;
-
-const styleAndText = css`
-  text-align: center;
-`;
-
-const styleIntrinsic = css`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-`;
+// const styleBase = css`
+//   box-sizing: content-box;
+//   margin-left: auto;
+//   margin-right: auto;
+//   max-width: var(${CSS_PROP_MAX});
+//   padding-left: var(${CSS_PROP_GUTTERS});
+//   padding-right: var(${CSS_PROP_GUTTERS});
+// `;
+//
+// const styleAndText = css`
+//   text-align: center;
+// `;
+//
+// const styleIntrinsic = css`
+//   align-items: center;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 export type Props = {
   /**
@@ -59,12 +58,12 @@ export const Center: FunctionComponent<Props> = ({
   max = `var(--measure)`,
 }) => {
   const componentProps = {
-    className: cx(
-      styleBase,
-      andText && styleAndText,
-      intrinsic && styleIntrinsic,
-      className
-    ),
+    // className: cx(
+    //   styleBase,
+    //   andText && styleAndText,
+    //   intrinsic && styleIntrinsic,
+    //   className
+    // ),
     style: {
       [CSS_PROP_GUTTERS]: toModularScale(gutters),
       [CSS_PROP_MAX]: max,

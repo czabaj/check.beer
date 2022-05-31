@@ -1,11 +1,10 @@
+import cx from "classnames";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import type { FunctionComponent } from "preact";
-import { useAuth } from "reactfire";
 
-import { Button } from "../components/Button";
-import { Center } from "../components/layouts/Center";
-import { Cover } from "../components/layouts/Cover";
-import { Stack } from "../components/layouts/Stack";
+import { useAuth } from "reactfire";
+import buttonClasses from "../styles/components/button.module.css";
+
 
 /**
  * The login page relies completely on firebaseUI
@@ -13,20 +12,16 @@ import { Stack } from "../components/layouts/Stack";
 export const Login: FunctionComponent = () => {
   const auth = useAuth();
   return (
-    <Cover>
-      <Stack>
-        <h1 className="text-center">Login</h1>
-        <Center>
-          <Button
-            onClick={() => {
-              signInWithPopup(auth, new GoogleAuthProvider());
-            }}
-            primary
-          >
-            Login with Google
-          </Button>
-        </Center>
-      </Stack>
-    </Cover>
+    <div>
+      <h1 className="text-center">Login</h1>
+      <button
+      className={cx(buttonClasses.button, buttonClasses.variantPrimary)}
+        onClick={() => {
+          signInWithPopup(auth, new GoogleAuthProvider());
+        }}
+      >
+        Login with Google
+      </button>
+    </div>
   );
 };

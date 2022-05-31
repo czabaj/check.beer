@@ -1,23 +1,20 @@
-import type { FunctionComponent } from "preact";
-import { Link } from "react-router-dom";
+import cx from 'classnames';
+import {Link} from "react-router-dom";
 
-import { Button } from "../components/Button";
-import { Center } from "../components/layouts/Center";
-import { Cover } from "../components/layouts/Cover";
-import { Stack } from "../components/layouts/Stack";
-import { LOGIN } from "./routes";
+import buttonClasses from "../styles/components/button.module.css";
+import {LOGIN} from "./routes";
 
-export const Homepage: FunctionComponent = () => {
-  return (
-    <Cover>
-      <Stack>
-        <h1 className="text-center">Untap.beer</h1>
-        <Center>
-          <Link component={Button} primary to={LOGIN}>
-            Do aplikace
-          </Link>
-        </Center>
-      </Stack>
-    </Cover>
-  );
+import classes from './Homepage.module.css'
+
+export const Homepage = () => {
+    return (
+        <div className={classes.root}>
+            <div>
+                <h1 className="text-center">Untap.beer</h1>
+                <Link className={cx(buttonClasses.button, buttonClasses.variantPrimary)} to={LOGIN}>
+                    Do aplikace
+                </Link>
+            </div>
+        </div>
+    );
 };

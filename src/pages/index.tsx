@@ -1,4 +1,3 @@
-import type { FunctionComponent } from "preact";
 import { Route, Switch } from "react-router-dom";
 
 import { Homepage } from "./Homepage";
@@ -8,7 +7,7 @@ import { Profile } from "./Profile";
 import { LOGIN, PLACE, PROFILE } from "./routes";
 import { redirectAuthenticatedIntoApp, redirectUnauthenticatedToLogin } from './utils'
 
-export const Root: FunctionComponent = () => {
+export const Root = () => {
   return (
     <Switch>
       <Route component={Homepage} exact path="/" />

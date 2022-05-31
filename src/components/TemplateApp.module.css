@@ -1,0 +1,48 @@
+@import "../styles/functionalSelectors.css";
+
+%centered {
+  @extend %centerSelfHorizontal;
+
+  min-inline-size: 60ch;
+}
+
+.root {
+  display: flex;
+  flex-flow: column nowrap;
+
+  & > header {
+    background-color: var(--brand);
+
+    & > div {
+      @extend %centered;
+
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    & h1 {
+      color: var(--text-3);
+      font-size: var(--font-size-4);
+    }
+  }
+
+  & > nav {
+    @extend %centered;
+  }
+
+  & > nav:not(:target) {
+    @extend %srOnly;
+  }
+
+  & > nav:target + main {
+    @extend %srOnly;
+  }
+
+  & > main {
+    @extend %centered;
+  }
+}
+
+.buttonMenu {
+}

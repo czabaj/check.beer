@@ -1,15 +1,15 @@
-import { FunctionComponent } from "preact";
-
 import { TemplateApp } from "../../components/TemplateApp";
+import buttonClasses from "../../styles/components/button.module.css";
 
-export const NewPlace: FunctionComponent = () => {
+
+export const NewPlace = () => {
   return (
     <TemplateApp pageTitle="Přidat místo">
       <form onSubmit={(event) => event.preventDefault()}>
         <label>
           Název místa: <input type="text" />
         </label>
-        <button type="submit">Přidat místo</button>
+        <button className={buttonClasses.button} type="submit">Přidat místo</button>
       </form>
     </TemplateApp>
   );

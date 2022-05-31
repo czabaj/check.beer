@@ -1,24 +1,22 @@
 import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
-import type { FunctionComponent } from "preact";
+import cx from "classnames";
 import { Link, useRouteMatch } from "react-router-dom";
 
-import { Button } from "../../components/Button";
 import { LoadingIndicator } from "../../components/LoadingIndicator";
 import { TemplateApp } from "../../components/TemplateApp";
 import { Icon } from "../../components/layouts/Icon";
 import { useDBUser } from "../../hooks/useDBUser";
 import { User as DBUser } from "../../models";
 import { NEW_PLACE } from "./routes";
+import buttonClasses from "../../styles/components/button.module.css";
 
-const PlacesListing: FunctionComponent<{ places?: DBUser[`places`] }> = ({
-  places,
-}) => {
+const PlacesListing = ({ places }: { places?: DBUser[`places`] }) => {
   const placesEntries = places && Object.entries(places);
   const { url } = useRouteMatch();
   return (
     <>
       {!placesEntries?.length ? (
-        <>Nemate zadna mista</>
+        <div>Nemate zadna mista</div>
       ) : (
         <ul>
           {placesEntries.map(([id, name]) => (
@@ -28,7 +26,7 @@ const PlacesListing: FunctionComponent<{ places?: DBUser[`places`] }> = ({
           ))}
         </ul>
       )}
-      <Link component={Button} primary round to={`${url}${NEW_PLACE}`}>
+      <Link className={cx(buttonClasses.button)} to={`${url}${NEW_PLACE}`}>
         <Icon icon={PlusIcon} noAlign />
         <span className="visually-hidden"> přidat dalsi misto</span>
       </Link>
@@ -36,7 +34,7 @@ const PlacesListing: FunctionComponent<{ places?: DBUser[`places`] }> = ({
   );
 };
 
-export const MyPlaces: FunctionComponent = () => {
+export const MyPlaces = () => {
   const { data: DBUser } = useDBUser();
 
   return (
