@@ -1,5 +1,5 @@
 import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
-import cx from "classnames";
+import cx from "clsx";
 import { Link, useRouteMatch } from "react-router-dom";
 
 import { LoadingIndicator } from "../../components/LoadingIndicator";

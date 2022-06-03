@@ -6,7 +6,7 @@ import type { FunctionComponent, JSX } from "preact";
 
 export type Props = {
   className?: string;
-  icon: FunctionComponent<JSX.SVGAttributes<SVGSVGElement>>;
+  icon: any;
   label?: string;
   height?: string;
   noAlign?: boolean;

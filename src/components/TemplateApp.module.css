@@ -31,6 +31,10 @@
     @extend %centered;
   }
 
+  & > main {
+    @extend %centered;
+  }
+
   & > nav:not(:target) {
     @extend %srOnly;
   }
@@ -38,11 +42,4 @@
   & > nav:target + main {
     @extend %srOnly;
   }
-
-  & > main {
-    @extend %centered;
-  }
-}
-
-.buttonMenu {
 }

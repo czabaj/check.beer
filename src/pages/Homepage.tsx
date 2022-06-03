@@ -1,4 +1,4 @@
-import cx from 'classnames';
+import cx from 'clsx';
 import {Link} from "react-router-dom";
 
 import buttonClasses from "../styles/components/button.module.css";

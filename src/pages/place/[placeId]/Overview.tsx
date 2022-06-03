@@ -1,5 +1,5 @@
 import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
-import cx from "classnames";
+import cx from "clsx";
 import * as dayjs from "dayjs";
 import {
   query,
@@ -9,7 +9,6 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import throttle from "lodash/throttle";
-import type { FunctionComponent } from "preact";
 import { useFirestoreCollectionData } from "reactfire";
 import { Link, useRouteMatch } from "react-router-dom";
 
@@ -86,10 +85,10 @@ export type OverviewProps = {
   placeRef: DocumentReference;
 };
 
-export const Overview: FunctionComponent<OverviewProps> = ({
+export const Overview = ({
   place,
   placeRef,
-}) => {
+}: OverviewProps) => {
   const recentKegsRef = query<Keg>(
     collection(placeRef, `kegs`) as any,
     where(`lastConsumptionAt`, `>=`, getSlidingWindow())

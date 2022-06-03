@@ -1,6 +1,6 @@
 import { ReactComponent as IconBars } from "@fortawesome/fontawesome-free/svgs/solid/bars.svg";
 import { ReactComponent as IconTimes } from "@fortawesome/fontawesome-free/svgs/solid/times.svg";
-import cx from "classnames";
+import cx from "clsx";
 import type {
   ComponentChild,
   ComponentChildren,
@@ -19,30 +19,6 @@ import { Icon } from "./layouts/Icon";
 const NAV_ID = `nav_menu`;
 const NAV_LABEL_ID = `nav_menu_label`;
 const NAV_TARGET = `#${NAV_ID}`;
-
-// const styleHeader = css`
-//   padding: var(--s-1);
-//   & > h1 {
-//     font-size: 1.5rem;
-//     margin: 0;
-//     text-decoration: underline;
-//   }
-// `;
-
-// const styleNav = css`
-//   :not(:target) {
-//     ${visuallyHidden}
-//   }
-//   :target + main {
-//     ${visuallyHidden}
-//   }
-//   ul {
-//     ${resetList}
-//   }
-//   li {
-//     padding: var(--s-1) var(--s-1);
-//   }
-// `;
 
 export type Props = {
   children: ComponentChildren;
