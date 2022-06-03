@@ -6,7 +6,7 @@ import { LoadingIndicator } from "./LoadingIndicator";
 
 export type Props = {
   /**
-   * The content to be rendered when redirection wont fire.
+   * The content to be rendered when redirection won't fire.
    */
   children: VNode;
   /**
@@ -24,11 +24,11 @@ export type Props = {
 /**
  * This component handles redirection based on authentication status.
  */
-export const RedirectAuth: FunctionComponent<Props> = ({
+export const RedirectAuth = ({
   authenticated,
   children,
   to,
-}) => {
+}: Props) => {
   const { status, data: signInCheckResult } = useSigninCheck();
   if (status === `loading`) {
     return <LoadingIndicator />;

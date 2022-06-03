@@ -49,7 +49,7 @@ export type Keg = {
 
 type PersonIsActive = boolean;
 export type Place = {
-  taps: Record<TapName, DocumentReference<Keg>>;
+  taps: Record<TapName, DocumentReference<Keg> | null>;
   name: string;
   persons: Record<PersonName, PersonIsActive>;
 };
