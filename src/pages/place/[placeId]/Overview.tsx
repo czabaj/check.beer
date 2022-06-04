@@ -12,12 +12,12 @@ import throttle from "lodash/throttle";
 import { useFirestoreCollectionData } from "reactfire";
 import { Link, useRouteMatch } from "react-router-dom";
 
-import { LoadingIndicator } from "../../../components/LoadingIndicator";
-import { Cluster } from "../../../components/layouts/Cluster";
-import { Icon } from "../../../components/layouts/Icon";
-import { TemplateApp } from "../../../components/TemplateApp";
-import type { Consumption, Keg, Place } from "../../../models";
-import buttonClasses from "../../../styles/components/button.module.css";
+import { LoadingIndicator } from "~/components/LoadingIndicator";
+import { Cluster } from "~/components/layouts/Cluster";
+import { Icon } from "~/components/layouts/Icon";
+import { TemplateApp } from "~/components/TemplateApp";
+import type { Consumption, Keg, Place } from "~/models";
+import buttonClasses from "~/styles/components/button.module.css";
 import { NEW_PERSON } from "./routes";
 
 // const stylePersonListItemBase = css`

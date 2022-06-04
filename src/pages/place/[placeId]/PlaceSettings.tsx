@@ -1,6 +1,6 @@
 import type { FunctionComponent } from "preact";
 
-import { TemplateApp } from "../../../components/TemplateApp";
+import { TemplateApp } from "~/components/TemplateApp";
 
 export const PlaceSettings: FunctionComponent = () => {
   return (

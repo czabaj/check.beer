@@ -5,9 +5,9 @@ import { Suspense } from "preact/compat";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
 
-import { LoadingIndicator } from "./components/LoadingIndicator";
-import { Root } from "./pages";
-import "./styles/index.css";
+import { LoadingIndicator } from "~/components/LoadingIndicator";
+import { Root } from "~/pages";
+import "~/styles/index.css";
 
 const APP_CHECK_TOKEN = `6LcR8pUcAAAAAGYjKIm5p1owwr23EpDQxbfEGlpo`;
 

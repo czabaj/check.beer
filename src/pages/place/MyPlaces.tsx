@@ -2,13 +2,13 @@ import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/s
 import cx from "clsx";
 import { Link, useRouteMatch } from "react-router-dom";
 
-import { LoadingIndicator } from "../../components/LoadingIndicator";
-import { TemplateApp } from "../../components/TemplateApp";
-import { Icon } from "../../components/layouts/Icon";
-import { useDBUser } from "../../hooks/useDBUser";
-import { User as DBUser } from "../../models";
+import { LoadingIndicator } from "~/components/LoadingIndicator";
+import { TemplateApp } from "~/components/TemplateApp";
+import { Icon } from "~/components/layouts/Icon";
+import { useCurrentUser } from "~/hooks/useCurrentUser";
+import { CurrentUser as DBUser } from "~/models";
+import buttonClasses from "~/styles/components/button.module.css";
 import { NEW_PLACE } from "./routes";
-import buttonClasses from "../../styles/components/button.module.css";
 
 const PlacesListing = ({ places }: { places?: DBUser[`places`] }) => {
   const placesEntries = places && Object.entries(places);
@@ -35,7 +35,7 @@ const PlacesListing = ({ places }: { places?: DBUser[`places`] }) => {
 };
 
 export const MyPlaces = () => {
-  const { data: DBUser } = useDBUser();
+  const { data: DBUser } = useCurrentUser();
 
   return (
     <TemplateApp pageTitle="Moje mista">

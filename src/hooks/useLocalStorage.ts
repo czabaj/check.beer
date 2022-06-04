@@ -1,5 +1,5 @@
 import {
-  StateUpdater,
+  type StateUpdater,
   useCallback,
   useEffect,
   useRef,

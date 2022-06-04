@@ -8,21 +8,25 @@
     "plugin:react/recommended",
     "prettier"
   ],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
-      "rules": {}
-    }
-  ],
   "rules": {
     "curly": [2, "multi-line", "consistent"],
-    "no-console": [2, { "allow": ["error", "warn"] }],
+    "import/order": [
+      2,
+      {
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "groups": ["builtin", "external", "internal"],
+        "newlines-between": "always"
+      }
+    ],
+    "no-console": [
+      2,
+      {
+        "allow": ["error", "warn"]
+      }
+    ],
     "react/button-has-type": 2,
     "react/react-in-jsx-scope": 0
   }

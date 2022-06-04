@@ -3,8 +3,8 @@ import type { FunctionComponent } from "preact";
 import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
-import { LoadingIndicator } from "../../../components/LoadingIndicator";
-import type { Place as PlaceType } from "../../../models";
+import { LoadingIndicator } from "~/components/LoadingIndicator";
+import type { Place as PlaceType } from "~/models";
 import { NewPerson } from "./NewPerson";
 import { Overview } from "./Overview";
 import { PlaceSettings } from "./PlaceSettings";

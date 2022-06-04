@@ -1,55 +1,30 @@
-import {
-  addDoc,
-  collection,
-  updateDoc,
-  where,
-  getDocs,
-  query,
-} from "firebase/firestore";
 import { useFirestore, useUser } from "reactfire";
-import { set, update } from "lodash/fp";
+import { useHistory } from "react-router-dom";
 
-import { TemplateApp } from "../../components/TemplateApp";
-import buttonClasses from "../../styles/components/button.module.css";
-import { Place, User as DBUser } from "../../models";
+import { TemplateApp } from "~/components/TemplateApp";
+import { addNewPlace } from "~/db";
+import buttonClasses from "~/styles/components/button.module.css";
 
 const FORM_FIELD_PLACE_NAME = `name`;
 
 export const NewPlace = () => {
   const firestore = useFirestore();
   const user = useUser();
+  const history = useHistory();
+  const handleSubmit = async (event: Event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const valid = form.reportValidity();
+    if (!valid) return;
+    const formData = new FormData(form);
+    const newPlace = await addNewPlace(firestore, user.data!, {
+      name: formData.get(FORM_FIELD_PLACE_NAME) as string,
+    });
+    history.push(`/place/${newPlace.id}`);
+  };
   return (
     <TemplateApp pageTitle="Přidat místo">
-      <form
-        onSubmit={async (event) => {
-          event.preventDefault();
-          const form = event.target as HTMLFormElement;
-          const valid = form.reportValidity();
-          if (!valid) return;
-          const formData = new FormData(form);
-          const name = formData.get(FORM_FIELD_PLACE_NAME) as string;
-          const userRef = query<DBUser>(
-            collection(firestore, `users`) as any,
-            where(`email`, `==`, user.data!.email)
-          );
-          const userDocs = await getDocs(userRef);
-          const DBUser = userDocs.docs[0];
-          const placeRef = await addDoc<Place>(
-            collection(firestore, "places") as any,
-            {
-              name,
-              taps: { main: null },
-              persons: { [DBUser.data().name]: true },
-            }
-          );
-          const updatedData = update(
-            `places`,
-            set(placeRef.id, name),
-            DBUser.data()
-          );
-          await updateDoc(DBUser.ref, updatedData);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <div>
             <label htmlFor={FORM_FIELD_PLACE_NAME}>Název místa</label>

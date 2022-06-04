@@ -12,7 +12,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.27.0
   clsx: ^1.1.1
   cssnano: ^5.1.8
-  dayjs: ^1.10.6
+  dayjs: ^1.11.2
   esbuild: ^0.12.15
   eslint: ^8.16.0
   eslint-config-prettier: ^8.5.0
@@ -23,19 +23,18 @@ specifiers:
   firebase: latest
   fireward: ^1.6.0
   lodash: ^4.17.21
-  normalize.css: ^8.0.1
   open-props: ^1.3.16
   postcss: ^8.4.13
   postcss-combine-duplicated-selectors: ^10.0.3
   postcss-extend-rule: ^4.0.0
   postcss-import: ^14.1.0
   postcss-preset-env: ^7.5.0
-  preact: ^10.5.13
+  preact: ^10.7.3
   prettier: ^2.6.2
-  react-router-dom: ^5.3.0
-  reactfire: ^4.2.0
-  rxfire: ^6.0.2
-  rxjs: ^7.3.0
+  react-router-dom: ^5.3.3
+  reactfire: ^4.2.1
+  rxfire: ^6.0.3
+  rxjs: ^7.5.5
   stylelint: ^14.8.5
   stylelint-config-prettier: ^9.0.3
   stylelint-config-standard: ^25.0.0
@@ -50,10 +49,9 @@ dependencies:
   dayjs: 1.11.2
   firebase: 9.8.2
   lodash: 4.17.21
-  normalize.css: 8.0.1
   open-props: 1.3.16
-  preact: 10.7.2
-  react-router-dom: 5.3.2
+  preact: 10.7.3
+  react-router-dom: 5.3.3
   reactfire: 4.2.1_firebase@9.8.2
   rxfire: 6.0.3_firebase@9.8.2+rxjs@7.5.5
   rxjs: 7.5.5
@@ -62,7 +60,7 @@ devDependencies:
   '@babel/core': 7.17.12
   '@babel/plugin-proposal-export-namespace-from': 7.17.12_@babel+core@7.17.12
   '@babel/plugin-transform-modules-commonjs': 7.17.12_@babel+core@7.17.12
-  '@preact/preset-vite': 2.2.0_qksod5gyx5zbf7eyu7ry5cjpvm
+  '@preact/preset-vite': 2.2.0_w7roqadab43aegc6lj3a4n4v2a
   '@types/lodash': 4.14.182
   '@types/react-router-dom': 5.3.3
   '@typescript-eslint/eslint-plugin': 5.27.0_dszb5tb7atwkjjijmmov4qhi7i
@@ -1069,7 +1067,7 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@preact/preset-vite/2.2.0_qksod5gyx5zbf7eyu7ry5cjpvm:
+  /@preact/preset-vite/2.2.0_w7roqadab43aegc6lj3a4n4v2a:
     resolution: {integrity: sha512-xOtPzyVSPphUF/tRnzjxkCR/ovbCS6O25ekdCw5MGKcaAkb6PDRo50tS1x2n0+O9qL7Z/qrHJKpyCVn29A4iMg==}
     peerDependencies:
       '@babel/core': 7.x
@@ -1078,7 +1076,7 @@ packages:
       '@babel/core': 7.17.12
       '@babel/plugin-transform-react-jsx': 7.17.12_@babel+core@7.17.12
       '@babel/plugin-transform-react-jsx-development': 7.16.7_@babel+core@7.17.12
-      '@prefresh/vite': 2.2.8_preact@10.7.2+vite@2.9.9
+      '@prefresh/vite': 2.2.8_preact@10.7.3+vite@2.9.9
       '@rollup/pluginutils': 4.2.1
       babel-plugin-transform-hook-names: 1.0.2_@babel+core@7.17.12
       debug: 4.3.4
@@ -1094,19 +1092,19 @@ packages:
     resolution: {integrity: sha512-fYAWbU1WDSLn108kKY4eDaaeUcnszFqXjgaGKYXNZ5NLulpRTpsrY+Sbfo9q8LDpWrBpqIgzjrwNnvglWI1xNQ==}
     dev: true
 
-  /@prefresh/core/1.3.4_preact@10.7.2:
+  /@prefresh/core/1.3.4_preact@10.7.3:
     resolution: {integrity: sha512-s7iNsnyJ3lZEUrYIgmVIB/hKtp4U6mdD91a31Zg7Q8M49O0x2KThrbrMQYraoDDrs4STdFB8Zv6bceUguOoX1A==}
     peerDependencies:
       preact: ^10.0.0
     dependencies:
-      preact: 10.7.2
+      preact: 10.7.3
     dev: true
 
   /@prefresh/utils/1.1.3:
     resolution: {integrity: sha512-Mb9abhJTOV4yCfkXrMrcgFiFT7MfNOw8sDa+XyZBdq/Ai2p4Zyxqsb3EgHLOEdHpMj6J9aiZ54W8H6FTam1u+A==}
     dev: true
 
-  /@prefresh/vite/2.2.8_preact@10.7.2+vite@2.9.9:
+  /@prefresh/vite/2.2.8_preact@10.7.3+vite@2.9.9:
     resolution: {integrity: sha512-yGGa+PKPYPTzMlxgQ8aBgxw9K69I8X4iQ0E6KOcIvls96WKqKLLOYZW9SUgCve446jpUXvc9udviPBZjCeZIIQ==}
     peerDependencies:
       preact: ^10.4.0
@@ -1114,10 +1112,10 @@ packages:
     dependencies:
       '@babel/core': 7.17.12
       '@prefresh/babel-plugin': 0.4.3
-      '@prefresh/core': 1.3.4_preact@10.7.2
+      '@prefresh/core': 1.3.4_preact@10.7.3
       '@prefresh/utils': 1.1.3
       '@rollup/pluginutils': 4.2.1
-      preact: 10.7.2
+      preact: 10.7.3
       vite: 2.9.9
     transitivePeerDependencies:
       - supports-color
@@ -3449,10 +3447,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /normalize.css/8.0.1:
-    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
-    dev: false
-
   /nth-check/2.0.1:
     resolution: {integrity: sha512-it1vE95zF6dTT9lBsYbxvqh0Soy4SPowchj0UBGj/V6cTPnXXtQOPUbhZ6CmGzAD/rW22LQK6E96pcdJXk4A4w==}
     dependencies:
@@ -4322,8 +4316,8 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /preact/10.7.2:
-    resolution: {integrity: sha512-GLjn0I3r6ka+NvxJUppsVFqb4V0qDTEHT/QxHlidPuClGaxF/4AI2Qti4a0cv3XMh5n1+D3hLScW10LRIm5msQ==}
+  /preact/10.7.3:
+    resolution: {integrity: sha512-giqJXP8VbtA1tyGa3f1n9wiN7PrHtONrDyE3T+ifjr/tTkg+2N4d/6sjC9WyJKv8wM7rOYDveqy5ZoFmYlwo4w==}
 
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -4388,8 +4382,8 @@ packages:
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  /react-router-dom/5.3.2:
-    resolution: {integrity: sha512-j8sAq4YdWsrkM2DfDX26GnjtDKWUSd65LzHyBz8NcgFcK0ct7oTvYlwhOr532xpXsYP1HONq6QqUGA7GhbAY5w==}
+  /react-router-dom/5.3.3:
+    resolution: {integrity: sha512-Ov0tGPMBgqmbu5CDmN++tv2HQ9HlWDuWIIqn4b88gjlAN5IHI+4ZUZRcpz9Hl0azFIwihbLDYw1OiHGRo7ZIng==}
     peerDependencies:
       react: '>=15'
     dependencies:
@@ -4397,13 +4391,13 @@ packages:
       history: 4.10.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react-router: 5.3.2
+      react-router: 5.3.3
       tiny-invariant: 1.2.0
       tiny-warning: 1.0.3
     dev: false
 
-  /react-router/5.3.2:
-    resolution: {integrity: sha512-GlsSUckZ4JthgsW5lV9oSCs5CoQ7q0t0Ump/Y5YQ8qhiS+WjaAhaoJhc7otpZW9eVhO6N06vYPt40SpEzuuZeg==}
+  /react-router/5.3.3:
+    resolution: {integrity: sha512-mzQGUvS3bM84TnbtMYR8ZjKnuPJ71IjSzR+DE6UkUqvN4czWIqEs17yLL8xkAycv4ev0AiN+IGrWu88vJs/p2w==}
     peerDependencies:
       react: '>=15'
     dependencies:

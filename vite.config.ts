@@ -1,3 +1,5 @@
+import path from "path";
+
 import preact from "@preact/preset-vite";
 import { defineConfig } from "vite";
 import svgrPlugin from "vite-plugin-svgr";
@@ -6,7 +8,8 @@ import svgrPlugin from "vite-plugin-svgr";
 export default defineConfig({
   resolve: {
     alias: {
-      react: "preact/compat",
+      react: `preact/compat`,
+      "~": path.resolve(__dirname, `./src`),
     },
   },
   plugins: [preact(), svgrPlugin()],

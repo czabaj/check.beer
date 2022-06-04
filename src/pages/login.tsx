@@ -1,15 +1,14 @@
 import cx from "clsx";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import type { FunctionComponent } from "preact";
-
 import { useAuth } from "reactfire";
-import buttonClasses from "../styles/components/button.module.css";
+
+import buttonClasses from "~/styles/components/button.module.css";
 
 
 /**
  * The login page relies completely on firebaseUI
  */
-export const Login: FunctionComponent = () => {
+export const Login = () => {
   const auth = useAuth();
   return (
     <div>
