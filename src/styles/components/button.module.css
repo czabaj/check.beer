@@ -71,9 +71,9 @@
   }
 
   /*
-     * All the childrens are styled as buttons, the borders are unset on the
-     * children - the border is rendered on the whole buttonClasses-cluster instead.
-     */
+       * All the children are styled as buttons, the borders are unset on the
+       * children - the border is rendered on the whole buttonClasses-cluster instead.
+       */
 
   & > * {
     @extend .button;
@@ -182,4 +182,9 @@
 .flat {
   border-radius: 0;
   min-inline-size: unset;
+}
+
+.icon {
+  min-inline-size: unset;
+  flex-direction: column;
 }

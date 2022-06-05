@@ -1,45 +1,20 @@
-import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
+import { ReactComponent as GearIcon } from "@fortawesome/fontawesome-free/svgs/solid/cog.svg";
 import cx from "clsx";
 import { DocumentReference } from "firebase/firestore";
 import { memo } from "preact/compat";
 import { useFirestoreCollectionData } from "reactfire";
-import { Trans, useTranslation } from "react-i18next";
+import { Trans } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Temporal } from "temporal-polyfill";
 
 import { LoadingIndicator } from "~/components/LoadingIndicator";
-import { Cluster } from "~/components/layouts/Cluster";
 import { Icon } from "~/components/layouts/Icon";
 import { TemplateApp } from "~/components/TemplateApp";
 import { kegRecentQuery } from "~/db";
-import type { Consumption, Keg, Place } from "~/models";
+import type { Consumption, Keg, PersonName, Place } from "~/models";
 import buttonClasses from "~/styles/components/button.module.css";
 import { NEW_PERSON } from "./routes";
-
-// const stylePersonListItemBase = css`
-//   font-size: 120%;
-//   padding: 0 var(--s-1);
-//   position: relative;
-//   &::before {
-//     background-color: dodgerblue;
-//     bottom: -1px;
-//     content: "";
-//     left: 0;
-//     position: absolute;
-//     top: 0;
-//     width: calc(var(--s-1) + 1.5ch);
-//   }
-//   & > span:first-child {
-//     z-index: 1;
-//     &::first-letter {
-//       color: white;
-//       font-weight: bold;
-//     }
-//   }
-//   & > span:last-child {
-//     font-style: italic;
-//   }
-// `;
+import classes from "./Overview.module.css";
 
 const sortConsumptions = (a: Consumption, b: Consumption) =>
   a.at.seconds - b.at.seconds;
@@ -57,16 +32,12 @@ const PersonListItem = (props: PersonListItemProps) => {
     .sort(sortConsumptions)
     .map(toConsumptionSymbol);
   return (
-    <Cluster as="li" justify="space-between">
-      <span>{props.name}</span>
-      <span>{consumedMillilitersByDateAsc.join(``)}</span>
-    </Cluster>
+    <li>
+      <div>{props.name}</div>
+      <div>{consumedMillilitersByDateAsc.join(``)}</div>
+    </li>
   );
 };
-
-// const stylePlaceOrderedList = css`
-//   ${resetList}
-// `;
 
 export type OverviewProps = {
   place: Place;
@@ -105,14 +76,10 @@ export const Overview = ({ place, placeRef }: OverviewProps) => {
   if (!kegs) {
     return <LoadingIndicator />;
   }
-  const activePersons = [] as string[];
-  const consumptionPerPerson = {} as Record<
-    typeof activePersons[number],
-    Consumption[]
-  >;
-  for (const [name, active] of Object.entries(place.persons)) {
-    if (active) {
-      activePersons.push(name);
+  const activePersons = place.active;
+  const consumptionPerPerson = {} as Record<PersonName, Consumption[]>;
+  for (const name of Object.keys(place.persons)) {
+    if (activePersons.includes(name)) {
       consumptionPerPerson[name] = [];
     }
   }
@@ -123,13 +90,26 @@ export const Overview = ({ place, placeRef }: OverviewProps) => {
   }
   return (
     <TemplateApp>
-      <div>
+      <div className={classes.header}>
         <div>
           <h2>{place.name}</h2>
-          <Established timestamp={place.established.toMillis()} />
+          <div>
+            <Established timestamp={place.established.toMillis()} />
+          </div>
         </div>
+        <button
+          className={cx(
+            buttonClasses.button,
+            buttonClasses.variantStealth,
+            buttonClasses.icon
+          )}
+          type="button"
+        >
+          <Icon icon={GearIcon} height="2rem" />
+          Nastavení
+        </button>
       </div>
-      <ol>
+      <ol className={classes.personsList}>
         {activePersons.sort().map((personName) => (
           <PersonListItem
             recentConsumptions={consumptionPerPerson[personName]}

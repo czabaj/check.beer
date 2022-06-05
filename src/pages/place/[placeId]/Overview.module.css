@@ -1,0 +1,31 @@
+@import "../../../styles/functionalSelectors.css";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.personsList {
+  @extend %resetList;
+
+  & > li {
+    border-inline-start: 2ch solid dodgerblue;
+    font-size: 120%;
+    padding-inline: var(--s-1);
+    position: relative;
+
+    & > div:first-child {
+      margin-inline-start: -2ch;
+
+      &::first-letter {
+        color: white;
+        font-weight: bold;
+      }
+    }
+
+    & > div:last-child {
+      font-style: italic;
+    }
+  }
+}

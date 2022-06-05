@@ -66,8 +66,9 @@ export const addNewPlace = async (
   place: Pick<Place, `name`>
 ): Promise<DocumentReference<Place>> => {
   const currentUser = await currentUserDoc(firestore, user);
-  const newPlaceData = {
+  const newPlaceData: Place = {
     ...place,
+    active: [currentUser.data().name],
     established: Timestamp.fromMillis(Date.now()),
     persons: { [currentUser.data().name]: true },
     taps: { main: null },

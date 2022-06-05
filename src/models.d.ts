@@ -47,11 +47,12 @@ export type Keg = {
   priceNew: number;
 };
 
-type PersonIsActive = boolean;
+type AccountId = boolean;
 export type Place = {
+  active: PersonName[];
   established: Timestamp;
   name: string;
-  persons: Record<PersonName, PersonIsActive>;
+  persons: Record<PersonName, AccountId | ``>;
   taps: Record<TapName, DocumentReference<Keg> | null>;
 };
 
