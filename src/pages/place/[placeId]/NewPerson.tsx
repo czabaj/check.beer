@@ -15,5 +15,11 @@ export const NewPerson = ({ place }: NewPersonProps) => {
       inactivePersons.push(name);
     }
   }
-  return <TemplateApp pageTitle={place.name}>{inactivePersons}</TemplateApp>;
+  return (
+    <TemplateApp>
+      <h2>{place.name}</h2>
+      <input type="search" />
+      {inactivePersons}
+    </TemplateApp>
+  );
 };

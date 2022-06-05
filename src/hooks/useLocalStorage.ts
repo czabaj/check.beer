@@ -7,7 +7,7 @@ import {
 } from "preact/hooks";
 
 /**
- * Works almost the same as `useState` but persist changes to localSotrage and
+ * Works almost the same as `useState` but persist changes to localStorage and
  * provides one more callback for clearing the localStorage.
  */
 export const useLocalStorage = <V>(

@@ -4,7 +4,8 @@ import { TemplateApp } from "~/components/TemplateApp";
 
 export const PlaceSettings: FunctionComponent = () => {
   return (
-    <TemplateApp pageTitle="Nastaveni mista">
+    <TemplateApp>
+      <h2>Nastaveni mista</h2>
       <>Nastaveni mista</>
     </TemplateApp>
   );

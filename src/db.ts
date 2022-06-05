@@ -1,23 +1,30 @@
 import { Auth, User } from "firebase/auth";
 import {
   collection,
-  getDocs,
+  getDocsFromCache,
+  getDocsFromServer,
   query,
   type CollectionReference,
   type DocumentReference,
   type Firestore,
   type Query,
+  type QuerySnapshot,
   type QueryDocumentSnapshot,
   where,
   addDoc,
   updateDoc,
+  Timestamp,
 } from "firebase/firestore";
-import { head, set, update } from "lodash/fp";
+import { head, set, throttle, update } from "lodash/fp";
 import { user } from "rxfire/auth";
 import { filter, map, switchMap } from "rxjs/operators";
 import { collectionData } from "rxfire/firestore";
+import { Temporal } from "temporal-polyfill";
 
-import { CurrentUser, Place } from "~/models";
+import { CurrentUser, Keg, Place } from "~/models";
+
+const getDocsFromCacheFirst = <T>(query: Query<T>): Promise<QuerySnapshot<T>> =>
+  getDocsFromCache(query).catch(() => getDocsFromServer(query));
 
 export const currentUserCollection = (
   firestore: Firestore
@@ -33,7 +40,7 @@ export const currentUserDoc = (
   firestore: Firestore,
   user: User
 ): Promise<QueryDocumentSnapshot<CurrentUser>> =>
-  getDocs(currentUserQuery(firestore, user)).then(
+  getDocsFromCacheFirst(currentUserQuery(firestore, user)).then(
     (currentUsersDocs) => currentUsersDocs.docs[0]
   );
 
@@ -61,8 +68,9 @@ export const addNewPlace = async (
   const currentUser = await currentUserDoc(firestore, user);
   const newPlaceData = {
     ...place,
-    taps: { main: null },
+    established: Timestamp.fromMillis(Date.now()),
     persons: { [currentUser.data().name]: true },
+    taps: { main: null },
   };
   const newPlace = await addDoc(placeCollection(firestore), newPlaceData);
   const updatedCurrentUser = update(
@@ -73,3 +81,21 @@ export const addNewPlace = async (
   await updateDoc(currentUser.ref, updatedCurrentUser);
   return newPlace;
 };
+
+export const kegCollection = (
+  place: DocumentReference<Place>
+): CollectionReference<Keg> => collection(place, `kegs`) as any;
+
+const UPDATE_EVERY = 60 * 60 * 1000; // milliseconds
+export const getSlidingWindow = throttle(UPDATE_EVERY, (): Timestamp => {
+  const monthAgo = Temporal.Now.plainDateISO()
+    .subtract({ months: 1 })
+    .toZonedDateTime(Temporal.Now.timeZone());
+  return Timestamp.fromMillis(monthAgo.epochMilliseconds);
+});
+
+export const kegRecentQuery = (place: DocumentReference<Place>) =>
+  query<Keg>(
+    kegCollection(place),
+    where(`lastConsumptionAt`, `>=`, getSlidingWindow())
+  );

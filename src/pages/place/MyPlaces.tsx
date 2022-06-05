@@ -38,7 +38,8 @@ export const MyPlaces = () => {
   const { data: DBUser } = useCurrentUser();
 
   return (
-    <TemplateApp pageTitle="Moje mista">
+    <TemplateApp>
+      <h2>Moje mista</h2>
       {!DBUser ? (
         <LoadingIndicator />
       ) : (

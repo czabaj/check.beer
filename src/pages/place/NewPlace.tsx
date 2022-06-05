@@ -23,7 +23,8 @@ export const NewPlace = () => {
     history.push(`/place/${newPlace.id}`);
   };
   return (
-    <TemplateApp pageTitle="Přidat místo">
+    <TemplateApp>
+      <h2>Přidat místo</h2>
       <form onSubmit={handleSubmit}>
         <fieldset>
           <div>

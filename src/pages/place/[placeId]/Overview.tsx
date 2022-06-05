@@ -1,14 +1,8 @@
 import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
 import cx from "clsx";
-import * as dayjs from "dayjs";
 import {
-  query,
-  collection,
-  where,
   DocumentReference,
-  Timestamp,
 } from "firebase/firestore";
-import throttle from "lodash/throttle";
 import { useFirestoreCollectionData } from "reactfire";
 import { Link, useRouteMatch } from "react-router-dom";
 
@@ -16,6 +10,7 @@ import { LoadingIndicator } from "~/components/LoadingIndicator";
 import { Cluster } from "~/components/layouts/Cluster";
 import { Icon } from "~/components/layouts/Icon";
 import { TemplateApp } from "~/components/TemplateApp";
+import { kegRecentQuery } from "~/db";
 import type { Consumption, Keg, Place } from "~/models";
 import buttonClasses from "~/styles/components/button.module.css";
 import { NEW_PERSON } from "./routes";
@@ -72,28 +67,15 @@ const PersonListItem = (props: PersonListItemProps) => {
 //   ${resetList}
 // `;
 
-const UPDATE_EVERY = 60 * 60 * 1000; // milliseconds
-const getSlidingWindow = throttle((): Timestamp => {
-  const fetchKegsWithConsumptionFrom = dayjs()
-    .subtract(1, `month`)
-    .startOf(`day`); // align to start of the unit - improves caching
-  return Timestamp.fromMillis(fetchKegsWithConsumptionFrom.valueOf());
-}, UPDATE_EVERY);
+
 
 export type OverviewProps = {
   place: Place;
-  placeRef: DocumentReference;
+  placeRef: DocumentReference<Place>;
 };
 
-export const Overview = ({
-  place,
-  placeRef,
-}: OverviewProps) => {
-  const recentKegsRef = query<Keg>(
-    collection(placeRef, `kegs`) as any,
-    where(`lastConsumptionAt`, `>=`, getSlidingWindow())
-  );
-  const { data: kegs, status } = useFirestoreCollectionData<Keg>(recentKegsRef);
+export const Overview = ({ place, placeRef }: OverviewProps) => {
+  const { data: kegs, status } = useFirestoreCollectionData(kegRecentQuery(placeRef));
   const { url } = useRouteMatch();
   console.log(`data`, { place, kegs });
   if (!kegs) {
@@ -116,7 +98,13 @@ export const Overview = ({
     }
   }
   return (
-    <TemplateApp pageTitle={place.name}>
+    <TemplateApp>
+      <div>
+        <div>
+          <h2>{place.name}</h2>
+          <div>Již od </div>
+        </div>
+      </div>
       <ol>
         {activePersons.sort().map((personName) => (
           <PersonListItem
@@ -125,13 +113,6 @@ export const Overview = ({
           />
         ))}
       </ol>
-      <Link
-        className={cx(buttonClasses.button, buttonClasses.variantPrimary)}
-        to={`${url}${NEW_PERSON}`}
-      >
-        <Icon icon={PlusIcon} noAlign />
-        <span className="visually-hidden"> přidat dalšího uživatele</span>
-      </Link>
     </TemplateApp>
   );
 };

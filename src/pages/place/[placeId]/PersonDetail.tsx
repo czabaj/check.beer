@@ -4,8 +4,8 @@ import { TemplateApp } from "~/components/TemplateApp";
 
 export const PersonDetail: FunctionComponent = () => {
   return (
-    <TemplateApp pageTitle="Detail osoby">
-      <>Detail osoby</>
+    <TemplateApp>
+      <h2>Detail osoby</h2>
     </TemplateApp>
   );
 };

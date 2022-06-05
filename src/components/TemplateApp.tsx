@@ -22,13 +22,9 @@ const NAV_TARGET = `#${NAV_ID}`;
 
 export type Props = {
   children: ComponentChildren;
-  pageTitle: ComponentChild;
 };
 
-export const TemplateApp: FunctionComponent<Props> = ({
-  children,
-  pageTitle,
-}) => {
+export const TemplateApp: FunctionComponent<Props> = ({ children }) => {
   const history = useHistory();
   const closeMenu = history.goBack;
   const location = useLocation();
@@ -100,10 +96,7 @@ export const TemplateApp: FunctionComponent<Props> = ({
           </li>
         </ul>
       </nav>
-      <main>
-        <h2>{pageTitle}</h2>
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 };

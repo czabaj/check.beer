@@ -49,9 +49,10 @@ export type Keg = {
 
 type PersonIsActive = boolean;
 export type Place = {
-  taps: Record<TapName, DocumentReference<Keg> | null>;
+  established: Timestamp;
   name: string;
   persons: Record<PersonName, PersonIsActive>;
+  taps: Record<TapName, DocumentReference<Keg> | null>;
 };
 
 export type CurrentUser = {

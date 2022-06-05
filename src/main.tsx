@@ -4,6 +4,7 @@ import { FunctionComponent, render } from "preact";
 import { Suspense } from "preact/compat";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
+import "temporal-polyfill/global";
 
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 import { Root } from "~/pages";
