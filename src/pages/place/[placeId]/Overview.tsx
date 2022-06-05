@@ -1,10 +1,11 @@
 import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/solid/plus.svg";
 import cx from "clsx";
-import {
-  DocumentReference,
-} from "firebase/firestore";
+import { DocumentReference } from "firebase/firestore";
+import { memo } from "preact/compat";
 import { useFirestoreCollectionData } from "reactfire";
+import { Trans, useTranslation } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
+import { Temporal } from "temporal-polyfill";
 
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 import { Cluster } from "~/components/layouts/Cluster";
@@ -67,15 +68,38 @@ const PersonListItem = (props: PersonListItemProps) => {
 //   ${resetList}
 // `;
 
-
-
 export type OverviewProps = {
   place: Place;
   placeRef: DocumentReference<Place>;
 };
 
+const toLocalDateString = (timestamp: number): string =>
+  Temporal.Instant.fromEpochMilliseconds(timestamp)
+    .toZonedDateTimeISO(Temporal.Now.timeZone())
+    .toPlainDate()
+    .toString();
+
+const Established = memo(({ timestamp }: { timestamp: number }) => {
+  return (
+    <Trans
+      defaults="Již od <time>{{established, datetime}}</time>"
+      values={{
+        established: new Date(timestamp),
+        formatParams: {
+          established: { year: "numeric", month: "numeric", day: "numeric" },
+        },
+      }}
+      components={{
+        time: (<time dateTime={toLocalDateString(timestamp)} />) as any,
+      }}
+    />
+  );
+});
+
 export const Overview = ({ place, placeRef }: OverviewProps) => {
-  const { data: kegs, status } = useFirestoreCollectionData(kegRecentQuery(placeRef));
+  const { data: kegs, status } = useFirestoreCollectionData(
+    kegRecentQuery(placeRef)
+  );
   const { url } = useRouteMatch();
   console.log(`data`, { place, kegs });
   if (!kegs) {
@@ -102,7 +126,7 @@ export const Overview = ({ place, placeRef }: OverviewProps) => {
       <div>
         <div>
           <h2>{place.name}</h2>
-          <div>Již od </div>
+          <Established timestamp={place.established.toMillis()} />
         </div>
       </div>
       <ol>

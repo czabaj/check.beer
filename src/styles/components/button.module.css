@@ -150,7 +150,7 @@
 .variantStealth {
   --_background: transparent;
   --_border: transparent;
-  --_text: var(--gray-9);
+  --_text: var(--text-1);
   --_active-background: var(--gray-3);
   --_active-border: var(--gray-5);
   --_active-text: var(--gray-9);

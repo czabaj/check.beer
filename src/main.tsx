@@ -7,6 +7,7 @@ import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
 import "temporal-polyfill/global";
 
 import { LoadingIndicator } from "~/components/LoadingIndicator";
+import "~/i18n";
 import { Root } from "~/pages";
 import "~/styles/index.css";
 

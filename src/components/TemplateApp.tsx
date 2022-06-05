@@ -1,19 +1,15 @@
 import { ReactComponent as IconBars } from "@fortawesome/fontawesome-free/svgs/solid/bars.svg";
 import { ReactComponent as IconTimes } from "@fortawesome/fontawesome-free/svgs/solid/times.svg";
 import cx from "clsx";
-import type {
-  ComponentChild,
-  ComponentChildren,
-  FunctionComponent,
-} from "preact";
+import type { ComponentChildren, FunctionComponent } from "preact";
 import { useEffect } from "preact/hooks";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
-import { PROFILE } from "../pages/routes";
-import { ROOT as PLACE_ROOT } from "../pages/place/routes";
-import buttonClasses from "../styles/components/button.module.css";
+import { PROFILE } from "~/pages/routes";
+import { ROOT as PLACE_ROOT } from "~/pages/place/routes";
+import buttonClasses from "~/styles/components/button.module.css";
+
 import classes from "./TemplateApp.module.css";
-import React from "preact/compat";
 import { Icon } from "./layouts/Icon";
 
 const NAV_ID = `nav_menu`;

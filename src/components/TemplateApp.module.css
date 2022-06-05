@@ -11,6 +11,8 @@
   flex-flow: column nowrap;
 
   & > header {
+    --text-1: var(--text-3);
+
     background-color: var(--brand);
 
     & > div {
@@ -22,7 +24,6 @@
     }
 
     & h1 {
-      color: var(--text-3);
       font-size: var(--font-size-4);
     }
   }
