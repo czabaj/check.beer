@@ -2,11 +2,11 @@ import { getFirestore } from "firebase/firestore";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { FirestoreProvider, useFirebaseApp } from "reactfire";
 
+import { redirectUnauthenticatedToLogin } from "../utils";
 import { PlaceId } from "./[placeId]";
 import { MyPlaces } from "./MyPlaces";
 import { NewPlace } from "./NewPlace";
 import { NEW_PLACE } from "./routes";
-import { redirectUnauthenticatedToLogin } from "../utils";
 
 export const Places = () => {
   const firestoreInstance = getFirestore(useFirebaseApp());

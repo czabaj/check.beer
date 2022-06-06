@@ -2,9 +2,10 @@ import cx from "clsx";
 import { Link } from "react-router-dom";
 
 import buttonClasses from "~/styles/components/button.module.css";
-import { LOGIN } from "./routes";
 
 import classes from "./Homepage.module.css";
+import { LOGIN } from "./routes";
+
 
 export const Homepage = () => {
   return (

@@ -5,12 +5,12 @@ import type { ComponentChildren, FunctionComponent } from "preact";
 import { useEffect } from "preact/hooks";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
-import { PROFILE } from "~/pages/routes";
 import { ROOT as PLACE_ROOT } from "~/pages/place/routes";
+import { PROFILE } from "~/pages/routes";
 import buttonClasses from "~/styles/components/button.module.css";
 
-import classes from "./TemplateApp.module.css";
 import { Icon } from "./layouts/Icon";
+import classes from "./TemplateApp.module.css";
 
 const NAV_ID = `nav_menu`;
 const NAV_LABEL_ID = `nav_menu_label`;

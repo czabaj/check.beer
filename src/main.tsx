@@ -23,7 +23,7 @@ const firebaseConfig = {
   measurementId: "G-RX9W09W11H",
 };
 
-const FirebaseAuthProvider: FunctionComponent = ({ children }) => {
+const FirebaseAuthProvider = ({ children }) => {
   const firebaseApp = useFirebaseApp();
   const auth = getAuth(firebaseApp);
   return <AuthProvider sdk={auth}>{children}</AuthProvider>;

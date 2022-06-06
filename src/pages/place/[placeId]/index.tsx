@@ -1,16 +1,17 @@
 import { doc } from "firebase/firestore";
-import type { FunctionComponent } from "preact";
 import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
+import type { Place as PlaceType } from "~/api/models";
 import { LoadingIndicator } from "~/components/LoadingIndicator";
-import type { Place as PlaceType } from "~/models";
+
 import { NewPerson } from "./NewPerson";
 import { Overview } from "./Overview";
+import { PersonDetail } from "./PersonDetail";
 import { PlaceSettings } from "./PlaceSettings";
-import { NEW_PERSON, SETTINGS } from "./routes";
+import { NEW_PERSON, PERSON_DETAIL, SETTINGS } from "./routes";
 
-export const PlaceId: FunctionComponent = () => {
+export const PlaceId = () => {
   const { path, url } = useRouteMatch();
   const { placeId } = useParams<{ placeId: string }>();
   const firestoreInstance = useFirestore();
@@ -28,6 +29,9 @@ export const PlaceId: FunctionComponent = () => {
       </Route>
       <Route path={`${url}${SETTINGS}`}>
         <PlaceSettings />
+      </Route>
+      <Route path={`${url}${PERSON_DETAIL}`}>
+        <PersonDetail />
       </Route>
     </Switch>
   );

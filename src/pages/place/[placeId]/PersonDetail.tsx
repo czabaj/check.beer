@@ -1,8 +1,6 @@
-import type { FunctionComponent } from "preact";
-
 import { TemplateApp } from "~/components/TemplateApp";
 
-export const PersonDetail: FunctionComponent = () => {
+export const PersonDetail = () => {
   return (
     <TemplateApp>
       <h2>Detail osoby</h2>

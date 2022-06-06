@@ -1,7 +1,7 @@
 import { DocumentReference } from "firebase/firestore";
 
+import type { Consumption, Keg, Place } from "~/api/models";
 import { TemplateApp } from "~/components/TemplateApp";
-import type { Consumption, Keg, Place } from "~/models";
 
 type NewPersonProps = {
   place: Place;

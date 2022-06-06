@@ -1,8 +1,8 @@
-import { useFirestore, useUser } from "reactfire";
 import { useHistory } from "react-router-dom";
+import { useFirestore, useUser } from "reactfire";
 
+import { addNewPlace } from "~/api/db";
 import { TemplateApp } from "~/components/TemplateApp";
-import { addNewPlace } from "~/db";
 import buttonClasses from "~/styles/components/button.module.css";
 
 const FORM_FIELD_PLACE_NAME = `name`;

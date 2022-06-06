@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
 
 import { delayU } from "~/utils/promise";
-import { getSlidingWindow } from "./db";
+
+import { getSlidingWindow } from "./api/db";
 
 describe(`getSlidingWindow`, () => {
   test(`Should return the same result for one hour`, async () => {

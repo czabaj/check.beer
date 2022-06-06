@@ -1,6 +1,7 @@
 import type { FunctionComponent } from "preact";
 
 import { withRedirectAuth } from "~/components/RedirectAuth";
+
 import { DEFAULT_PRIVATE_ROUTE, LOGIN } from "./routes";
 
 export const redirectAuthenticatedIntoApp = (

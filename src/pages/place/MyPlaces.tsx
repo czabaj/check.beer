@@ -2,12 +2,13 @@ import { ReactComponent as PlusIcon } from "@fortawesome/fontawesome-free/svgs/s
 import cx from "clsx";
 import { Link, useRouteMatch } from "react-router-dom";
 
+import { CurrentUser as DBUser } from "~/api/models";
+import { Icon } from "~/components/layouts/Icon";
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 import { TemplateApp } from "~/components/TemplateApp";
-import { Icon } from "~/components/layouts/Icon";
 import { useCurrentUser } from "~/hooks/useCurrentUser";
-import { CurrentUser as DBUser } from "~/models";
 import buttonClasses from "~/styles/components/button.module.css";
+
 import { NEW_PLACE } from "./routes";
 
 const PlacesListing = ({ places }: { places?: DBUser[`places`] }) => {

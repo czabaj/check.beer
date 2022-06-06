@@ -1,4 +1,5 @@
 @import "../../../styles/functionalSelectors.css";
+@import "../../../styles/utils.css";
 
 .header {
   display: flex;
@@ -15,8 +16,11 @@
     padding-inline: var(--s-1);
     position: relative;
 
-    & > div:first-child {
+    & > *:first-child {
+      @extend %resetAnchor, .breakout;
+
       margin-inline-start: -2ch;
+      display: block;
 
       &::first-letter {
         color: white;
@@ -24,7 +28,7 @@
       }
     }
 
-    & > div:last-child {
+    & > *:last-child {
       font-style: italic;
     }
   }

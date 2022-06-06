@@ -1,7 +1,7 @@
+import React from "preact/compat";
 import { useAuth, useUser } from "reactfire";
 
 import { TemplateApp } from "~/components/TemplateApp";
-import React from "preact/compat";
 
 export const Profile = () => {
   const { data: user } = useUser();

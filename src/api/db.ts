@@ -17,11 +17,11 @@ import {
 } from "firebase/firestore";
 import { head, set, throttle, update } from "lodash/fp";
 import { user } from "rxfire/auth";
-import { filter, map, switchMap } from "rxjs/operators";
 import { collectionData } from "rxfire/firestore";
+import { filter, map, switchMap } from "rxjs/operators";
 import { Temporal } from "temporal-polyfill";
 
-import { CurrentUser, Keg, Place } from "~/models";
+import { CurrentUser, Keg, Place } from "~/api/models";
 
 const getDocsFromCacheFirst = <T>(query: Query<T>): Promise<QuerySnapshot<T>> =>
   getDocsFromCache(query).catch(() => getDocsFromServer(query));

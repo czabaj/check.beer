@@ -2,53 +2,20 @@ import { ReactComponent as GearIcon } from "@fortawesome/fontawesome-free/svgs/s
 import cx from "clsx";
 import { DocumentReference } from "firebase/firestore";
 import { memo } from "preact/compat";
-import { useFirestoreCollectionData } from "reactfire";
 import { Trans } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
-import { Temporal } from "temporal-polyfill";
+import { useFirestoreCollectionData } from "reactfire";
 
-import { LoadingIndicator } from "~/components/LoadingIndicator";
+import { kegRecentQuery } from "~/api/db";
+import type { Consumption, PersonName, Place } from "~/api/models";
+import { sortConsumptions, toConsumptionSymbol } from "~/api/utils";
 import { Icon } from "~/components/layouts/Icon";
+import { LoadingIndicator } from "~/components/LoadingIndicator";
 import { TemplateApp } from "~/components/TemplateApp";
-import { kegRecentQuery } from "~/db";
-import type { Consumption, Keg, PersonName, Place } from "~/models";
 import buttonClasses from "~/styles/components/button.module.css";
-import { NEW_PERSON } from "./routes";
+import { toLocalDateString } from "~/utils/dateTime";
+
 import classes from "./Overview.module.css";
-
-const sortConsumptions = (a: Consumption, b: Consumption) =>
-  a.at.seconds - b.at.seconds;
-
-const toConsumptionSymbol = ({ milliliters }: Consumption) =>
-  milliliters >= 400 ? `X` : `I`;
-
-type PersonListItemProps = {
-  recentConsumptions: Consumption[];
-  name: string;
-};
-
-const PersonListItem = (props: PersonListItemProps) => {
-  const consumedMillilitersByDateAsc = props.recentConsumptions
-    .sort(sortConsumptions)
-    .map(toConsumptionSymbol);
-  return (
-    <li>
-      <div>{props.name}</div>
-      <div>{consumedMillilitersByDateAsc.join(``)}</div>
-    </li>
-  );
-};
-
-export type OverviewProps = {
-  place: Place;
-  placeRef: DocumentReference<Place>;
-};
-
-const toLocalDateString = (timestamp: number): string =>
-  Temporal.Instant.fromEpochMilliseconds(timestamp)
-    .toZonedDateTimeISO(Temporal.Now.timeZone())
-    .toPlainDate()
-    .toString();
 
 const Established = memo(({ timestamp }: { timestamp: number }) => {
   return (
@@ -67,7 +34,30 @@ const Established = memo(({ timestamp }: { timestamp: number }) => {
   );
 });
 
-export const Overview = ({ place, placeRef }: OverviewProps) => {
+const PersonListItem = (props: {
+  hrefDetail: string;
+  name: string;
+  recentConsumptions: Consumption[];
+}) => {
+  const consumedMillilitersByDateAsc = props.recentConsumptions
+    .sort(sortConsumptions)
+    .map(toConsumptionSymbol);
+
+  return (
+    <li>
+      <Link to={props.hrefDetail}>{props.name}</Link>
+      <div>{consumedMillilitersByDateAsc.join(``)}</div>
+    </li>
+  );
+};
+
+export const Overview = ({
+  place,
+  placeRef,
+}: {
+  place: Place;
+  placeRef: DocumentReference<Place>;
+}) => {
   const { data: kegs, status } = useFirestoreCollectionData(
     kegRecentQuery(placeRef)
   );
@@ -88,6 +78,7 @@ export const Overview = ({ place, placeRef }: OverviewProps) => {
       consumptionPerPerson[consumption.person]?.push(consumption);
     }
   }
+
   return (
     <TemplateApp>
       <div className={classes.header}>
@@ -112,8 +103,10 @@ export const Overview = ({ place, placeRef }: OverviewProps) => {
       <ol className={classes.personsList}>
         {activePersons.sort().map((personName) => (
           <PersonListItem
-            recentConsumptions={consumptionPerPerson[personName]}
+            hrefDetail={`${url}/konzument/${personName}`}
+            key={personName}
             name={personName}
+            recentConsumptions={consumptionPerPerson[personName]}
           />
         ))}
       </ol>
