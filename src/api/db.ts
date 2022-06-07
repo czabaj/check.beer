@@ -15,13 +15,13 @@ import {
   updateDoc,
   Timestamp,
 } from "firebase/firestore";
-import { head, set, throttle, update } from "lodash/fp";
+import { head, throttle } from "lodash/fp";
 import { user } from "rxfire/auth";
 import { collectionData } from "rxfire/firestore";
 import { filter, map, switchMap } from "rxjs/operators";
 import { Temporal } from "temporal-polyfill";
 
-import { CurrentUser, Keg, Place } from "~/api/models";
+import { CurrentUser, Keg, Person, Place } from "~/api/models";
 
 const getDocsFromCacheFirst = <T>(query: Query<T>): Promise<QuerySnapshot<T>> =>
   getDocsFromCache(query).catch(() => getDocsFromServer(query));
@@ -60,26 +60,51 @@ export const placeCollection = (
   firestore: Firestore
 ): CollectionReference<Place> => collection(firestore, `places`) as any;
 
+export const placePersonsCollection = (
+  firestore: Firestore,
+  placeId: string
+): CollectionReference<Person> =>
+  collection(firestore, `places`, placeId, `persons`) as any;
+
 export const addNewPlace = async (
   firestore: Firestore,
   user: User,
   place: Pick<Place, `name`>
 ): Promise<DocumentReference<Place>> => {
   const currentUser = await currentUserDoc(firestore, user);
+  const currentUserName = currentUser.data().name;
+  const now = Timestamp.fromMillis(Date.now());
+  const mainTapName = "Pípa 1";
   const newPlaceData: Place = {
     ...place,
-    active: [currentUser.data().name],
+    currency: `CZK`,
     established: Timestamp.fromMillis(Date.now()),
-    persons: { [currentUser.data().name]: true },
-    taps: { main: null },
+    personsAll: {},
+    taps: { [mainTapName]: null },
   };
   const newPlace = await addDoc(placeCollection(firestore), newPlaceData);
-  const updatedCurrentUser = update(
-    `places`,
-    set(newPlace.id, place.name),
-    currentUser.data()
+  const currentUserPerson: Person = {
+    account: currentUser.ref,
+    balance: 0,
+    created: now,
+    name: currentUserName,
+    transactions: [],
+  };
+  const newCurrentUserPerson = await addDoc(
+    placePersonsCollection(firestore, newPlace.id),
+    currentUserPerson
   );
-  await updateDoc(currentUser.ref, updatedCurrentUser);
+  const updatePlacePromise = updateDoc(
+    newPlace,
+    `personsAll.${newCurrentUserPerson.id}`,
+    [currentUserName, now, mainTapName]
+  );
+  const updateCurrentUserPromise = updateDoc(
+    currentUser.ref,
+    `places.${newPlace.id}`,
+    place.name
+  );
+  await Promise.all([updateCurrentUserPromise, updatePlacePromise]);
   return newPlace;
 };
 

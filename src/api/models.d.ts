@@ -4,15 +4,8 @@ import { DocumentReference, Timestamp } from "firebase/firestore";
  * All volume units are represented as integer of milliliters
  */
 export type MillilitersInteger = number;
-/**
- * Used as a key in Place.persons, thus must be unique per Place. Used as an
- * identifier in related Consumption and as a key for PersonalAccount document,
- * cannot be changed or removed when user has a historic Consumption or
- * accounting transaction (the personal account is created as soon as person
- * puts some money into the place or when the Keg where she had a Consumption
- * is accounted upon finishing).
- */
 type PersonName = string;
+type PersonUID = string;
 /**
  * Used as a key in Place.taps, thus must be unique per Place. Can be changed.
  */
@@ -25,15 +18,18 @@ export type FinancialTransaction = {
   note: string;
 };
 
-export type PersonalAccount = {
+export type Person = {
+  account?: DocumentReference<CurrentUser>;
   balance: number;
+  created: Timestamp;
+  name: string;
   transactions: FinancialTransaction[];
 };
 
 export type Consumption = {
   at: Timestamp;
   milliliters: MillilitersInteger;
-  person: PersonName;
+  person: DocumentReference<Person>;
 };
 
 export type Keg = {
@@ -47,12 +43,11 @@ export type Keg = {
   priceNew: number;
 };
 
-type AccountId = boolean;
 export type Place = {
-  active: PersonName[];
+  currency: string;
   established: Timestamp;
   name: string;
-  persons: Record<PersonName, AccountId | ``>;
+  personsAll: Record<PersonUID, [PersonName, Timestamp, TapName | undefined]>;
   taps: Record<TapName, DocumentReference<Keg> | null>;
 };
 

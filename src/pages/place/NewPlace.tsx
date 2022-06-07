@@ -5,6 +5,8 @@ import { addNewPlace } from "~/api/db";
 import { TemplateApp } from "~/components/TemplateApp";
 import buttonClasses from "~/styles/components/button.module.css";
 
+import { ROOT } from "./routes";
+
 const FORM_FIELD_PLACE_NAME = `name`;
 
 export const NewPlace = () => {
@@ -20,7 +22,7 @@ export const NewPlace = () => {
     const newPlace = await addNewPlace(firestore, user.data!, {
       name: formData.get(FORM_FIELD_PLACE_NAME) as string,
     });
-    history.push(`/place/${newPlace.id}`);
+    history.push(`${ROOT}/${newPlace.id}`);
   };
   return (
     <TemplateApp>

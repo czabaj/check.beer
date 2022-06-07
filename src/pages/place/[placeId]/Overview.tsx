@@ -1,6 +1,7 @@
 import { ReactComponent as GearIcon } from "@fortawesome/fontawesome-free/svgs/solid/cog.svg";
 import cx from "clsx";
 import { DocumentReference } from "firebase/firestore";
+import { orderBy } from "lodash/fp";
 import { memo } from "preact/compat";
 import { Trans } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -66,18 +67,26 @@ export const Overview = ({
   if (!kegs) {
     return <LoadingIndicator />;
   }
-  const activePersons = place.active;
-  const consumptionPerPerson = {} as Record<PersonName, Consumption[]>;
-  for (const name of Object.keys(place.persons)) {
-    if (activePersons.includes(name)) {
-      consumptionPerPerson[name] = [];
+  const activePersons: Record<
+    string,
+    { consumptions: Consumption[]; id: string; name: string }
+  > = {};
+  for (const [id, [name, , preferredTap]] of Object.entries(place.personsAll)) {
+    const isActive = Boolean(preferredTap);
+    if (isActive) {
+      activePersons[id] = { consumptions: [], id, name };
     }
   }
   for (const { consumptions } of kegs) {
     for (const consumption of consumptions) {
-      consumptionPerPerson[consumption.person]?.push(consumption);
+      activePersons[consumption.person.id]?.consumptions.push(consumption);
     }
   }
+  const sortedPersons = orderBy(
+    [`name`],
+    [`asc`],
+    Object.values(activePersons)
+  );
 
   return (
     <TemplateApp>
@@ -101,12 +110,12 @@ export const Overview = ({
         </button>
       </div>
       <ol className={classes.personsList}>
-        {activePersons.sort().map((personName) => (
+        {sortedPersons.map(({ consumptions, id, name }) => (
           <PersonListItem
-            hrefDetail={`${url}/konzument/${personName}`}
-            key={personName}
-            name={personName}
-            recentConsumptions={consumptionPerPerson[personName]}
+            hrefDetail={`${url}/konzument/${id}`}
+            key={id}
+            name={name}
+            recentConsumptions={consumptions}
           />
         ))}
       </ol>
