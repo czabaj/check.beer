@@ -1,7 +1,7 @@
-import { doc } from "firebase/firestore";
 import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
+import { placeDoc } from "~/api/db";
 import type { Place as PlaceType } from "~/api/models";
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 
@@ -15,7 +15,7 @@ export const PlaceId = () => {
   const { path, url } = useRouteMatch();
   const { placeId } = useParams<{ placeId: string }>();
   const firestoreInstance = useFirestore();
-  const placeRef = doc<PlaceType>(firestoreInstance as any, `places`, placeId);
+  const placeRef = placeDoc(firestoreInstance, placeId);
   const { data: place } = useFirestoreDocData<PlaceType>(placeRef);
   return !place ? (
     <LoadingIndicator />
@@ -28,7 +28,7 @@ export const PlaceId = () => {
         <NewPerson place={place} placeRef={placeRef} />
       </Route>
       <Route path={`${url}${SETTINGS}`}>
-        <PlaceSettings />
+        <PlaceSettings place={place} placeRef={placeRef} />
       </Route>
       <Route path={`${url}${PERSON_DETAIL}`}>
         <PersonDetail />

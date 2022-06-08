@@ -1,6 +1,8 @@
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore } from "firebase/firestore";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { FirestoreProvider, useFirebaseApp } from "reactfire";
+import { FirestoreProvider, useInitFirestore } from "reactfire";
+
+import { LoadingIndicator } from "~/components/LoadingIndicator";
 
 import { redirectUnauthenticatedToLogin } from "../utils";
 import { PlaceId } from "./[placeId]";
@@ -8,12 +10,29 @@ import { MyPlaces } from "./MyPlaces";
 import { NewPlace } from "./NewPlace";
 import { NEW_PLACE } from "./routes";
 
+const FirebaseFirestoreProvider = (props: { children: any }) => {
+  const { status, data: firestoreInstance } = useInitFirestore(
+    async (firebaseApp) => {
+      const db = initializeFirestore(firebaseApp, {});
+      // await enableIndexedDbPersistence(db);
+      return db;
+    }
+  );
+
+  return status === "loading" ? (
+    <LoadingIndicator />
+  ) : (
+    <FirestoreProvider sdk={firestoreInstance}>
+      {props.children}
+    </FirestoreProvider>
+  );
+};
+
 export const Places = () => {
-  const firestoreInstance = getFirestore(useFirebaseApp());
   const { path, url } = useRouteMatch();
 
   return (
-    <FirestoreProvider sdk={firestoreInstance}>
+    <FirebaseFirestoreProvider>
       <Switch>
         <Route
           component={redirectUnauthenticatedToLogin(MyPlaces)}
@@ -27,6 +46,6 @@ export const Places = () => {
         />
         <Route component={PlaceId} path={`${url}/:placeId`} />
       </Switch>
-    </FirestoreProvider>
+    </FirebaseFirestoreProvider>
   );
 };

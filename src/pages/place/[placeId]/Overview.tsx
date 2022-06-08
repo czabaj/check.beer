@@ -2,38 +2,20 @@ import { ReactComponent as GearIcon } from "@fortawesome/fontawesome-free/svgs/s
 import cx from "clsx";
 import { DocumentReference } from "firebase/firestore";
 import { orderBy } from "lodash/fp";
-import { memo } from "preact/compat";
-import { Trans } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useFirestoreCollectionData } from "reactfire";
 
 import { kegRecentQuery } from "~/api/db";
-import type { Consumption, PersonName, Place } from "~/api/models";
+import type { Consumption, Place } from "~/api/models";
 import { sortConsumptions, toConsumptionSymbol } from "~/api/utils";
 import { Icon } from "~/components/layouts/Icon";
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 import { TemplateApp } from "~/components/TemplateApp";
 import buttonClasses from "~/styles/components/button.module.css";
-import { toLocalDateString } from "~/utils/dateTime";
 
+import { Established } from "./components/Established";
 import classes from "./Overview.module.css";
-
-const Established = memo(({ timestamp }: { timestamp: number }) => {
-  return (
-    <Trans
-      defaults="Již od <time>{{established, datetime}}</time>"
-      values={{
-        established: new Date(timestamp),
-        formatParams: {
-          established: { year: "numeric", month: "numeric", day: "numeric" },
-        },
-      }}
-      components={{
-        time: (<time dateTime={toLocalDateString(timestamp)} />) as any,
-      }}
-    />
-  );
-});
+import { SETTINGS } from "./routes";
 
 const PersonListItem = (props: {
   hrefDetail: string;
@@ -63,7 +45,6 @@ export const Overview = ({
     kegRecentQuery(placeRef)
   );
   const { url } = useRouteMatch();
-  console.log(`data`, { place, kegs });
   if (!kegs) {
     return <LoadingIndicator />;
   }
@@ -97,22 +78,22 @@ export const Overview = ({
             <Established timestamp={place.established.toMillis()} />
           </div>
         </div>
-        <button
+        <Link
           className={cx(
             buttonClasses.button,
             buttonClasses.variantStealth,
             buttonClasses.icon
           )}
-          type="button"
+          to={`${url}${SETTINGS}`}
         >
           <Icon icon={GearIcon} height="2rem" />
           Nastavení
-        </button>
+        </Link>
       </div>
       <ol className={classes.personsList}>
         {sortedPersons.map(({ consumptions, id, name }) => (
           <PersonListItem
-            hrefDetail={`${url}/konzument/${id}`}
+            hrefDetail={`${url}/osoba/${id}`}
             key={id}
             name={name}
             recentConsumptions={consumptions}

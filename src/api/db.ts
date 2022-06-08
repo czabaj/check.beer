@@ -14,6 +14,7 @@ import {
   addDoc,
   updateDoc,
   Timestamp,
+  doc,
 } from "firebase/firestore";
 import { head, throttle } from "lodash/fp";
 import { user } from "rxfire/auth";
@@ -65,6 +66,11 @@ export const placePersonsCollection = (
   placeId: string
 ): CollectionReference<Person> =>
   collection(firestore, `places`, placeId, `persons`) as any;
+
+export const placeDoc = (
+  firestore: Firestore,
+  placeId: string
+): DocumentReference<Place> => doc(firestore, `places`, placeId) as any;
 
 export const addNewPlace = async (
   firestore: Firestore,

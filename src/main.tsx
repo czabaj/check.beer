@@ -1,10 +1,9 @@
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { getAuth } from "firebase/auth";
-import { FunctionComponent, render } from "preact";
+import { render } from "preact";
 import { Suspense } from "preact/compat";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
-import "temporal-polyfill/global";
 
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 import "~/i18n";
@@ -23,13 +22,13 @@ const firebaseConfig = {
   measurementId: "G-RX9W09W11H",
 };
 
-const FirebaseAuthProvider = ({ children }) => {
+const FirebaseAuthProvider = (props: { children: any }) => {
   const firebaseApp = useFirebaseApp();
   const auth = getAuth(firebaseApp);
-  return <AuthProvider sdk={auth}>{children}</AuthProvider>;
+  return <AuthProvider sdk={auth}>{props.children}</AuthProvider>;
 };
 
-const FirebaseAppCheck: FunctionComponent = () => {
+const FirebaseAppCheck = () => {
   const app = useFirebaseApp();
   const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider(APP_CHECK_TOKEN),
