@@ -1,4 +1,4 @@
-import { memo } from "preact/compat";
+import { memo } from "react";
 import { Trans } from "react-i18next";
 
 import { toLocalDateString } from "~/utils/dateTime";

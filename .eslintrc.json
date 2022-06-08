@@ -30,6 +30,7 @@
       }
     ],
     "react/button-has-type": 2,
+    "react/display-name": 0,
     "react/react-in-jsx-scope": 0
   },
   "settings": {

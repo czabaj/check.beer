@@ -1,8 +1,7 @@
 import { ReactComponent as IconBars } from "@fortawesome/fontawesome-free/svgs/solid/bars.svg";
 import { ReactComponent as IconTimes } from "@fortawesome/fontawesome-free/svgs/solid/times.svg";
 import cx from "clsx";
-import type { ComponentChildren, FunctionComponent } from "preact";
-import { useEffect } from "preact/hooks";
+import { type ReactNode, useEffect } from "react";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 
 import { ROOT as PLACE_ROOT } from "~/pages/place/routes";
@@ -17,10 +16,10 @@ const NAV_LABEL_ID = `nav_menu_label`;
 const NAV_TARGET = `#${NAV_ID}`;
 
 export type Props = {
-  children: ComponentChildren;
+  children: ReactNode;
 };
 
-export const TemplateApp: FunctionComponent<Props> = ({ children }) => {
+export const TemplateApp = ({ children }: Props) => {
   const history = useHistory();
   const closeMenu = history.goBack;
   const location = useLocation();

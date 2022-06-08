@@ -3,7 +3,7 @@
 
 import path from "path";
 
-import preact from "@preact/preset-vite";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import svgrPlugin from "vite-plugin-svgr";
 
@@ -12,10 +12,9 @@ export default defineConfig({
   build: {
     target: `es2020`,
   },
-  plugins: [preact(), svgrPlugin()],
+  plugins: [react(), svgrPlugin()],
   resolve: {
     alias: {
-      react: `preact/compat`,
       "~": path.resolve(__dirname, `./src`),
     },
   },

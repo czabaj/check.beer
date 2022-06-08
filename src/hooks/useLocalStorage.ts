@@ -1,10 +1,11 @@
 import {
-  type StateUpdater,
+  type SetStateAction,
+  type Dispatch,
   useCallback,
   useEffect,
   useRef,
   useState,
-} from "preact/hooks";
+} from "react";
 
 /**
  * Works almost the same as `useState` but persist changes to localStorage and
@@ -13,7 +14,7 @@ import {
 export const useLocalStorage = <V>(
   localStorageKey: string,
   initialValue: V
-): [V, StateUpdater<V>, () => void] => {
+): [V, Dispatch<SetStateAction<V>>, () => void] => {
   const [state, setState] = useState<V>(() => {
     const value = window.localStorage.getItem(localStorageKey);
     return value !== null ? JSON.parse(value) : initialValue;

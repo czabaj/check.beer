@@ -1,4 +1,4 @@
-import type { FunctionComponent, JSX } from "preact";
+import type { CSSProperties } from "react";
 
 // const styleVerticalAlign = css`
 //   vertical-align: -0.125em;
@@ -11,21 +11,19 @@ export type Props = {
   height?: string;
   noAlign?: boolean;
   width?: string;
-  style?: JSX.CSSProperties;
+  style?: CSSProperties;
 };
 
 /**
  * Turns the element into an image in assistive technologies and adds an aria-label of the value
  */
-export const Icon: FunctionComponent<Props> = ({
-  className,
+export const Icon = ({
   height = `0.75em`,
   icon: IconComponent,
-  noAlign,
   style,
   width = height,
   ...other
-}) => {
+}: Props) => {
   return (
     <IconComponent
       {...other}

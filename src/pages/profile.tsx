@@ -1,4 +1,3 @@
-import React from "preact/compat";
 import { useAuth, useUser } from "reactfire";
 
 import { TemplateApp } from "~/components/TemplateApp";

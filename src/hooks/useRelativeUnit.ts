@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from "preact/hooks";
+import { useEffect, useMemo, useReducer } from "react";
 
 const MINUTE = 60 * 1000;
 const HOUR = 60 * MINUTE;

@@ -1,4 +1,4 @@
-import type { FunctionComponent, VNode } from "preact";
+import type { FunctionComponent, ReactElement, ReactNode } from "react";
 import { Redirect } from "react-router-dom";
 import { useSigninCheck } from "reactfire";
 
@@ -8,7 +8,7 @@ export type Props = {
   /**
    * The content to be rendered when redirection won't fire.
    */
-  children: VNode;
+  children: ReactElement;
   /**
    * Setting to `true` redirects _authenticated_ users away, e.g. on the login
    * page, which must not be shown to already logged-in users. Leave unset or
@@ -24,11 +24,7 @@ export type Props = {
 /**
  * This component handles redirection based on authentication status.
  */
-export const RedirectAuth = ({
-  authenticated,
-  children,
-  to,
-}: Props) => {
+export const RedirectAuth = ({ authenticated, children, to }: Props) => {
   const { status, data: signInCheckResult } = useSigninCheck();
   if (status === `loading`) {
     return <LoadingIndicator />;
@@ -46,7 +42,8 @@ export const withRedirectAuth: <ComponentProps>(
   options: Omit<Props, `children`>
 ) => (
   WrappedComponent: FunctionComponent<ComponentProps>
-) => (props: ComponentProps) => VNode =
+) => (props: ComponentProps) => ReactNode =
+  // eslint-disable-next-line react/display-name
   (options) => (WrappedComponent) => (props) =>
     (
       <RedirectAuth {...options}>

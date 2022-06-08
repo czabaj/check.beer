@@ -1,7 +1,7 @@
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { getAuth } from "firebase/auth";
-import { render } from "preact";
-import { Suspense } from "preact/compat";
+import { type ReactNode, Suspense } from "react";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider, FirebaseAppProvider, useFirebaseApp } from "reactfire";
 
@@ -22,10 +22,10 @@ const firebaseConfig = {
   measurementId: "G-RX9W09W11H",
 };
 
-const FirebaseAuthProvider = (props: { children: any }) => {
+const FirebaseAuthProvider = (props: { children: ReactNode }) => {
   const firebaseApp = useFirebaseApp();
   const auth = getAuth(firebaseApp);
-  return <AuthProvider sdk={auth}>{props.children}</AuthProvider>;
+  return <AuthProvider sdk={auth}>{props.children as any}</AuthProvider>;
 };
 
 const FirebaseAppCheck = () => {
@@ -52,4 +52,5 @@ const Main = () => {
   );
 };
 
-render(<Main />, document.getElementById("app")!);
+const root = createRoot(document.getElementById("app")!);
+root.render(<Main />);

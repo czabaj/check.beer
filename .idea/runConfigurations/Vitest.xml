@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Vitest" type="NodeJSConfigurationType" application-parameters="run --threads false" path-to-js-file="node_modules/.pnpm/vitest@0.14.0_vobrqfmhdwhhfsgwya44wdinze/node_modules/vitest/vitest.mjs" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>
