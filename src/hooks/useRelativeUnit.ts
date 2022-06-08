@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useReducer } from "react";
 
-const MINUTE = 60 * 1000;
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 
@@ -35,8 +36,9 @@ type RelativeTime = {
 
 const countRelativeTime = (millis: number): RelativeTime => {
   const range = selectUnit(millis);
-  const value = Math.floor(millis / getDurationInMillis(range));
-  const nextTick = Math.abs(millis % getDurationInMillis(range));
+  const rangeMillis = getDurationInMillis(range);
+  const value = Math.trunc(millis / rangeMillis);
+  const nextTick = range === `second` ? SECOND : Math.abs(millis % rangeMillis);
   return { nextTick, range, value };
 };
 
