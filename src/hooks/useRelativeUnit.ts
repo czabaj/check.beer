@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useReducer } from "react";
 
+import {toggle} from "~/utils/fp";
+
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
@@ -42,7 +44,6 @@ const countRelativeTime = (millis: number): RelativeTime => {
   return { nextTick, range, value };
 };
 
-const toggle = (b: boolean): boolean => !b;
 
 export const useRelativeUnit = (timestamp: number) => {
   const [forcedUpdate, tick] = useReducer(toggle, true);

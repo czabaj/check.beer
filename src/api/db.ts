@@ -1,11 +1,14 @@
 import { Auth, User } from "firebase/auth";
 import {
   collection,
+  getDocFromCache,
+  getDocFromServer,
   getDocsFromCache,
   getDocsFromServer,
   query,
   type CollectionReference,
   type DocumentReference,
+  type DocumentSnapshot,
   type Firestore,
   type Query,
   type QuerySnapshot,
@@ -23,9 +26,15 @@ import { filter, map, switchMap } from "rxjs/operators";
 import { Temporal } from "temporal-polyfill";
 
 import { CurrentUser, Keg, Person, Place } from "~/api/models";
+import { firstBumpedTapOrFirstTapName } from "~/api/utils";
 
 const getDocsFromCacheFirst = <T>(query: Query<T>): Promise<QuerySnapshot<T>> =>
   getDocsFromCache(query).catch(() => getDocsFromServer(query));
+
+const getDocFromCacheFirst = <T>(
+  reference: DocumentReference<T>
+): Promise<DocumentSnapshot<T>> =>
+  getDocFromCache(reference).catch(() => getDocFromServer(reference));
 
 export const currentUserCollection = (
   firestore: Firestore
@@ -72,14 +81,13 @@ export const placeDoc = (
   placeId: string
 ): DocumentReference<Place> => doc(firestore, `places`, placeId) as any;
 
-export const addNewPlace = async (
+export const placeAdd = async (
   firestore: Firestore,
   user: User,
   place: Pick<Place, `name`>
 ): Promise<DocumentReference<Place>> => {
   const currentUser = await currentUserDoc(firestore, user);
   const currentUserName = currentUser.data().name;
-  const now = Timestamp.fromMillis(Date.now());
   const mainTapName = "Pípa 1";
   const newPlaceData: Place = {
     ...place,
@@ -89,29 +97,45 @@ export const addNewPlace = async (
     taps: { [mainTapName]: null },
   };
   const newPlace = await addDoc(placeCollection(firestore), newPlaceData);
-  const currentUserPerson: Person = {
-    account: currentUser.ref,
+  await Promise.all([
+    placePersonAdd(firestore, newPlace, {
+      account: currentUser.ref,
+      name: currentUserName,
+    }),
+    updateDoc(currentUser.ref, `places.${newPlace.id}`, newPlaceData.name),
+  ]);
+  return newPlace;
+};
+
+export const placePersonAdd = async (
+  firestore: Firestore,
+  place: DocumentReference<Place>,
+  person: Pick<Person, `account` | `name`>
+): Promise<DocumentReference<Person>> => {
+  const newPersonName = person.name;
+  const placeData = await getDocFromCacheFirst(place);
+  const nameAlreadyTaken = Object.values(placeData.data()!.personsAll).some(
+    ([name]) => name === newPersonName
+  );
+  if (nameAlreadyTaken) throw new Error(`Name already taken.`);
+  const now = Timestamp.fromMillis(Date.now());
+  const newPersonData: Person = {
+    ...person,
     balance: 0,
     created: now,
-    name: currentUserName,
     transactions: [],
   };
-  const newCurrentUserPerson = await addDoc(
-    placePersonsCollection(firestore, newPlace.id),
-    currentUserPerson
+  const newPerson = await addDoc(
+    placePersonsCollection(firestore, place.id),
+    newPersonData
   );
-  const updatePlacePromise = updateDoc(
-    newPlace,
-    `personsAll.${newCurrentUserPerson.id}`,
-    [currentUserName, now, mainTapName]
-  );
-  const updateCurrentUserPromise = updateDoc(
-    currentUser.ref,
-    `places.${newPlace.id}`,
-    place.name
-  );
-  await Promise.all([updateCurrentUserPromise, updatePlacePromise]);
-  return newPlace;
+  const preferredTapName = firstBumpedTapOrFirstTapName(placeData.data()!.taps);
+  await updateDoc(place, `personsAll.${newPerson.id}`, [
+    newPersonData.name,
+    now,
+    preferredTapName,
+  ]);
+  return newPerson;
 };
 
 export const kegCollection = (

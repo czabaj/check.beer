@@ -1,4 +1,19 @@
+@import "../../../styles/functionalSelectors.css";
+
 .header {
   display: flex;
   align-items: center;
+}
+
+.personList {
+  @extend %resetList;
+
+  & > li {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .lastActivity {
+    font-size: var(--font-size-0);
+  }
 }

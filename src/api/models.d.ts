@@ -18,6 +18,13 @@ export type FinancialTransaction = {
   note: string;
 };
 
+export type PersonShort = {
+  id: PersonUID;
+  lastSeen: Timestamp;
+  name: PersonName;
+  preferredTap?: TapName;
+};
+
 export type Person = {
   account?: DocumentReference<CurrentUser>;
   balance: number;
