@@ -10,6 +10,7 @@ import { useFirestore } from "reactfire";
 import { placePersonAdd } from "~/api/db";
 import { PersonShort, Place } from "~/api/models";
 import { placePersonsShort } from "~/api/utils";
+import { Dialog } from "~/components/Dialog";
 import { Icon } from "~/components/layouts/Icon";
 import { TemplateApp } from "~/components/TemplateApp";
 import { useRelativeUnit } from "~/hooks/useRelativeUnit";
@@ -58,9 +59,10 @@ const AddUserDialog = (
 ) => {
   const firestore = useFirestore();
   return (
-    <dialog
+    <Dialog
       open={props.open}
       onClose={(event) => {
+        debugger;
         event.preventDefault();
         if (!event.nativeEvent.returnValue) {
           props.onClose?.(event);
@@ -84,9 +86,6 @@ const AddUserDialog = (
           }
         );
       }}
-      onCancel={(event) => {
-        debugger;
-      }}
     >
       <form method="dialog">
         <label htmlFor="new_user_name">Jméno</label>
@@ -100,8 +99,11 @@ const AddUserDialog = (
         <button type="submit" value="ok">
           OK
         </button>
+        <button onClick={props.onClose} type="button">
+          Cancel
+        </button>
       </form>
-    </dialog>
+    </Dialog>
   );
 };
 
@@ -145,12 +147,13 @@ export const PlaceSettings = ({
           </div>
         </div>
       </div>
+      <h2 id="place_settings_heading">Nastaveni mista</h2>
       <form
+        aria-labelledby="place_settings_heading"
         onSubmit={(event) => {
           event.preventDefault();
         }}
       >
-        <caption>Nastaveni mista</caption>
         <ul>
           {Object.entries(place.taps).map(([name, keg]) => {
             return <li key={name}>{name}</li>;
