@@ -59,6 +59,10 @@
     "vite-plugin-svgr": "^0.6.0",
     "vitest": "latest"
   },
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
+  },
   "scripts": {
     "build": "tsc && vite build",
     "compile:securityRules": "fireward -i myrules.ward > firestore.rules",

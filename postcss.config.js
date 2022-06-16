@@ -1,5 +1,3 @@
-const path = require('path');
-
 const cssnano = require('cssnano');
 const combineSelectors = require('postcss-combine-duplicated-selectors');
 const postcssExtendRule = require('postcss-extend-rule');
