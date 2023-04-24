@@ -1,88 +1,55 @@
 %centerSelfHorizontal {
-    box-sizing: content-box;
-    padding-inline: var(--centerSelf_gutters, 1rem);
-    margin-inline: auto;
-    max-inline-size: var(--centerSelf_measure, 60ch);
+  box-sizing: content-box;
+  padding-inline: var(--centerSelf_gutters, 1rem);
+  margin-inline: auto;
+  max-inline-size: var(--centerSelf_measure, 60ch);
 }
 
 %centerContentHorizontal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-%resetAnchor {
-    text-decoration: none;
-    color: inherit;
-}
-
-%resetButton {
-    /* Corrects inability to style clickable `input` types in iOS */
-    appearance: none;
-    background-color: transparent;
-    border: none;
-    color: inherit;
-    font-family: inherit;
-    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
-    line-height: normal;
-    margin: 0;
-    overflow: visible;
-    padding: 0;
-    inline-size: auto;
-    /* Corrects font smoothing for webkit */
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-
-    /* Remove excess padding and border in Firefox 4+ */
-    &::-moz-focus-inner {
-        border: 0;
-        padding: 0;
-    }
-
-    &:focus-visible {
-        outline: none;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 %resetFieldset {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    min-inline-size: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
 }
 
 %resetHeading {
-    font-size: 100%;
-    font-weight: inherit;
-    margin: 0;
+  font-size: 100%;
+  font-weight: inherit;
+  margin: 0;
 }
 
 %resetLegend {
-    display: table;
-    padding: 0;
+  display: table;
+  padding: 0;
 }
 
 %resetList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 %srOnly {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 %stack {
-    & > * {
-        margin-block: 0;
-    }
-    & > * + * {
-        margin-block-start: var(--_stack_space, var(--s0));
-    }
+  & > * {
+    margin-block: 0;
+  }
+  & > * + * {
+    margin-block-start: var(--_stack_space, var(--s0));
+  }
 }

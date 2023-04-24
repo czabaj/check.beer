@@ -1,0 +1,43 @@
+/* credit https://medium.com/codex/even-better-styled-html-css-checkboxes-7e9345b5bffd */
+
+.switch {
+  --switch-size: 1em;
+  --switch-border-width: 0.1875em;
+  --switch-border-inner-radius: calc(var(--switch-size) / 2);
+  --switch-border-outer-radius: calc(
+    var(--switch-border-inner-radius) + var(--switch-border-width)
+  );
+
+  appearance: none;
+  box-sizing: content-box; /* default after appearance:none is border-box */
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  inline-size: calc(var(--switch-size) * 2);
+  block-size: var(--switch-size);
+  background: #949494;
+  border: var(--switch-border-width) solid #008;
+  border-radius: var(--switch-border-outer-radius);
+  transition: background 300ms;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    inline-size: var(--switch-size);
+    block-size: var(--switch-size);
+    background: #fff;
+    border-radius: var(--switch-border-inner-radius);
+    transition: background 300ms, left 300ms;
+  }
+
+  &:checked {
+    background: #17d;
+  }
+
+  &:checked:before {
+    inset-inline-start: var(--switch-width);
+    background: #8cf;
+  }
+}

@@ -1,96 +1,60 @@
-import { ReactComponent as IconBars } from "@fortawesome/fontawesome-free/svgs/solid/bars.svg";
-import { ReactComponent as IconTimes } from "@fortawesome/fontawesome-free/svgs/solid/times.svg";
 import cx from "clsx";
-import { type ReactNode, useEffect } from "react";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { type ReactNode, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 
 import { ROOT as PLACE_ROOT } from "~/pages/place/routes";
 import { PROFILE } from "~/pages/routes";
 import buttonClasses from "~/styles/components/button.module.css";
 
-import { Icon } from "./layouts/Icon";
 import classes from "./TemplateApp.module.css";
 
-const NAV_ID = `nav_menu`;
-const NAV_LABEL_ID = `nav_menu_label`;
-const NAV_TARGET = `#${NAV_ID}`;
-
-export type Props = {
+export type TemplateProps = {
   children: ReactNode;
 };
 
-export const TemplateApp = ({ children }: Props) => {
-  const history = useHistory();
-  const closeMenu = history.goBack;
-  const location = useLocation();
-  const menuOpen = location.hash === NAV_TARGET;
+export const TemplateApp = ({ children }: TemplateProps) => {
+  const menuOpenRef = useRef<HTMLButtonElement>();
   useEffect(() => {
-    // allow close the menu with Escape
-    if (menuOpen) {
-      const type = `keydown`;
-      const handler = (event: KeyboardEvent) => {
-        if (
-          event.key === `Escape` &&
-          !event.defaultPrevented &&
-          !event.altKey &&
-          !event.ctrlKey &&
-          !event.metaKey &&
-          !event.shiftKey
-        ) {
-          closeMenu();
-        }
-      };
-      document.addEventListener(type, handler);
-      return () => document.removeEventListener(type, handler);
-    }
-  }, [menuOpen]);
+    const listener = (event: KeyboardEvent) => {
+      if (event.key === `Escape`) menuOpenRef.current!.blur();
+    };
+    document.addEventListener(`keydown`, listener);
+    return () => document.removeEventListener(`keydown`, listener);
+  }, []);
+
   return (
     <div className={classes.root}>
       <header>
         <div>
           <h1>Untap.beer</h1>
-
-          {menuOpen ? (
-            <button
-              className={cx(
-                buttonClasses.button,
-                buttonClasses.variantStealth,
-                buttonClasses.flat
-              )}
-              onClick={closeMenu}
-              title="Zpět na obsah"
-            >
-              <Icon icon={IconTimes} height="2rem" />
-            </button>
-          ) : (
-            <a
-              className={cx(
-                buttonClasses.button,
-                buttonClasses.variantStealth,
-                buttonClasses.flat
-              )}
-              href={NAV_TARGET}
-              title="Navigační menu"
-            >
-              <Icon icon={IconBars} height="2rem" />
-            </a>
-          )}
+          <button
+            aria-hidden={true}
+            className={cx(
+              classes.navMenuButton,
+              buttonClasses.button,
+              buttonClasses.variantStealth,
+              buttonClasses.flat
+            )}
+            ref={menuOpenRef as any}
+            title="Navigační menu"
+            type="button"
+          />
+          <nav>
+            <div>Hlavní rozcestník</div>
+            <ul>
+              <li>
+                <NavLink to={PROFILE}>Moje nastavení</NavLink>
+              </li>
+              <li>
+                <NavLink to={PLACE_ROOT}>Jinam</NavLink>
+              </li>
+              <li>
+                <button type="button">Zavřít</button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </header>
-      <nav aria-labelledby={NAV_LABEL_ID} id={NAV_ID}>
-        <h2 className="visually-hidden">Hlavní rozcestník</h2>
-        <ul>
-          <li>
-            <NavLink to={PROFILE}>Moje nastavení</NavLink>
-          </li>
-          <li>
-            <NavLink to={PLACE_ROOT}>Jinam</NavLink>
-          </li>
-          <li>
-            <button onClick={closeMenu}>Zavřít</button>
-          </li>
-        </ul>
-      </nav>
       <main>{children}</main>
     </div>
   );

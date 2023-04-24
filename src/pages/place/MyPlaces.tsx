@@ -27,20 +27,21 @@ const PlacesListing = ({ places }: { places?: DBUser[`places`] }) => {
           ))}
         </ul>
       )}
-      <Link className={cx(buttonClasses.button)} to={`${url}${NEW_PLACE}`}>
-        <Icon icon={PlusIcon} noAlign />
-        <span className="visually-hidden"> přidat dalsi misto</span>
-      </Link>
     </>
   );
 };
 
 export const MyPlaces = () => {
   const { data: DBUser } = useCurrentUser();
+  const { url } = useRouteMatch();
 
   return (
     <TemplateApp>
       <h2>Moje mista</h2>
+      <Link className={cx(buttonClasses.button)} to={`${url}${NEW_PLACE}`}>
+        <Icon icon={PlusIcon} noAlign />
+        <span className="visually-hidden"> přidat dalsi misto</span>
+      </Link>
       {!DBUser ? (
         <LoadingIndicator />
       ) : (

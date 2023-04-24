@@ -1,9 +1,5 @@
-@import "../functionalSelectors.css";
-
 .button,
 .button:visited {
-  @extend %resetAnchor, %resetButton;
-
   align-items: center;
   background-color: var(--_background, transparent);
   border-radius: var(--radius-2);
@@ -19,18 +15,6 @@
   user-select: none;
   padding-inline: var(--_padding-inline, 1rem);
 
-  &:active {
-    background-color: var(--_active-background, var(--gray-2));
-    border-color: var(--_active-border, currentColor);
-    color: var(--_active-text, var(--gray-5));
-  }
-
-  &:disabled {
-    background-color: var(--_disabled-background, var(--gray-2));
-    border-color: var(--_disabled-border, currentColor);
-    color: var(--_disabled-text, var(--gray-4));
-  }
-
   &:focus-visible {
     outline-style: solid;
     outline-color: transparent;
@@ -41,6 +25,18 @@
     background-color: var(--_hover-background, var(--gray-3));
     border-color: var(--_hover-border, currentColor);
     color: var(--_hover-text, var(--gray-5));
+  }
+
+  &:active {
+    background-color: var(--_active-background, var(--gray-2));
+    border-color: var(--_active-border, currentColor);
+    color: var(--_active-text, var(--gray-5));
+  }
+
+  &:disabled {
+    background-color: var(--_disabled-background, var(--gray-2));
+    border-color: var(--_disabled-border, currentColor);
+    color: var(--_disabled-text, var(--gray-4));
   }
 
   @media screen and (--highContrast) {
@@ -125,7 +121,7 @@
   --_disabled-background: var(--gray-3);
   --_disabled-border: transparent;
   --_disabled-text: var(--gray-5);
-  --_hover-background: var(--brand);
+  --_hover-background: hsl(var(--brand-hs) calc(var(--brand-l) + 5%));
   --_hover-border: transparent;
   --_hover-text: var(--gray-1);
   --_separator: var(--gray-1);

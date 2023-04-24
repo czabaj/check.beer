@@ -1,4 +1,4 @@
-.srOnly:not(:focus):not(:active) {
+.srOnly:not(:focus, :active) {
   /* noinspection Stylelint */
   block-size: 1px;
   clip-path: inset(50%);

@@ -1,6 +1,6 @@
 # check.beer
 
-A web application for "home pub" management. It solves a problems:
+A web application for "home pub" management. It solves problems:
 
 - what beer is on which tap,
 - how many beer is left in the kegs,

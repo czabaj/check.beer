@@ -28,19 +28,36 @@
     }
   }
 
-  & > nav {
-    @extend %centered;
-  }
-
   & > main {
     @extend %centered;
   }
 
-  & > nav:not(:target) {
+  & > nav:target + main {
     @extend %srOnly;
   }
+}
 
-  & > nav:target + main {
+.navMenuButton {
+  &::after {
+    content: "\2630";
+    font-size: 2rem;
+  }
+
+  & + nav {
+    @extend %centered;
+
+    position: absolute;
+    inset-block-start: 0;
+    background-color: var(--brand);
+    padding-block: 5rem;
+    inline-size: 100%;
+
+    & > ul {
+      @extend %resetList;
+    }
+  }
+
+  &:not(:focus) + nav {
     @extend %srOnly;
   }
 }
