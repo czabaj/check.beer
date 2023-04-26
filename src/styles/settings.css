@@ -1,15 +1,45 @@
-:where(html) {
-    --measure: 60ch;
-    --ratio: 1.5;
-    --s-5: calc(var(--s-4) / var(--ratio));
-    --s-4: calc(var(--s-3) / var(--ratio));
-    --s-3: calc(var(--s-2) / var(--ratio));
-    --s-2: calc(var(--s-1) / var(--ratio));
-    --s-1: calc(var(--s0) / var(--ratio));
-    --s0: 1rem;
-    --s1: calc(var(--s0) * var(--ratio));
-    --s2: calc(var(--s1) * var(--ratio));
-    --s3: calc(var(--s2) * var(--ratio));
-    --s4: calc(var(--s3) * var(--ratio));
-    --s5: calc(var(--s4) * var(--ratio));
+html {
+  --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+    Noto Sans, sans-serif;
+  --font-serif: ui-serif, serif;
+  --font-mono: Dank Mono, Operator Mono, Inconsolata, Fira Mono, ui-monospace,
+    SF Mono, Monaco, Droid Sans Mono, Source Code Pro, monospace;
+
+  --font-size-10: 0.625rem;
+  --font-size-12: 0.75rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --font-size-18: 1.125rem;
+  --font-size-20: 1.25rem;
+  --font-size-24: 1.5rem;
+  --font-size-32: 2rem;
+  --font-size-40: 2.5rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 800;
+
+  --border-size-1: 1px;
+  --border-size-2: 2px;
+  --border-size-3: 5px;
+  --border-size-4: 10px;
+  --radius-1: 2px;
+  --radius-2: 5px;
+  --radius-round: 1e5px;
+
+  --measure: 60ch;
+  --ratio: 1.5;
+
+  --s-5: calc(var(--s-4) / var(--ratio));
+  --s-4: calc(var(--s-3) / var(--ratio));
+  --s-3: calc(var(--s-2) / var(--ratio));
+  --s-2: calc(var(--s-1) / var(--ratio));
+  --s-1: calc(var(--s0) / var(--ratio));
+  --s0: 1rem;
+  --s1: calc(var(--s0) * var(--ratio));
+  --s2: calc(var(--s1) * var(--ratio));
+  --s3: calc(var(--s2) * var(--ratio));
+  --s4: calc(var(--s3) * var(--ratio));
+  --s5: calc(var(--s4) * var(--ratio));
 }

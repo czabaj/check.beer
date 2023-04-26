@@ -1,0 +1,54 @@
+a,
+button,
+details summary {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  margin: 0;
+  min-inline-size: 100%;
+}
+
+button {
+  /* Corrects inability to style clickable `input` types in iOS */
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  inline-size: auto;
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Remove excess padding and border in Firefox 4+ */
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+html {
+  background-color: var(--surface-1);
+  color: var(--text-2);
+  font-family: var(--font-sans);
+  line-height: var(--ratio);
+}

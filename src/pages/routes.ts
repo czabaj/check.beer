@@ -1,4 +1,3 @@
-export const LOGIN = `/prihlaseni`;
 export const PLACE = `/misto`;
 export const PROFILE = `/profil`;
 export const ROOT = `/`;

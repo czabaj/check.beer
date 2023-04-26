@@ -1,0 +1,58 @@
+@import "~/styles/functionalSelectors.css";
+
+%centered {
+  @extend %centerSelfHorizontal;
+
+  min-inline-size: 60ch;
+}
+
+.header {
+  --text-1: var(--text-3);
+
+  background-color: var(--brand);
+
+  & > div {
+    @extend %centered;
+
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & h1 {
+    font-size: var(--font-size-4);
+  }
+}
+
+.main {
+  @extend %centered;
+}
+
+.navMenuButton {
+  list-style: none;
+  position: relative;
+
+  & > summary::after {
+    content: "\2630";
+    font-size: 2rem;
+  }
+
+  & > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  & > nav {
+    @extend %centered;
+
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-end: 0;
+    background-color: var(--brand);
+    padding-block: 5rem;
+    inline-size: 100%;
+
+    & > ul {
+      @extend %resetList;
+    }
+  }
+}

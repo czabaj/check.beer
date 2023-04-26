@@ -3,7 +3,7 @@ import { useSigninCheck } from "reactfire";
 
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 
-import { Login } from "./login";
+import { Login } from "./Login";
 
 export const withLogin = function <ComponentProps>(
   Component: FunctionComponent<ComponentProps>

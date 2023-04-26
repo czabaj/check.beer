@@ -1,18 +1,28 @@
 :where(html) {
   color-scheme: light;
 
-  --brand-hs: 86 84%;
-  --brand-l: 36%;
-  --brand: hsl(var(--brand-hs) var(--brand-l));
+  --surface-1-hs: 210deg 16%;
+  --surface-1-l: 93%;
+  --surface-1-hsl: var(--surface-1-hs) var(--surface-1-l);
+  --surface-1: hsl(var(--surface-1-hsl));
+  --surface-2: hsl(210deg 17% 98%);
+  --surface-3: hsl(210deg 17% 95%);
+  --surface-4: hsl(210deg 14% 83%);
+  --surface-brand-hs: 86deg 84%;
+  --surface-brand-l: 36%;
+  --surface-brand-hsl: var(--surface-brand-hs) var(--surface-brand-l);
+  --surface-brand: hsl(var(--surface-brand-hsl));
+  --surface-danger-hs: 0deg 63%;
+  --surface-danger-l: 54%;
+  --surface-danger-hsl: var(--surface-danger-hs) var(--surface-danger-l);
+  --surface-danger: hsl(var(--surface-danger-hsl));
 
-  --text-1: var(--gray-8);
-  --text-2: var(--gray-7);
-  --text-3: var(--yellow-4);
-
-  --surface-1: var(--gray-2);
-  --surface-2: var(--gray-0);
-  --surface-3: var(--gray-1);
-  --surface-4: var(--gray-3);
+  --text-1: hsl(210deg 10% 23%);
+  --text-2: hsl(210deg 9% 31%);
+  --text-3: hsl(210deg 14% 83%);
+  --text-brand-1: hsl(210deg 17% 98%);
+  --text-brand-2: hsl(47deg 100% 62%);
+  --text-danger: hsl(0deg 0% 100%);
 
   @media (--HDcolor) {
     @supports (color(display-p3 0 0.5 1)) {
