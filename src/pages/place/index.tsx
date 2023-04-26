@@ -4,7 +4,7 @@ import { FirestoreProvider, useInitFirestore } from "reactfire";
 
 import { LoadingIndicator } from "~/components/LoadingIndicator";
 
-import { redirectUnauthenticatedToLogin } from "../utils";
+import { withLogin } from "../utils";
 import { PlaceId } from "./[placeId]";
 import { MyPlaces } from "./MyPlaces";
 import { NewPlace } from "./NewPlace";
@@ -34,13 +34,9 @@ export const Places = () => {
   return (
     <FirebaseFirestoreProvider>
       <Switch>
+        <Route component={withLogin(MyPlaces)} exact path={path} />
         <Route
-          component={redirectUnauthenticatedToLogin(MyPlaces)}
-          exact
-          path={path}
-        />
-        <Route
-          component={redirectUnauthenticatedToLogin(NewPlace)}
+          component={withLogin(NewPlace)}
           exact
           path={`${url}${NEW_PLACE}`}
         />
