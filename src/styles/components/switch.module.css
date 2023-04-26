@@ -29,7 +29,7 @@
     block-size: var(--switch-size);
     background: #fff;
     border-radius: var(--switch-border-inner-radius);
-    transition: background 300ms, left 300ms;
+    transition: background 300ms, inset-inline-start 300ms;
   }
 
   &:checked {

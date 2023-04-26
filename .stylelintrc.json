@@ -20,6 +20,7 @@
         "ignoreShorthands": ["grid-template"]
       }
     ],
+    "import-notation": "string",
     "liberty/use-logical-spec": "always",
     "rule-empty-line-before": null,
     "selector-class-pattern": "^(lui-)?[a-z][a-zA-Z0-9]+$",
