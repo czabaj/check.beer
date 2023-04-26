@@ -38,10 +38,12 @@
 %srOnly {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
+  /* stylelint-disable-next-line liberty/use-logical-spec, unit-allowed-list */
   height: 1px;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
+  /* stylelint-disable-next-line liberty/use-logical-spec, unit-allowed-list */
   width: 1px;
 }
 

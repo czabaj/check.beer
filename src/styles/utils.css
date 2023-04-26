@@ -1,9 +1,9 @@
 .srOnly:not(:focus, :active) {
-  /* noinspection Stylelint */
+  /* stylelint-disable-next-line unit-allowed-list */
   block-size: 1px;
   clip-path: inset(50%);
   clip: rect(0 0 0 0);
-  /* noinspection Stylelint */
+  /* stylelint-disable-next-line unit-allowed-list */
   inline-size: 1px;
   overflow: hidden;
   position: absolute;

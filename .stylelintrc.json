@@ -30,7 +30,7 @@
       }
     ],
     "unit-allowed-list": [
-      ["%", "ch", "deg", "em", "fr", "ms", "rem", "vh", "vmax", "vw"],
+      ["%", "ch", "deg", "em", "fr", "lvh", "ms", "rem", "vh", "vmax", "vw"],
       {
         "ignoreProperties": {
           "px": ["/border/", "/radius/", "/shadow/"]

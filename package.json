@@ -65,9 +65,10 @@
   },
   "scripts": {
     "build": "tsc && vite build",
+    "check:lint": "eslint --ext .js,.ts,.tsx --fix .",
+    "check:styles": "stylelint 'src/**/*.css'",
     "compile:securityRules": "fireward -i myrules.ward > firestore.rules",
     "dev": "vite",
-    "lint": "eslint --ext .js,.ts,.tsx --fix .",
     "serve": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui"

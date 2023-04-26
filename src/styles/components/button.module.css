@@ -1,5 +1,4 @@
-.button,
-.button:visited {
+.button {
   align-items: center;
   background-color: var(--_background, transparent);
   border-radius: var(--radius-2);
