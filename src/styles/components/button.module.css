@@ -161,7 +161,7 @@
   --_disabled-border: transparent;
   --_disabled-text: var(--text-3);
   --_hover-background: var(--surface-1);
-  --_hover-border: hsl(var(--surface-1-hsl) / 20%);
+  --_hover-border: currentColor;
   --_hover-text: var(--text-1);
   --_padding-inline: 0.5rem;
 }

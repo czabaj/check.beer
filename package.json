@@ -83,7 +83,8 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "storybook": "storybook dev --no-open --port 6006 ",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "storybook:serve": "npx http-server storybook-static"
   },
   "version": "0.0.0"
 }

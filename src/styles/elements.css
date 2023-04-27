@@ -1,6 +1,7 @@
 a,
 button,
-details summary {
+details summary,
+label {
   cursor: pointer;
 }
 
@@ -42,7 +43,8 @@ button {
   }
 }
 
-button:disabled {
+button:disabled,
+label:has(*:disabled) {
   cursor: not-allowed;
 }
 

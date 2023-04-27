@@ -37,7 +37,14 @@
   }
 
   &:checked::before {
-    inset-inline-start: var(--switch-width);
+    inset-inline-start: var(--switch-size);
     background: #8cf;
+  }
+
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: Highlight;
+    outline-color: -webkit-focus-ring-color;
+    outline-width: 3;
   }
 }
